@@ -1,10 +1,108 @@
 <!DOCTYPE html>
-<html lang="de" dir="ltr">
+<html lang='de' dir='ltr'>
   <head>
-    <meta charset="utf-8">
+    <meta charset='utf-8'>
     <title>Schulden Verwaltung</title>
+    <link rel='stylesheet' href='style/style.css'>
+    <link href='https://fonts.googleapis.com/css?family=Roboto:300,500' rel='stylesheet'>
+    <link href='https://fonts.googleapis.com/css?family=Roboto:200,400' rel='stylesheet'>
+    <link href='https://use.fontawesome.com/releases/v5.8.1/css/all.css' rel='stylesheet' integrity='sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf' crossorigin='anonymous'>
+    <script src='script/script.js' charset='utf-8'></script>
+    <script src='script/inputAnimation.js' charset='utf-8'></script>
+    <script src="https://www.gstatic.com/firebasejs/6.1.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.1.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.1.0/firebase-database.js"></script>
   </head>
   <body>
-    
+    <div id='accountWrapper'>
+      <div id="signIn">
+
+        <h1>Anmelden</h1>
+
+        <span id="emailSignInSpan">E-Mail Adresse</span>
+        <input type="text" id="emailSignIn">
+
+        <br><br><br>
+
+        <span id="passwordSignInSpan">Passwort</span>
+        <input type="password" id="passwordSignIn">
+
+        <br><br>
+
+        <button type="button" id="signInBtn">Anmelden</button>
+
+        <p>Noch keinen Account? <label id="goToSignUp">Registrieren</label>.</p>
+
+      </div>
+
+      <div id="signUp">
+
+        <h1>Registrieren</h1>
+
+        <span id="emailSignInSpan">E-Mail Adresse</span>
+        <input type="text" id="emailSignUp">
+
+        <br><br><br>
+
+        <span id="usernameSignUpSpan">Benutzername</span>
+        <input type="text" id="usernameSignUp">
+
+        <br><br><br>
+
+        <span id="passwordSignInSpan">Passwort</span>
+        <input type="password" id="passwordSignUp">
+
+        <br><br>
+
+        <button type="button" id="signUpBtn">Registrieren</button>
+
+        <p>Bereits registriert? <label id="goToSignIn">Anmelden</label>.</p>
+
+      </div>
+    </div>
+
+    <div id='contentWrapper'>
+      <h1>Schuldner Liste</h1>
+      <div id="entryWrapper">
+
+      </div>
+    </div>
+
+    <div id='plusWrapper'>
+      <h1>Eintrag erstellen</h1>
+
+      <span id="nameSpan">Name des Schuldners</span>
+      <input type="text" id="name">
+
+      <br><br><br>
+
+      <span id="reasonSpan">Grund</span>
+      <input type="text" id="reason">
+
+      <br><br><br>
+
+      <span id="dateSpan">Datum</span>
+      <input type="date" id="date" value="">
+
+      <br><br><br>
+
+      <span id="sumSpan">Betrag</span>
+      <input type="number" id="sum">
+
+      <br><br>
+
+      <button type="button" id="addEntryBtn">Erstellen</button>
+
+      <br><br><br><br><br>
+
+      <p id="addFDB"></p>
+    </div>
+
+    <footer>
+      <i class="fas fa-sign-out-alt" id="signOut"></i>
+      <i class='fas fa-user' id='user'></i>
+      <i class='fas fa-home' id='home'></i>
+      <i class="fas fa-plus" id="plus"></i>
+    </footer>
   </body>
 </html>
