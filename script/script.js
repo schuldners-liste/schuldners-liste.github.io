@@ -136,6 +136,7 @@ window.addEventListener('load', () => {
         promise.then(() => {
           const userId = firebase.auth().currentUser.uid;
           writeUserToDatabase(username.value, email.value, userId);
+          homeIcon.click();
         });
   });
 
@@ -175,6 +176,13 @@ window.addEventListener('load', () => {
       }
     });
     printEntries(userId);
+
+    homeIcon.click();
+
+    name.value = '';
+    reason.value = '';
+    sum.value = '';
+    initDateValue();
   });
 
   function writeUserToDatabase(username, email, userId) {
