@@ -79,7 +79,7 @@ window.addEventListener('load', () => {
       fadeIn('addWrapper');
       changeDisplayProperty('addWrapper', 'block');
       document.getElementById('addFDB').textContent = '';
-      document.getElementById('entryFDB').textContent = '';
+      if (entryWrapper.childNodes.length === 0) document.getElementById('entryFDB').textContent = 'Keine Einträge verfügbar.'
     } else {
       changeDisplayProperty('user', 'block');
       changeDisplayProperty('signOut', 'none');
