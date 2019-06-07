@@ -36,6 +36,7 @@ window.addEventListener('load', () => {
   });
 
   homeIcon.addEventListener('click', () => {
+
     fadeOut('accountWrapper');
     fadeOut('plusWrapper');
     changeDisplayProperty('contentWrapper', 'block');
@@ -73,15 +74,25 @@ window.addEventListener('load', () => {
   firebase.auth().onAuthStateChanged((user) => {
     if (user) {
       printEntries(user.uid);
-      userIcon.style.display = 'none';
-      signOutIcon.style.display = 'block';
+      changeDisplayProperty('user', 'none');
+      changeDisplayProperty('signOut', 'block');
+      fadeIn('addWrapper');
+      changeDisplayProperty('addWrapper', 'block');
+      document.getElementById('addFDB').textContent = '';
+      document.getElementById('entryFDB').textContent = '';
+      if (document.getElementById('entryWrapper').childNodes.length <= 1) document.getElementById('entryFDB').textContent = 'Keine Einträge verfügbar.';
     } else {
-      signOutIcon.style.display = 'none';
-      userIcon.style.display = 'block';
+      changeDisplayProperty('user', 'block');
+      changeDisplayProperty('signOut', 'none');
+
       const patternWrapper = document.getElementById('entryWrapper');
-      while (patternWrapper.firstChild) {
-        patternWrapper.removeChild(patternWrapper.firstChild);
-      }
+      while (patternWrapper.firstChild) patternWrapper.removeChild(patternWrapper.firstChild);
+
+      document.getElementById('entryFDB').textContent = 'Keine Einträge verfügbar.';
+      document.getElementById('addFDB').textContent = 'Sie müssen angemeldet sein um Einträge erstellen zu können.';
+
+      fadeOut('addWrapper');
+      changeDisplayProperty('addWrapper', 'none');
     }
   });
 
@@ -148,13 +159,14 @@ window.addEventListener('load', () => {
     const date = document.getElementById('date');
     const sum = document.getElementById('sum');
     const userId = firebase.auth().currentUser.uid;
-    const currentDate = new Date();
+    const currentDate = Date.now();
 
-    firebase.database().ref('users/' + userId + '/entries/' + Date.now()).set({
+    firebase.database().ref('users/' + userId + '/entries/' + currentDate).set({
       name: name.value,
       reason: reason.value,
       date: date.value,
       sum: sum.value,
+      timestamp: currentDate
     }, (error) => {
       if (error) {
         // The write failed...
@@ -162,6 +174,7 @@ window.addEventListener('load', () => {
         document.getElementById('addFDB').textContent = "Eintrag wurde erfolgreich erstellt."
       }
     });
+    printEntries(userId);
   });
 
   function writeUserToDatabase(username, email, userId) {
@@ -180,6 +193,7 @@ window.addEventListener('load', () => {
   function printEntries(userId) {
     let content;
     let entries = [];
+
 
     firebase.database().ref('users/' + userId + '/entries').once('value').then((snapshot) => {
 
@@ -216,6 +230,7 @@ window.addEventListener('load', () => {
         let sum = 'Betrag: ' + entries[i].sum + '€';
         let name = 'Schuldner: ' + entries[i].name;
         let reason = 'Grund: ' + entries[i].reason;
+        let timestamp = entries[i].timestamp;
 
         let contentWrapper = document.getElementById('entryWrapper');
         let newEintrag = document.createElement('div');
@@ -226,6 +241,7 @@ window.addEventListener('load', () => {
         let sumBox = document.createElement('div');
         let nameBox = document.createElement('div');
         let reasonBox = document.createElement('div');
+        let removeBox = document.createElement('i');
 
         let eintragData = [name, date, reason, sum];
         let outputArr = [nameBox, dateBox, reasonBox, sumBox];
@@ -236,9 +252,18 @@ window.addEventListener('load', () => {
             newEintrag.appendChild(outputArr[i]);
           }, 250);
         }
+        removeBox.classList.add('fas');
+        removeBox.classList.add('fa-times');
+        removeBox.addEventListener('click', () => {
+          firebase.database().ref('users/' + userId + '/entries/' + timestamp).remove();
+          contentWrapper.removeChild(newEintrag);
+          if (contentWrapper.childNodes.length === 1) document.getElementById('entryFDB').textContent = 'Keine Einträge verfügbar.'
+        });
+        newEintrag.appendChild(removeBox)
         contentWrapper.appendChild(newEintrag);
       }
     });
+    document.getElementById('entryFDB').textContent = '';
   }
 });
 
