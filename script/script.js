@@ -80,7 +80,6 @@ window.addEventListener('load', () => {
       changeDisplayProperty('addWrapper', 'block');
       document.getElementById('addFDB').textContent = '';
       document.getElementById('entryFDB').textContent = '';
-      if (document.getElementById('entryWrapper').childNodes.length <= 1) document.getElementById('entryFDB').textContent = 'Keine Einträge verfügbar.';
     } else {
       changeDisplayProperty('user', 'block');
       changeDisplayProperty('signOut', 'none');
@@ -202,6 +201,8 @@ window.addEventListener('load', () => {
     let content;
     let entries = [];
 
+    const patternWrapper = document.getElementById('entryWrapper');
+    while (patternWrapper.firstChild) patternWrapper.removeChild(patternWrapper.firstChild);
 
     firebase.database().ref('users/' + userId + '/entries').once('value').then((snapshot) => {
 
@@ -265,7 +266,7 @@ window.addEventListener('load', () => {
         removeBox.addEventListener('click', () => {
           firebase.database().ref('users/' + userId + '/entries/' + timestamp).remove();
           contentWrapper.removeChild(newEintrag);
-          if (contentWrapper.childNodes.length === 1) document.getElementById('entryFDB').textContent = 'Keine Einträge verfügbar.'
+          if (contentWrapper.childNodes.length === 0) document.getElementById('entryFDB').textContent = 'Keine Einträge verfügbar.'
         });
         newEintrag.appendChild(removeBox)
         contentWrapper.appendChild(newEintrag);
