@@ -40,6 +40,10 @@ footer i {
   cursor: pointer;
 }
 
+.hide {
+  display: none !important;
+}
+
 #plusWrapper, #contentWrapper, #accountWrapper {
   transition: opacity 800ms ease-in-out;
 }
@@ -64,7 +68,7 @@ footer i {
   transition: opacity 800ms ease-in-out;
 }
 
-button {
+.button {
   background: #1a73e8;
   border-radius: 15px;
   outline: none;
@@ -77,21 +81,12 @@ button {
   letter-spacing: .50px;
   user-select: none;
   float: right;
+  width: 6vw;
+  height: 2vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
-
-/* #accountWrapper input {
-  outline: none;
-  border: none;
-  border-bottom: lightgray 5px solid;
-  height: 35pt;
-  width: 100%;
-  display: block;
-  font-size: 40pt;
-  transition: border-bottom 250ms ease;
-  cursor: text;
-  margin: 0 0 1.5% 0;
-  padding: 0;
-} */
 
 input {
   outline: none;
@@ -111,23 +106,9 @@ p {
   font-size: 250%;
 }
 
-/* #accountWrapper input:focus {
-  border-bottom: #5ac878 5px solid;
-} */
-
 input:focus {
   border-bottom: #5ac878 5px solid;
 }
-
-/* #accountWrapper #signIn span {
-  user-select: none;
-  position: relative;
-  left: 0;
-  pointer-events: none;
-  font-size: 40pt;
-  top: 2vw;
-  transition: font-size 250ms, top 250ms;
-} */
 
 span {
   user-select: none;
@@ -175,7 +156,7 @@ br {
 #entryWrapper {
   width: 100vw;
   height: auto;
-  overflow-y: scroll;
+  overflow-y: scroll !important;
   overflow-x: hidden;
 }
 
@@ -188,11 +169,40 @@ br {
   margin: 0 auto;
   margin-bottom: 3%;
   margin-top: 2%;
+  margin-left: 10%;
   font-size: 250%;
 }
 
 .eintrag i {
   position: absolute;
-  right: 10%;
+  right: 11vw;
   font-size: 200%;
+  cursor: pointer;
+}
+
+/* Loader */
+
+.loader {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.loader div {
+  border-radius: 100%;
+  background-color: white;
+  width: 1vw;
+  height: 1vw;
+}
+
+.animate {
+  animation: loaderDot 750ms ease-in-out infinite;
+}
+
+@keyframes loaderDot {
+  0%  {opacity: 1}
+  50% {opacity: 0}
+  100%{opacity: 1}
 }

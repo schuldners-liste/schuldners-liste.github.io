@@ -37,9 +37,18 @@
         <span id="passwordSignInSpan">Passwort</span>
         <input type="password" id="passwordSignIn">
 
+        <p id="signInFDB"></p>
+
         <br><br>
 
-        <button type="button" id="signInBtn">Anmelden</button>
+        <div class="button" id="signInBtn">
+          <div class="loader hide" id="signInLoader">
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
+          <span id="signInText">Anmelden</span>
+        </div>
 
         <p>Noch keinen Account? <label id="goToSignUp">Registrieren</label>.</p>
 
@@ -59,12 +68,21 @@
 
         <br><br><br>
 
-        <span id="passwordSignInSpan">Passwort</span>
+        <span id="passwordSignUpSpan">Passwort</span>
         <input type="password" id="passwordSignUp">
+
+        <p id="signUpFDB"></p>
 
         <br><br>
 
-        <button type="button" id="signUpBtn">Registrieren</button>
+        <div class="button" id="signUpBtn">
+          <div class="loader hide" id="signUpLoader">
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
+          <span id="signUpText">Registrieren</span>
+        </div>
 
         <p>Bereits registriert? <label id="goToSignIn">Anmelden</label>.</p>
 
@@ -100,15 +118,21 @@
         <span id="sumSpan">Betrag</span>
         <input type="number" id="sum">
 
+        <p id="addFDB"></p>
+
         <br><br>
 
-        <button type="button" id="addEntryBtn">Erstellen</button>
+        <div class="button" id="addEntryBtn">
+          <div class="loader hide" id="addEntryLoader">
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
+          <span id="addEntryText">Erstellen</span>
+        </div>
 
-        <br><br><br><br><br>
+
       </div>
-
-
-      <p id="addFDB"></p>
     </div>
 
     <footer>
