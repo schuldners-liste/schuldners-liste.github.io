@@ -1,0 +1,40 @@
+#navWrapper {
+  width: 80px;
+}
+
+#navBurger {
+width: 80px;
+}
+
+#navBurger p {
+  width: 7.2vh;
+  height: 1vh;
+  background: black;
+  border-radius: 5px;
+}
+
+#burger1 {
+  transition: all 200ms ease-in-out;
+  transform-origin: left;
+}
+
+#burger2 {
+  transition: all 200ms ease-in-out;
+}
+
+#burger3 {
+  transition: all 200ms ease-in-out;
+  transform-origin: left;
+}
+
+.burger1Active {
+  transform: rotateZ(45deg);
+}
+
+.burger2Active {
+  opacity: 0;
+}
+
+.burger3Active {
+  transform: rotateZ(-45deg);
+}
