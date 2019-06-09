@@ -102,7 +102,7 @@ input {
   padding: 0;
 }
 
-p {
+#accountWrapper p, #contentWrapper p, #plusWrapper p {
   font-size: 250%;
 }
 
