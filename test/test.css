@@ -67,6 +67,13 @@ body {
   transition: left 500ms ease-in-out;
 }
 
+#nav img {
+  width: 100%;
+  position: relative;
+  top: 0;
+  left: 0;
+}
+
 #textWrapper {
   width: 80%;
 }
