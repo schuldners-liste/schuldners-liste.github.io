@@ -13,11 +13,11 @@ window.addEventListener('load', () => {
     b3.classList.toggle('burger3Active');
 
     if (nav.style.left === '0px') {
-      nav.style.left = '-70vw';
+      nav.style.left = '-90vw';
       burger.style.left = 0;
     } else {
       nav.style.left = 0;
-      burger.style.left = '62vw';
+      burger.style.left = '82vw';
     }
   });
 });

@@ -55,7 +55,7 @@ body {
 #nav {
   height: 100vh;
   background-color: white;
-  width: 60vw;
+  width: 80vw;
   margin: 0 auto;
   box-shadow: 7px 0px 5px 1px rgba(189,189,189,0.5);
   position: fixed;
@@ -63,7 +63,7 @@ body {
   font-size: 250%;
   display: flex;
   justify-content: center;
-  left: -70vw;
+  left: -90vw;
   transition: left 500ms ease-in-out;
 }
 
