@@ -545,7 +545,8 @@ window.addEventListener('load', () => {
 
     const messages = ['The password is invalid or the user does not have a password.',
                       'The email address is badly formatted.',
-                      'Too many unsuccessful login attempts.  Please include reCaptcha verification or try again later'
+                      'Too many unsuccessful login attempts.  Please include reCaptcha verification or try again later',
+                      'There is no user record corresponding to this identifier. The user may have been deleted.'
                      ]
 
     if (email.value === '') {
@@ -575,6 +576,11 @@ window.addEventListener('load', () => {
 
       if (errorMsg === messages[2]) {
         signInFDB.textContent = 'Der Anmelde Vorgang ist zu oft fehlgeschlagen, versuchen Sie es später ernuet.';
+      }
+
+      if (errorMsg === messages[3]) {
+        signInFDB.textContent = 'Es wurde keine Account mit der eingegebenen E-Mail Adresse gefunden.';
+        emailInvalid = true;
       }
     }
 
