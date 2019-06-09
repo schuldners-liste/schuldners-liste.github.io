@@ -47,7 +47,7 @@ footer i {
 }
 
 
-#plusWrapper, #accountWrapper, #infoWrapper {
+#plusWrapper, #accountWrapper, #infoWrapper, #securityWrapper {
   opacity: 0;
 }
 
@@ -143,9 +143,9 @@ br {
   display: none;
 }
 
-/* Informationen */
+/* Special Text */
 
-#infoTextWrapper {
+.specialTextWrapper {
   width: 80%;
   text-align: justify;
   font-size: 200%;

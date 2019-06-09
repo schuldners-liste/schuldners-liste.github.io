@@ -24,6 +24,7 @@ window.addEventListener('load', () => {
   const addEntryBtn = document.getElementById('addEntryBtn');
   const navBurger = document.getElementById('navBurger');
   const info = document.getElementById('info');
+  const security = document.getElementById('security');
 
   userIcon.addEventListener('click', () => {
 
@@ -404,12 +405,30 @@ window.addEventListener('load', () => {
 
   info.addEventListener('click', () => {
     fadeIn('infoWrapper');
+    changeDisplayProperty('infoWrapper', 'block');
     changeDisplayProperty('plusWrapper', 'none');
     changeDisplayProperty('accountWrapper', 'none');
     changeDisplayProperty('contentWrapper', 'none');
+    changeDisplayProperty('securityWrapper', 'none');
     fadeOut('plusWrapper');
     fadeOut('accountWrapper');
     fadeOut('contentWrapper');
+    fadeOut('securityWrapper');
+
+    navBurger.click();
+  });
+
+  security.addEventListener('click', () => {
+    fadeIn('securityWrapper');
+    changeDisplayProperty('securityWrapper', 'block');
+    changeDisplayProperty('plusWrapper', 'none');
+    changeDisplayProperty('accountWrapper', 'none');
+    changeDisplayProperty('contentWrapper', 'none');
+    changeDisplayProperty('infoWrapper', 'none');
+    fadeOut('plusWrapper');
+    fadeOut('accountWrapper');
+    fadeOut('contentWrapper');
+    fadeOut('infoWrapper');
 
     navBurger.click();
   });
