@@ -23,6 +23,7 @@ window.addEventListener('load', () => {
   const signInBtn = document.getElementById('signInBtn');
   const addEntryBtn = document.getElementById('addEntryBtn');
   const navBurger = document.getElementById('navBurger');
+  const info = document.getElementById('info');
 
   userIcon.addEventListener('click', () => {
 
@@ -399,6 +400,18 @@ window.addEventListener('load', () => {
       nav.style.left = 0;
       burger.style.left = '82vw';
     }
+  });
+
+  info.addEventListener('click', () => {
+    fadeIn('infoWrapper');
+    changeDisplayProperty('plusWrapper', 'none');
+    changeDisplayProperty('accountWrapper', 'none');
+    changeDisplayProperty('contentWrapper', 'none');
+    fadeOut('plusWrapper');
+    fadeOut('accountWrapper');
+    fadeOut('contentWrapper');
+
+    navBurger.click();
   });
 
   function writeUserToDatabase(username, email, userId) {

@@ -46,11 +46,8 @@ footer i {
   display: none !important;
 }
 
-#plusWrapper, #contentWrapper, #accountWrapper {
-  transition: opacity 800ms ease-in-out;
-}
 
-#plusWrapper {
+#plusWrapper, #accountWrapper, #infoWrapper {
   opacity: 0;
 }
 
@@ -58,16 +55,11 @@ footer i {
   opacity: 1;
 }
 
-#accountWrapper {
-  opacity: 0;
-}
-
 #accountWrapper #signIn {
   opacity: 1;
   width: 80%;
   position: fixed;
   left: 10%;
-  transition: opacity 800ms ease-in-out;
 }
 
 .button {
@@ -127,7 +119,6 @@ span {
   width: 80%;
   position: fixed;
   left: 10%;
-  transition: opacity 800ms ease-in-out;
 }
 
 #goToSignIn, #goToSignUp {
@@ -146,11 +137,20 @@ br {
   width: 80%;
   position: fixed;
   left: 10%;
-  transition: opacity 800ms ease-in-out;
 }
 
 #signOut {
   display: none;
+}
+
+/* Informationen */
+
+#infoTextWrapper {
+  width: 80%;
+  text-align: justify;
+  font-size: 200%;
+  margin-left: 10%;
+  line-height: 200%;
 }
 
 /* Liste */
