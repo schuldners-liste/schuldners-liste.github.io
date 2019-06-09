@@ -24,6 +24,17 @@ window.addEventListener('load', () => {
   const addEntryBtn = document.getElementById('addEntryBtn');
 
   userIcon.addEventListener('click', () => {
+
+    const inputs = [document.getElementById('emailSignUp'),
+                    document.getElementById('usernameSignUp'),
+                    document.getElementById('passwordSignUp'),
+                    document.getElementById('emailSignIn'),
+                    document.getElementById('passwordSignIn')];
+
+    for (const input of inputs) {
+      input.value = '';
+    }
+
     fadeOut('contentWrapper');
     fadeOut('plusWrapper');
     changeDisplayProperty('accountWrapper', 'block');
