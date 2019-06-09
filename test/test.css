@@ -7,10 +7,11 @@ width: 80px;
 }
 
 #navBurger p {
-  width: 7.2vh;
-  height: 1vh;
+  width: 5.7vw;
+  height: 1vw;
   background: black;
   border-radius: 5px;
+  margin: 1vw;
 }
 
 #burger1 {
