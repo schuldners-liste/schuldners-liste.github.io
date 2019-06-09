@@ -60,11 +60,15 @@ body {
   box-shadow: 7px 0px 5px 1px rgba(189,189,189,0.5);
   position: fixed;
   top: 0;
-  font-size: 250%;
+  font-size: 300%;
   display: flex;
   justify-content: center;
   left: -90vw;
   transition: left 500ms ease-in-out;
+}
+
+#nav p {
+  margin: 8vw 0 6vw 0;
 }
 
 #nav img {
@@ -74,6 +78,10 @@ body {
   left: 0;
 }
 
+#nav i {
+  margin-right: 5%;
+}
+
 #textWrapper {
   width: 80%;
 }
@@ -81,4 +89,5 @@ body {
 #copyright {
   font-size: 60% !important;
   text-align: center;
+  margin: 0 auto !important;
 }
