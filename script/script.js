@@ -53,8 +53,6 @@ window.addEventListener('load', () => {
 
   plusIcon.addEventListener('click', () => {
 
-    document.getElementById('addFDB').textContent = document.getElementById('addFDB').textContent.replace('Eintrag wurde erfolgreich erstellt.', '');
-
     initDateValue();
     fadeOut('accountWrapper');
     fadeOut('contentWrapper');
@@ -356,8 +354,6 @@ window.addEventListener('load', () => {
         if (error) {
           // The write failed...
         } else {
-          addFDB.style.color = 'black';
-          addFDB.textContent = 'Eintrag wurde erfolgreich erstellt.';
           homeIcon.click();
           printEntries(userId);
           name.value = '';
