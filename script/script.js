@@ -444,12 +444,14 @@ window.addEventListener('load', () => {
 
       // Convert Date Format
       for (let i = 0; i < entries.length; i++) {
-        let parts = entries[i].date.split('-');
-        let tempYear = parts[0];
-        let tempMonth = parts[1];
-        let tempDay = parts[2];
+        if (entries[i].date.includes('-')) {
+          let parts = entries[i].date.split('-');
+          let tempYear = parts[0];
+          let tempMonth = parts[1];
+          let tempDay = parts[2];
 
-        entries[i].date = `${tempDay}.${tempMonth}.${tempYear}`;
+          entries[i].date = `${tempDay}.${tempMonth}.${tempYear}`;
+        }
       }
 
       for (let i = 0; i < entries.length; i++) {
@@ -483,10 +485,11 @@ window.addEventListener('load', () => {
         }
         removeBox.classList.add('fas');
         removeBox.classList.add('fa-times');
+
         removeBox.addEventListener('click', () => {
           firebase.database().ref('users/' + userId + '/entries/' + timestamp).remove();
           contentWrapper.removeChild(newEintrag);
-          moveEntry(userId, eintragData);
+          moveEntry(userId, entries[i]);
           if (contentWrapper.childNodes.length === 0) document.getElementById('entryFDB').textContent = 'Keine Einträge verfügbar.'
           else document.getElementById('entryFDB').textContent = '';
         });
@@ -504,8 +507,8 @@ window.addEventListener('load', () => {
     let content;
     let entries = [];
 
-    const patternWrapper = document.getElementById('entryWrapper');
-    while (patternWrapper.firstChild) patternWrapper.removeChild(patternWrapper.firstChild);
+    const wrapper = document.getElementById('deletedEntriesWrapper');
+    while (wrapper.firstChild) wrapper.removeChild(wrapper.firstChild);
 
     firebase.database().ref('users/' + userId + '/deletedEntries').once('value').then((snapshot) => {
 
@@ -516,32 +519,13 @@ window.addEventListener('load', () => {
         entries[entries.length] = content[index];
       }
 
-      // Sort Array by timestamp
       for (let i = 0; i < entries.length; i++) {
-        for (let j = i + 1; j < entries.length; j++) {
-          if (entries[i].timestamp > entries[j].timestamp) {
-            let help = entries[j];
-            entries[j] = entries[i];
-            entries[i] = help;
-          }
-        }
-      }
-
-      // Convert Date Format
-      // for (let i = 0; i < entries.length; i++) {
-      //   let parts = entries[i].date.split('-');
-      //   let tempYear = parts[0];
-      //   let tempMonth = parts[1];
-      //   let tempDay = parts[2];
-      //
-      //   entries[i].date = `${tempDay}.${tempMonth}.${tempYear}`;
-      // }
-
-      for (let i = 0; i < entries.length; i++) {
-        let date = entries[i].date;
-        let sum = entries[i].sum;
-        let name = entries[i].name;
-        let reason = entries[i].reason;
+        let date = 'Datum: ' + entries[i].date;
+        entries[i].sum = entries[i].sum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+        entries[i].sum = entries[i].sum.replace('.', ',');
+        let sum = 'Betrag: ' + entries[i].sum + '€';
+        let name = 'Schuldner: ' + entries[i].name;
+        let reason = 'Grund: ' + entries[i].reason;
         let delDate = 'Gelöscht am: ' + entries[i].delDate + ', ' + entries[i].delTime + 'Uhr';
 
         let contentWrapper = document.getElementById('deletedEntriesWrapper');
@@ -554,7 +538,7 @@ window.addEventListener('load', () => {
         let nameBox = document.createElement('div');
         let reasonBox = document.createElement('div');
         let delBox = document.createElement('div');
-        let removeBox = document.createElement('i');
+        let redo = document.createElement('i');
 
         let eintragData = [name, date, reason, sum, delDate];
         let outputArr = [nameBox, dateBox, reasonBox, sumBox, delBox];
@@ -565,16 +549,15 @@ window.addEventListener('load', () => {
             newEintrag.appendChild(outputArr[i]);
           }, 250);
         }
-        removeBox.classList.add('fas');
-        removeBox.classList.add('fa-redo-alt');
-        // removeBox.addEventListener('click', () => {
-        //   firebase.database().ref('users/' + userId + '/entries/' + timestamp).remove();
-        //   contentWrapper.removeChild(newEintrag);
-        //   moveEntry(userId, eintragData);
-        //   if (contentWrapper.childNodes.length === 0) document.getElementById('entryFDB').textContent = 'Keine Einträge verfügbar.'
-        //   else document.getElementById('entryFDB').textContent = '';
-        // });
-        newEintrag.appendChild(removeBox)
+
+        redo.classList.add('fas');
+        redo.classList.add('fa-redo-alt');
+        redo.addEventListener('click', () => {
+          firebase.database().ref('users/' + userId + '/deletedEntries/' + entries[i].timestamp).remove();
+          contentWrapper.removeChild(newEintrag);
+          moveDeletedEntriesToMainList(userId, entries[i]);
+        });
+        newEintrag.appendChild(redo);
         contentWrapper.appendChild(newEintrag);
 
         if (contentWrapper.childNodes.length === 0) document.getElementById('deletedFDB').textContent = 'Keine gelöschten Einträge verfügbar.'
@@ -582,6 +565,26 @@ window.addEventListener('load', () => {
       }
     });
     document.getElementById('deletedFDB').textContent = '';
+  }
+
+  function moveDeletedEntriesToMainList(userId, entry) {
+
+    const currentTime = new Date();
+
+    firebase.database().ref('users/' + userId + '/entries/' + currentTime.getTime()).set({
+      name: entry.name,
+      sum: entry.sum,
+      reason: entry.reason,
+      date: entry.date,
+      timestamp: currentTime.getTime()
+    }, (error) => {
+      if (error) {
+        // The write failed...
+      } else {
+        homeIcon.click();
+        printEntries(userId);
+      }
+    });
   }
 
   function toggleSignInAnimation() {
@@ -726,24 +729,20 @@ window.addEventListener('load', () => {
     signInFDB.style.color = 'red';
   }
 
-  function moveEntry(userId, eintragData) {
-    let name = eintragData[0];
-    let sum = eintragData[3];
-    let reason = eintragData[2];
-    let date = eintragData[1];
+  function moveEntry(userId, entry) {
+
     let deleteDate = new Date();
-
     const delDate = `${deleteDate.getDate()}.${deleteDate.getMonth()+1}.${deleteDate.getFullYear()}`;
-
     const delTime = `${deleteDate.getHours()}:${deleteDate.getMinutes()}`;
 
     firebase.database().ref('users/' + userId + '/deletedEntries/' + deleteDate.getTime()).set({
-      name: name,
-      sum: sum,
-      reason: reason,
-      date: date,
+      name: entry.name,
+      sum: entry.sum,
+      reason: entry.reason,
+      date: entry.date,
       delDate: delDate,
-      delTime: delTime
+      delTime: delTime,
+      timestamp: deleteDate.getTime()
     }, (error) => {
       if (error) {
         // The write failed...
