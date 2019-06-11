@@ -24,12 +24,12 @@
       <div id="nav">
         <div id="textWrapper">
           <img src="./img/banner2.svg" alt="Banner">
-          <p>Eingeloggt als: <span id="usernameField">Dorfdi</span></p>
+          <p>Eingeloggt als: <span id="usernameField"></span></p>
           <hr>
           <p><i class="fas fa-user"></i> Konto</p>
           <p id="info"><i class="fas fa-info-circle"></i> Informationen</p>
           <p id="security"><i class="fas fa-shield-alt"></i> Datenschutz & Sicherheit</p>
-          <p><i class="fas fa-trash-alt"></i> Gelöscht</p>
+          <p id="deleted"><i class="fas fa-trash-alt"></i> Gelöscht</p>
           <p><i class="fas fa-comment"></i> Feedback & Support</p>
           <p><i class="fas fa-cog"></i> Einstellungen</p>
           <hr>
@@ -104,9 +104,8 @@
     </div>
 
     <div id='contentWrapper'>
-      <h1>Schuldner</h1>
-      <div id="entryWrapper">
-      </div>
+      <h1>Einträge</h1>
+      <div id="entryWrapper"></div>
       <p id="entryFDB" style="margin-left: 10%"></p>
     </div>
 
@@ -155,9 +154,7 @@
         <p>Verfolgen und verwalten Sie Ihre Darlehen, einfach und bequem. </p>
         <p>Schuldners Liste ist für StudentInnen und SchülerInnen die ideale App, da Sie für eher kleinere Beträge entwickelt wurde, ist aber dennoch nach oben hin bis ins Unendliche Skalierbar.</p>
 
-        <br>
-
-        <p>Standardfunktionen:</p>
+        <p style="margin-top: 3vh">Standardfunktionen:</p>
         <ul>
           <li>sehen Sie auf einen Blick wem Sie wie viel Geld geliehen haben.</li>
           <li>Sortierung nach Höhe des Betrages/Datum</li>
@@ -170,9 +167,15 @@
     <div id="securityWrapper">
       <h1>Datenschutz & Sicherheit</h1>
       <div class="specialTextWrapper">
-        <p>Die Daten werden verschlüsselt in meiner Datenbank gespeichert, ich als Entwickler dieser App habe jedoch nur Zugang zu Ihrem Usernamen und Ihrer E-Mail Adresse. Aus Sicherheitsgründen wird täglich um 6 Uhr ein Backup der Datenbank erstellt. Die Daten welche in der Datenbank stehen können von niemandem ausgelesen werden, die Datenbank hat eine Serverseitige Überprüfung implementiert welche sicherstellt ob Sie mit Ihrem Account berechtigt sind auf die angefragten Daten zuzugreifen.</p>
+        <p>Die Daten werden verschlüsselt in meiner Datenbank gespeichert, ich als Entwickler dieser App habe jedoch nur Zugang zu Ihrem Usernamen und Ihrer E-Mail Adresse. Aus Sicherheitsgründen wird wöchentlich ein Backup der Datenbank erstellt. Die Daten welche in der Datenbank stehen können von niemandem ausgelesen werden, die Datenbank hat eine Serverseitige Überprüfung welche sicherstellt ob der Account welche die Daten anfordert die Berechtigung hat diese Daten zu erhalten.</p>
         <p>Ihre Daten werden in keinem Fall an Dritte weitergegeben, sie werden lediglich verwendet um Ihre Einträge zu speichern und verwalten zu können.</p>
       </div>
+    </div>
+
+    <div id="deletedWrapper">
+      <h1>Gelöschte Einträge</h1>
+      <div id="deletedEntriesWrapper"></div>
+      <p id="deletedFDB" style="margin-left: 10%"></p>
     </div>
 
     <footer>

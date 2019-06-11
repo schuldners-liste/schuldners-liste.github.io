@@ -47,8 +47,8 @@ footer i {
 }
 
 
-#plusWrapper, #accountWrapper, #infoWrapper, #securityWrapper {
-  opacity: 0;
+#plusWrapper, #accountWrapper, #infoWrapper, #securityWrapper, #deletedWrapper {
+  display: none;
 }
 
 #contentWrapper {
@@ -96,7 +96,7 @@ input {
   padding: 0;
 }
 
-#accountWrapper p, #contentWrapper p, #plusWrapper p {
+#accountWrapper p, #contentWrapper p, #plusWrapper p, #deletedWrapper p {
   font-size: 250%;
 }
 
@@ -114,7 +114,6 @@ span {
 }
 
 #accountWrapper #signUp {
-  opacity: 0;
   display: none;
   width: 80%;
   position: fixed;
@@ -132,7 +131,6 @@ br {
 }
 
 #plusWrapper {
-  opacity: 0;
   display: none;
   width: 80%;
   position: fixed;

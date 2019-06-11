@@ -17,6 +17,6 @@ Standardfunktionen:
 
 ### Datenschutz & Sicherheit
 
-Die Daten werden verschlüsselt in meiner Datenbank gespeichert, ich als Entwickler dieser App habe jedoch nur Zugang zu Ihrem Usernamen und Ihrer E-Mail Adresse. Aus Sicherheitsgründen wird täglich um 6 Uhr ein Backup der Datenbank erstellt. Die Daten welche in der Datenbank stehen können von niemandem ausgelesen werden, die Datenbank hat eine Serverseitige Überprüfung implementiert welche sicherstellt ob Sie mit Ihrem Account berechtigt sind auf die angefragten Daten zuzugreifen.
+Die Daten werden verschlüsselt in meiner Datenbank gespeichert, ich als Entwickler dieser App habe jedoch nur Zugang zu Ihrem Usernamen und Ihrer E-Mail Adresse. Aus Sicherheitsgründen wird wöchentlich ein Backup der Datenbank erstellt. Die Daten welche in der Datenbank stehen können von niemandem ausgelesen werden, die Datenbank hat eine Serverseitige Überprüfung welche sicherstellt ob der Account welche die Daten anfordert die Berechtigung hat diese Daten zu erhalten.
 
 Ihre Daten werden in keinem Fall an Dritte weitergegeben, sie werden lediglich verwendet um Ihre Einträge zu speichern und verwalten zu können.

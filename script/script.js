@@ -25,6 +25,7 @@ window.addEventListener('load', () => {
   const navBurger = document.getElementById('navBurger');
   const info = document.getElementById('info');
   const security = document.getElementById('security');
+  const deleted = document.getElementById('deleted');
 
   userIcon.addEventListener('click', () => {
 
@@ -38,48 +39,24 @@ window.addEventListener('load', () => {
       input.value = '';
     }
 
-    fadeOut('contentWrapper');
-    fadeOut('plusWrapper');
-    changeDisplayProperty('accountWrapper', 'block');
-    fadeIn('accountWrapper');
+    hideAll();
 
-    setTimeout(() => {
-      changeDisplayProperty('plusWrapper', 'none');
-      changeDisplayProperty('contentWrapper', 'none');
-    }, 800);
+
+
+    // setTimeout(function () {
+      changeDisplayProperty('accountWrapper', 'block');
+    // }, 200);
   });
 
   homeIcon.addEventListener('click', () => {
-
-    fadeOut('accountWrapper');
-    fadeOut('plusWrapper');
+    hideAll();
     changeDisplayProperty('contentWrapper', 'block');
-
-    setTimeout(() => {
-      fadeIn('contentWrapper');
-    }, 10);
-
-    setTimeout(() => {
-      changeDisplayProperty('plusWrapper', 'none');
-      changeDisplayProperty('accountWrapper', 'none');
-    }, 800);
   });
 
   plusIcon.addEventListener('click', () => {
-
+    hideAll();
     initDateValue();
-    fadeOut('accountWrapper');
-    fadeOut('contentWrapper');
     changeDisplayProperty('plusWrapper', 'block');
-
-    setTimeout(() => {
-      fadeIn('plusWrapper');
-    }, 10);
-
-    setTimeout(() => {
-      changeDisplayProperty('contentWrapper', 'none');
-      changeDisplayProperty('accountWrapper', 'none');
-    }, 800);
   });
 
   signOutIcon.addEventListener('click', () => {
@@ -89,12 +66,18 @@ window.addEventListener('load', () => {
   firebase.auth().onAuthStateChanged((user) => {
     if (user) {
       printEntries(user.uid);
+
       changeDisplayProperty('user', 'none');
       changeDisplayProperty('signOut', 'block');
-      fadeIn('addWrapper');
       changeDisplayProperty('addWrapper', 'block');
+
       document.getElementById('addFDB').textContent = '';
-      if (entryWrapper.childNodes.length === 0) document.getElementById('entryFDB').textContent = 'Keine Einträge verfügbar.'
+
+      if (entryWrapper.childNodes.length === 0) document.getElementById('entryFDB').textContent = 'Keine Einträge verfügbar.';
+
+      firebase.database().ref('users/' + user.uid + '/userdata').once('value').then((snapshot) => {
+        document.getElementById('usernameField').textContent = snapshot.val().username;
+      });
     } else {
       changeDisplayProperty('user', 'block');
       changeDisplayProperty('signOut', 'none');
@@ -104,36 +87,24 @@ window.addEventListener('load', () => {
 
       document.getElementById('entryFDB').textContent = 'Keine Einträge verfügbar.';
       document.getElementById('addFDB').textContent = 'Sie müssen angemeldet sein um Einträge erstellen zu können.';
+      document.getElementById('usernameField').textContent = 'nicht eingeloggt.';
 
-      fadeOut('addWrapper');
       changeDisplayProperty('addWrapper', 'none');
     }
   });
 
   gotToSignUp.addEventListener('click', () => {
+    hideAll();
     changeDisplayProperty('signUp', 'block');
-    fadeOut('signIn');
-
-    setTimeout(() => {
-      fadeIn('signUp');
-    }, 10);
-
-    setTimeout(() => {
-      changeDisplayProperty('signIn', 'none');
-    }, 800);
+    changeDisplayProperty('accountWrapper', 'block');
+    changeDisplayProperty('signIn', 'none');
   });
 
   gotToSignIn.addEventListener('click', () => {
+    hideAll();
     changeDisplayProperty('signIn', 'block');
-    fadeOut('signUp');
-
-    setTimeout(() => {
-      fadeIn('signIn');
-    }, 10);
-
-    setTimeout(() => {
-      changeDisplayProperty('signUp', 'none');
-    }, 800);
+    changeDisplayProperty('accountWrapper', 'block');
+    changeDisplayProperty('signUp', 'none');
   });
 
   signUpBtn.addEventListener('click', () => {
@@ -404,33 +375,31 @@ window.addEventListener('load', () => {
   });
 
   info.addEventListener('click', () => {
-    fadeIn('infoWrapper');
+    hideAll();
     changeDisplayProperty('infoWrapper', 'block');
-    changeDisplayProperty('plusWrapper', 'none');
-    changeDisplayProperty('accountWrapper', 'none');
-    changeDisplayProperty('contentWrapper', 'none');
-    changeDisplayProperty('securityWrapper', 'none');
-    fadeOut('plusWrapper');
-    fadeOut('accountWrapper');
-    fadeOut('contentWrapper');
-    fadeOut('securityWrapper');
 
     navBurger.click();
   });
 
   security.addEventListener('click', () => {
-    fadeIn('securityWrapper');
+    hideAll();
     changeDisplayProperty('securityWrapper', 'block');
-    changeDisplayProperty('plusWrapper', 'none');
-    changeDisplayProperty('accountWrapper', 'none');
-    changeDisplayProperty('contentWrapper', 'none');
-    changeDisplayProperty('infoWrapper', 'none');
-    fadeOut('plusWrapper');
-    fadeOut('accountWrapper');
-    fadeOut('contentWrapper');
-    fadeOut('infoWrapper');
 
     navBurger.click();
+  });
+
+  deleted.addEventListener('click', () => {
+    const deletedFDB = document.getElementById('deletedFDB');
+    hideAll();
+    changeDisplayProperty('deletedWrapper', 'block');
+
+    navBurger.click();
+
+    if (firebase.auth().currentUser !== null) {
+      printDeletedEntries(firebase.auth().currentUser.uid);
+    } else {
+      deletedFDB.textContent = 'Sie müssen eingeloggt sein um diese Funktion nutzen zu können.';
+    }
   });
 
   function writeUserToDatabase(username, email, userId) {
@@ -517,6 +486,7 @@ window.addEventListener('load', () => {
         removeBox.addEventListener('click', () => {
           firebase.database().ref('users/' + userId + '/entries/' + timestamp).remove();
           contentWrapper.removeChild(newEintrag);
+          moveEntry(userId, eintragData);
           if (contentWrapper.childNodes.length === 0) document.getElementById('entryFDB').textContent = 'Keine Einträge verfügbar.'
           else document.getElementById('entryFDB').textContent = '';
         });
@@ -528,6 +498,90 @@ window.addEventListener('load', () => {
       }
     });
     document.getElementById('entryFDB').textContent = '';
+  }
+
+  function printDeletedEntries(userId) {
+    let content;
+    let entries = [];
+
+    const patternWrapper = document.getElementById('entryWrapper');
+    while (patternWrapper.firstChild) patternWrapper.removeChild(patternWrapper.firstChild);
+
+    firebase.database().ref('users/' + userId + '/deletedEntries').once('value').then((snapshot) => {
+
+      content = snapshot.val();
+
+      // Fill Array with Database Content
+      for (let index in content) {
+        entries[entries.length] = content[index];
+      }
+
+      // Sort Array by timestamp
+      for (let i = 0; i < entries.length; i++) {
+        for (let j = i + 1; j < entries.length; j++) {
+          if (entries[i].timestamp > entries[j].timestamp) {
+            let help = entries[j];
+            entries[j] = entries[i];
+            entries[i] = help;
+          }
+        }
+      }
+
+      // Convert Date Format
+      // for (let i = 0; i < entries.length; i++) {
+      //   let parts = entries[i].date.split('-');
+      //   let tempYear = parts[0];
+      //   let tempMonth = parts[1];
+      //   let tempDay = parts[2];
+      //
+      //   entries[i].date = `${tempDay}.${tempMonth}.${tempYear}`;
+      // }
+
+      for (let i = 0; i < entries.length; i++) {
+        let date = entries[i].date;
+        let sum = entries[i].sum;
+        let name = entries[i].name;
+        let reason = entries[i].reason;
+        let delDate = 'Gelöscht am: ' + entries[i].delDate + ', ' + entries[i].delTime + 'Uhr';
+
+        let contentWrapper = document.getElementById('deletedEntriesWrapper');
+        let newEintrag = document.createElement('div');
+
+        newEintrag.classList.add('eintrag');
+
+        let dateBox = document.createElement('div');
+        let sumBox = document.createElement('div');
+        let nameBox = document.createElement('div');
+        let reasonBox = document.createElement('div');
+        let delBox = document.createElement('div');
+        let removeBox = document.createElement('i');
+
+        let eintragData = [name, date, reason, sum, delDate];
+        let outputArr = [nameBox, dateBox, reasonBox, sumBox, delBox];
+
+        for (let i = 0; i < outputArr.length; i++) {
+          setTimeout(() => {
+            outputArr[i].textContent = eintragData[i];
+            newEintrag.appendChild(outputArr[i]);
+          }, 250);
+        }
+        removeBox.classList.add('fas');
+        removeBox.classList.add('fa-redo-alt');
+        // removeBox.addEventListener('click', () => {
+        //   firebase.database().ref('users/' + userId + '/entries/' + timestamp).remove();
+        //   contentWrapper.removeChild(newEintrag);
+        //   moveEntry(userId, eintragData);
+        //   if (contentWrapper.childNodes.length === 0) document.getElementById('entryFDB').textContent = 'Keine Einträge verfügbar.'
+        //   else document.getElementById('entryFDB').textContent = '';
+        // });
+        newEintrag.appendChild(removeBox)
+        contentWrapper.appendChild(newEintrag);
+
+        if (contentWrapper.childNodes.length === 0) document.getElementById('deletedFDB').textContent = 'Keine gelöschten Einträge verfügbar.'
+        else document.getElementById('deletedFDB').textContent = '';
+      }
+    });
+    document.getElementById('deletedFDB').textContent = '';
   }
 
   function toggleSignInAnimation() {
@@ -671,18 +725,52 @@ window.addEventListener('load', () => {
 
     signInFDB.style.color = 'red';
   }
+
+  function moveEntry(userId, eintragData) {
+    let name = eintragData[0];
+    let sum = eintragData[3];
+    let reason = eintragData[2];
+    let date = eintragData[1];
+    let deleteDate = new Date();
+
+    const delDate = `${deleteDate.getDate()}.${deleteDate.getMonth()+1}.${deleteDate.getFullYear()}`;
+
+    const delTime = `${deleteDate.getHours()}:${deleteDate.getMinutes()}`;
+
+    firebase.database().ref('users/' + userId + '/deletedEntries/' + deleteDate.getTime()).set({
+      name: name,
+      sum: sum,
+      reason: reason,
+      date: date,
+      delDate: delDate,
+      delTime: delTime
+    }, (error) => {
+      if (error) {
+        // The write failed...
+      } else {
+        // Data saved successfully!
+      }
+    });
+  }
 });
 
 function changeDisplayProperty(id, property) {
   document.getElementById(id).style.display = property;
 }
 
-function fadeOut(id) {
-  document.getElementById(id).style.opacity = 0;
-}
+function  hideAll() {
 
-function fadeIn(id) {
-  document.getElementById(id).style.opacity = 1;
+  const elements = [document.getElementById('contentWrapper'),
+                    document.getElementById('accountWrapper'),
+                    document.getElementById('plusWrapper'),
+                    document.getElementById('infoWrapper'),
+                    document.getElementById('securityWrapper'),
+                    document.getElementById('deletedWrapper')
+                  ];
+
+  for (const element of elements) {
+    element.style.display = 'none';
+  }
 }
 
 function initDateValue() {
