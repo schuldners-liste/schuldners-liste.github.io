@@ -151,6 +151,10 @@ br {
   line-height: 200%;
 }
 
+.specialTextWrapper span {
+  font-size: 40% !important;
+}
+
 /* Liste */
 
 #entryWrapper {
