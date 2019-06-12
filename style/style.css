@@ -47,8 +47,13 @@ footer i {
 }
 
 
-#plusWrapper, #accountWrapper, #infoWrapper, #securityWrapper, #deletedWrapper, #supportWrapper, #settingsWrapper {
+#plusWrapper, #accountWrapper, #infoWrapper, #securityWrapper, #deletedWrapper, #supportWrapper, #settingsWrapper, #kontoWrapper {
   display: none;
+  height: 89vh;
+  margin: 0 auto;
+  position: fixed;
+  top: 0;
+  left: 0;
 }
 
 #contentWrapper {
@@ -209,4 +214,22 @@ br {
   0%  {opacity: 1}
   50% {opacity: 0}
   100%{opacity: 1}
+}
+
+/* Konto */
+
+#kontoWrapper form, #delAccWrapper {
+  width: 80vw;
+  margin-bottom: 20%;
+  margin-left: 10vw;
+}
+
+#kontoWrapper form h2 {
+  font-size: 5vw;
+}
+
+#formWrapper {
+  height: 90%;
+  width: 100%;
+  overflow-y: scroll;
 }

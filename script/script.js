@@ -30,6 +30,7 @@ window.addEventListener('load', () => {
   const deleted = document.getElementById('deleted');
   const support = document.getElementById('support');
   const settings = document.getElementById('settings');
+  const konto = document.getElementById('konto');
   const disableNav = document.getElementById('disableNav');
 
   userIcon.addEventListener('click', () => {
@@ -431,6 +432,13 @@ window.addEventListener('load', () => {
     navBurger.click();
   });
 
+  konto.addEventListener('click', () => {
+    hideAll();
+    changeDisplayProperty('kontoWrapper', 'block');
+
+    navBurger.click();
+  });
+
   function writeUserToDatabase(username, email, userId) {
     firebase.database().ref('users/' + userId + '/userdata').set({
       username: username,
@@ -797,7 +805,8 @@ function  hideAll() {
                     document.getElementById('securityWrapper'),
                     document.getElementById('deletedWrapper'),
                     document.getElementById('supportWrapper'),
-                    document.getElementById('settingsWrapper')
+                    document.getElementById('settingsWrapper'),
+                    document.getElementById('kontoWrapper')
                   ];
 
   for (const element of elements) {

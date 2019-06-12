@@ -26,7 +26,7 @@
           <img src="./img/banner2.jpg" alt="Banner">
           <p>Eingeloggt als: <span id="usernameField"></span></p>
           <hr>
-          <p><i class="fas fa-user"></i> Konto</p>
+          <p id="konto"><i class="fas fa-user"></i> Konto</p>
           <p id="info"><i class="fas fa-info-circle"></i> Informationen</p>
           <p id="security"><i class="fas fa-shield-alt"></i> Datenschutz & Sicherheit</p>
           <p id="deleted"><i class="fas fa-trash-alt"></i> Gelöscht</p>
@@ -197,11 +197,77 @@
     <div id="settingsWrapper">
       <h1>Einstellungen</h1>
       <div class="specialTextWrapper">
-        <p>Alle Einträge löschen.</p>
+        <!-- <p>Alle Einträge löschen.</p> -->
         <!-- <p>Theme ändern (beta)</p>
         <p>Benachritigungen (beta)</p> -->
-        <p>Sortierungs Einstellungen</p>
+        <!-- <p>Sortierungs Einstellungen</p> -->
       </div>
+    </div>
+
+    <div id="kontoWrapper">
+      <h1>Konto</h1>
+
+      <div id="formWrapper">
+        <form id="changeUsername" action="index.html" method="post">
+          <h2>Benutzernamen ändern</h2>
+          <input type="text" id="newUsername" placeholder="neuer Benutzername">
+          <input type="password" id="usernamePW" placeholder="Passwort">
+
+          <div class="button" id="changeUNBtn">
+            <div class="loader hide" id="changeUNLoader">
+              <div></div>
+              <div></div>
+              <div></div>
+            </div>
+            <span id="changeUNText">Speichern</span>
+          </div>
+        </form>
+
+        <form id="changeEmail" action="index.html" method="post">
+          <h2>E-Mail Adresse ändern</h2>
+          <input type="text" id="newEmail" placeholder="neue E-Mail Adresse">
+          <input type="password" id="emailPW" placeholder="Passwort">
+
+          <div class="button" id="changeEMpBtn">
+            <div class="loader hide" id="changeEMLoader">
+              <div></div>
+              <div></div>
+              <div></div>
+            </div>
+            <span id="changeEMText">Speichern</span>
+          </div>
+        </form>
+
+        <form id="changePassword" action="index.html" method="post">
+          <h2>Passwort ändern</h2>
+          <input type="password" id="newPW" placeholder="neues Passwort">
+          <input type="password" id="confirmNewPW" placeholder="neues Passwort wiederholen">
+          <input type="password" id="oldPW" placeholder="altes Passwort">
+
+          <div class="button" id="changePWBtn">
+            <div class="loader hide" id="changePWLoader">
+              <div></div>
+              <div></div>
+              <div></div>
+            </div>
+            <span id="changePWText">Speichern</span>
+          </div>
+        </form>
+
+        <br><br><br>
+
+        <div id="delAccWrapper">
+          <div class="button" id="deleteAccBtn">
+            <div class="loader hide" id="deleteAccLoader">
+              <div></div>
+              <div></div>
+              <div></div>
+            </div>
+            <span id="deleteAccText">Account löschen</span>
+          </div>
+        </div>
+      </div>
+
     </div>
 
     <footer>
