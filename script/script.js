@@ -26,6 +26,8 @@ window.addEventListener('load', () => {
   const info = document.getElementById('info');
   const security = document.getElementById('security');
   const deleted = document.getElementById('deleted');
+  const support = document.getElementById('support');
+  const settings = document.getElementById('settings');
 
   userIcon.addEventListener('click', () => {
 
@@ -402,6 +404,20 @@ window.addEventListener('load', () => {
     }
   });
 
+  support.addEventListener('click', () => {
+    hideAll();
+    changeDisplayProperty('supportWrapper', 'block');
+
+    navBurger.click();
+  });
+
+  settings.addEventListener('click', () => {
+    hideAll();
+    changeDisplayProperty('settingsWrapper', 'block');
+
+    navBurger.click();
+  });
+
   function writeUserToDatabase(username, email, userId) {
     firebase.database().ref('users/' + userId + '/userdata').set({
       username: username,
@@ -764,7 +780,9 @@ function  hideAll() {
                     document.getElementById('plusWrapper'),
                     document.getElementById('infoWrapper'),
                     document.getElementById('securityWrapper'),
-                    document.getElementById('deletedWrapper')
+                    document.getElementById('deletedWrapper'),
+                    document.getElementById('supportWrapper'),
+                    document.getElementById('settingsWrapper')
                   ];
 
   for (const element of elements) {
