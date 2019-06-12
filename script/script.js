@@ -76,6 +76,7 @@ window.addEventListener('load', () => {
       document.getElementById('addFDB').textContent = '';
 
       if (entryWrapper.childNodes.length === 0) document.getElementById('entryFDB').textContent = 'Keine Einträge verfügbar.';
+      if (deletedEntriesWrapper.childNodes.length === 0) document.getElementById('deletedFDB').textContent = 'Keine Einträge verfügbar.';
 
       firebase.database().ref('users/' + user.uid + '/userdata').once('value').then((snapshot) => {
         document.getElementById('usernameField').textContent = snapshot.val().username;
@@ -597,8 +598,10 @@ window.addEventListener('load', () => {
       if (error) {
         // The write failed...
       } else {
-        homeIcon.click();
         printEntries(userId);
+        setTimeout(() => {
+          homeIcon.click();
+        }, 200);
       }
     });
   }
