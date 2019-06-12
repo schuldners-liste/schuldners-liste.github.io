@@ -28,6 +28,7 @@ window.addEventListener('load', () => {
   const deleted = document.getElementById('deleted');
   const support = document.getElementById('support');
   const settings = document.getElementById('settings');
+  const disableNav = document.getElementById('disableNav');
 
   userIcon.addEventListener('click', () => {
 
@@ -363,6 +364,7 @@ window.addEventListener('load', () => {
     const b3 = document.getElementById('burger3');
     const nav = document.getElementById('nav');
     const burger = document.getElementById('navBurger');
+    const disableNav = document.getElementById('disableNav');
 
     b1.classList.toggle('burger1Active');
     b2.classList.toggle('burger2Active');
@@ -371,9 +373,17 @@ window.addEventListener('load', () => {
     if (nav.style.left === '0px') {
       nav.style.left = '-90vw';
       burger.style.left = 0;
+      disableNav.style.display = 'none';
     } else {
       nav.style.left = 0;
       burger.style.left = '82vw';
+      disableNav.style.display = 'block';
+    }
+  });
+
+  disableNav.addEventListener('click', () => {
+    if (document.getElementById('nav').style.left === '0px') {
+      navBurger.click();
     }
   });
 
