@@ -13,6 +13,8 @@ window.addEventListener('load', () => {
   firebase.initializeApp(config);
   const database = firebase.database();
 
+  firebase.auth().languageCode = 'de';
+
   const userIcon = document.getElementById('user');
   const homeIcon = document.getElementById('home');
   const plusIcon = document.getElementById('plus');
