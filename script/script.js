@@ -619,9 +619,6 @@ window.addEventListener('load', () => {
         // The write failed...
       } else {
         printEntries(userId);
-        setTimeout(() => {
-          homeIcon.click();
-        }, 200);
       }
     });
   }
@@ -876,7 +873,7 @@ function changeDisplayProperty(id, property) {
   document.getElementById(id).style.display = property;
 }
 
-function  hideAll() {
+function hideAll() {
 
   const elements = [document.getElementById('contentWrapper'),
                     document.getElementById('accountWrapper'),
@@ -885,7 +882,7 @@ function  hideAll() {
                     document.getElementById('securityWrapper'),
                     document.getElementById('deletedWrapper'),
                     document.getElementById('supportWrapper'),
-                    document.getElementById('settingsWrapper'),
+                    // document.getElementById('settingsWrapper'),
                     document.getElementById('kontoWrapper')
                   ];
 
