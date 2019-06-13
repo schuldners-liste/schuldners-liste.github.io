@@ -436,6 +436,50 @@ window.addEventListener('load', () => {
     hideAll();
     changeDisplayProperty('kontoWrapper', 'block');
 
+    const changeUsername = document.getElementById('changeUNBtn');
+    const changeEmail = document.getElementById('changeEMText');
+    const changePassword = document.getElementById('changePWText');
+    const user = firebase.auth().currentUser;
+
+    changeUsername.addEventListener('click', () => {
+      toggleChangeUserNameAnimation();
+      const newUsername = document.getElementById('newUsername');
+      const password = document.getElementById('usernamePW');
+      const changeUsernameFDB = document.getElementById('changeUsernameFDB');
+      let isValid = true;
+
+      if (newUsername.value === '') {
+        newUsername.style.borderBottom = 'red 5px solid';
+        changeUsernameFDB.textContent = 'Es dürfen keine Felder leer bleiben';
+        isValid = false;
+      }
+
+      if (password.value === '') {
+        password.style.borderBottom = 'red 5px solid';
+        changeUsernameFDB.textContent = 'Es dürfen keine Felder leer bleiben';
+        isValid = false;
+      }
+
+      if (isValid) {
+        user.reauthenticateAndRetrieveDataWithCredential(firebase.auth.EmailAuthProvider.credential(user.email, password.value)).then(() => {
+          firebase.database().ref('users/' + user.uid + '/userdata').update({
+            username: newUsername.value
+          }, (error) => {
+            if (error) {
+              console.log(error.message);
+              toggleChangeUserNameAnimation();
+            } else {
+              toggleChangeUserNameAnimation();
+            }
+          });
+        });
+
+      } else {
+        toggleChangeUserNameAnimation();
+      }
+
+    });
+
     navBurger.click();
   });
 
@@ -683,13 +727,13 @@ window.addEventListener('load', () => {
 
   }
 
-  function toggleChangeUserNameyAnimation() {
-    const addEntryLoader = document.getElementById('addEntryLoader')
-    const elements = addEntryLoader.getElementsByTagName('div');
-    const text = document.getElementById('signUpText');
+  function toggleChangeUserNameAnimation() {
+    const changeUNLoader = document.getElementById('changeUNLoader')
+    const elements = changeUNLoader.getElementsByTagName('div');
+    const text = document.getElementById('changeUNText');
 
     text.classList.toggle('hide');
-    signUpLoader.classList.toggle('hide');
+    changeUNLoader.classList.toggle('hide');
 
     elements[0].classList.toggle('animate');
 
