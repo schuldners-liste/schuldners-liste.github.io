@@ -686,6 +686,86 @@ window.addEventListener('load', () => {
 
   }
 
+  function toggleChangeUserNameyAnimation() {
+    const addEntryLoader = document.getElementById('addEntryLoader')
+    const elements = addEntryLoader.getElementsByTagName('div');
+    const text = document.getElementById('signUpText');
+
+    text.classList.toggle('hide');
+    signUpLoader.classList.toggle('hide');
+
+    elements[0].classList.toggle('animate');
+
+    setTimeout(() => {
+      elements[1].classList.toggle('animate');
+    }, 250);
+
+    setTimeout(() => {
+      elements[2].classList.toggle('animate');
+    }, 500);
+
+  }
+
+  function togglechangeEmailAnimation() {
+    const addEntryLoader = document.getElementById('addEntryLoader')
+    const elements = addEntryLoader.getElementsByTagName('div');
+    const text = document.getElementById('signUpText');
+
+    text.classList.toggle('hide');
+    signUpLoader.classList.toggle('hide');
+
+    elements[0].classList.toggle('animate');
+
+    setTimeout(() => {
+      elements[1].classList.toggle('animate');
+    }, 250);
+
+    setTimeout(() => {
+      elements[2].classList.toggle('animate');
+    }, 500);
+
+  }
+
+  function togglechangePasswordAnimation() {
+    const addEntryLoader = document.getElementById('addEntryLoader')
+    const elements = addEntryLoader.getElementsByTagName('div');
+    const text = document.getElementById('signUpText');
+
+    text.classList.toggle('hide');
+    signUpLoader.classList.toggle('hide');
+
+    elements[0].classList.toggle('animate');
+
+    setTimeout(() => {
+      elements[1].classList.toggle('animate');
+    }, 250);
+
+    setTimeout(() => {
+      elements[2].classList.toggle('animate');
+    }, 500);
+
+  }
+
+  function toggledeleteAccAnimation() {
+    const addEntryLoader = document.getElementById('addEntryLoader')
+    const elements = addEntryLoader.getElementsByTagName('div');
+    const text = document.getElementById('signUpText');
+
+    text.classList.toggle('hide');
+    signUpLoader.classList.toggle('hide');
+
+    elements[0].classList.toggle('animate');
+
+    setTimeout(() => {
+      elements[1].classList.toggle('animate');
+    }, 250);
+
+    setTimeout(() => {
+      elements[2].classList.toggle('animate');
+    }, 500);
+
+  }
+
   function signInErrorHandling(email, password, error) {
     let empty = false;
     let emailInvalid = false;

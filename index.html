@@ -210,8 +210,10 @@
       <div id="formWrapper">
         <form id="changeUsername" action="index.html" method="post">
           <h2>Benutzernamen ändern</h2>
-          <input type="text" id="newUsername" placeholder="neuer Benutzername">
-          <input type="password" id="usernamePW" placeholder="Passwort">
+          <span>neuer Benutzername</span>
+          <input type="text" id="newUsername">
+          <span>Passwort</span>
+          <input type="password" id="usernamePW">
 
           <div class="button" id="changeUNBtn">
             <div class="loader hide" id="changeUNLoader">
@@ -225,8 +227,10 @@
 
         <form id="changeEmail" action="index.html" method="post">
           <h2>E-Mail Adresse ändern</h2>
-          <input type="text" id="newEmail" placeholder="neue E-Mail Adresse">
-          <input type="password" id="emailPW" placeholder="Passwort">
+          <span>neue E-Mail Adresse</span>
+          <input type="text" id="newEmail">
+          <span>Passwort</span>
+          <input type="password" id="emailPW">
 
           <div class="button" id="changeEMpBtn">
             <div class="loader hide" id="changeEMLoader">
@@ -240,9 +244,12 @@
 
         <form id="changePassword" action="index.html" method="post">
           <h2>Passwort ändern</h2>
-          <input type="password" id="newPW" placeholder="neues Passwort">
-          <input type="password" id="confirmNewPW" placeholder="neues Passwort wiederholen">
-          <input type="password" id="oldPW" placeholder="altes Passwort">
+          <span>neues Passwort</span>
+          <input type="password" id="newPW">
+          <span>neues Passwort wiederholen</span>
+          <input type="password" id="confirmNewPW">
+          <span>altes Passwort</span>
+          <input type="password" id="oldPW">
 
           <div class="button" id="changePWBtn">
             <div class="loader hide" id="changePWLoader">
@@ -254,18 +261,34 @@
           </div>
         </form>
 
-        <br><br><br>
+        <form id="delAccWrapper">
 
-        <div id="delAccWrapper">
+          <h2>Account löschen</h2>
+
+          <span>Passwort</span>
+          <input type="password" id="deleteAccPW">
+
           <div class="button" id="deleteAccBtn">
-            <div class="loader hide" id="deleteAccLoader">
-              <div></div>
-              <div></div>
-              <div></div>
-            </div>
-            <span id="deleteAccText">Account löschen</span>
-          </div>
+          <span id="deleteAccText">Account löschen</span>
         </div>
+
+          <div id="deleteAccPopUp">
+            <h2>Account lösche</h2>
+            <i class="fas fa-times"></i>
+            <p>Sind Sie sich sicher, dass Sie Ihren Account löschen möchten? Dieser Schritt kann nicht Rückgängig gemacht werden.</p>
+            <div class="button" id="deleteAccPopUpBtn">
+              <div class="loader hide" id="deleteAccLoader">
+                <div></div>
+                <div></div>
+                <div></div>
+              </div>
+              <span id="deleteAccPopUpText">Account löschen</span>
+            </div>
+          </div>
+
+        </form>
+
+        <br><br><br><br><br><br><br><br><br><br><br><br>
       </div>
 
     </div>
