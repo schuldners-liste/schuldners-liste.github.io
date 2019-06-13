@@ -29,7 +29,7 @@ window.addEventListener('load', () => {
   const security = document.getElementById('security');
   const deleted = document.getElementById('deleted');
   const support = document.getElementById('support');
-  const settings = document.getElementById('settings');
+  // const settings = document.getElementById('settings');
   const konto = document.getElementById('konto');
   const disableNav = document.getElementById('disableNav');
 
@@ -425,12 +425,12 @@ window.addEventListener('load', () => {
     navBurger.click();
   });
 
-  settings.addEventListener('click', () => {
-    hideAll();
-    changeDisplayProperty('settingsWrapper', 'block');
-
-    navBurger.click();
-  });
+  // settings.addEventListener('click', () => {
+  //   hideAll();
+  //   changeDisplayProperty('settingsWrapper', 'block');
+  //
+  //   navBurger.click();
+  // });
 
   konto.addEventListener('click', () => {
     hideAll();
