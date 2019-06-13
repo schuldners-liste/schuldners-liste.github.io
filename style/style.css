@@ -159,9 +159,9 @@ br {
 .specialTextWrapper {
   width: 80%;
   text-align: justify;
-  font-size: 200%;
+  font-size: 230%;
   margin-left: 10%;
-  line-height: 200%;
+  line-height: 150%;
 }
 
 .specialTextWrapper span {
