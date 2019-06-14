@@ -46,12 +46,7 @@ window.addEventListener('load', () => {
     }
 
     hideAll();
-
-
-
-    // setTimeout(function () {
-      changeDisplayProperty('accountWrapper', 'block');
-    // }, 200);
+    changeDisplayProperty('accountWrapper', 'block');
   });
 
   homeIcon.addEventListener('click', () => {
