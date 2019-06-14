@@ -159,7 +159,7 @@ br {
 
 .specialTextWrapper {
   text-align: justify;
-  font-size: 230%;
+  font-size: 3vw;
   margin-left: 10%;
   line-height: 150%;
   overflow-y: scroll;
