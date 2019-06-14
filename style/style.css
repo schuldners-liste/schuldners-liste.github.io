@@ -8,8 +8,9 @@ body {
 h1 {
   user-select: none;
   font-size: 500%;
-  margin-left: 20%;
-  margin-top: 3%;
+  margin-left: 2vw;
+  margin-top: 15vw;
+  margin-bottom: 1%;
 }
 
 #contentWrapper {
@@ -157,15 +158,24 @@ br {
 /* Special Text */
 
 .specialTextWrapper {
-  width: 80%;
   text-align: justify;
   font-size: 230%;
   margin-left: 10%;
   line-height: 150%;
+  overflow-y: scroll;
+  padding-right: 10%;
+  height: 100vh;
+  position: relative;
+  left: 0;
 }
 
 .specialTextWrapper span {
   font-size: 40% !important;
+}
+
+.specialTextWrapper .headline {
+  font-weight: bold;
+  font-size: 110%;
 }
 
 #version {
