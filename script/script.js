@@ -437,8 +437,8 @@ window.addEventListener('load', () => {
     changeDisplayProperty('kontoWrapper', 'block');
 
     const changeUsername = document.getElementById('changeUNBtn');
-    const changeEmail = document.getElementById('changeEMText');
-    const changePassword = document.getElementById('changePWText');
+    const changeEmail = document.getElementById('changeEMpBtn');
+    const changePassword = document.getElementById('changePWBtn');
     const user = firebase.auth().currentUser;
 
     changeUsername.addEventListener('click', () => {
@@ -478,6 +478,103 @@ window.addEventListener('load', () => {
         toggleChangeUserNameAnimation();
       }
 
+    });
+
+    changeEmail.addEventListener('click', () => {
+      togglechangeEmailAnimation();
+      const newEmail = document.getElementById('newEmail');
+      const password = document.getElementById('emailPW');
+      const changeEmailFDB = document.getElementById('changeEmailFDB');
+      let isValid = true;
+
+      if (newEmail.value === '') {
+        newEmail.style.borderBottom = 'red 5px solid';
+        changeEmailFDB.textContent = 'Es dürfen keine Felder leer bleiben';
+        isValid = false;
+      }
+
+      if (password.value === '') {
+        password.style.borderBottom = 'red 5px solid';
+        changeEmailFDB.textContent = 'Es dürfen keine Felder leer bleiben';
+        isValid = false;
+      }
+
+      if (isValid) {
+        user.reauthenticateAndRetrieveDataWithCredential(firebase.auth.EmailAuthProvider.credential(user.email, password.value)).then(() => {
+          firebase.database().ref('users/' + user.uid + '/userdata').update({
+            email: newEmail.value
+          }, (error) => {
+            if (error) {
+              console.log(error.message);
+              togglechangeEmailAnimation();
+            } else {
+              togglechangeEmailAnimation();
+            }
+
+            user.updateEmail(newEmail.value).then(() => {
+              console.log('success');
+            });
+          });
+        });
+
+      } else {
+        togglechangeEmailAnimation();
+      }
+
+    });
+
+    changePassword.addEventListener('click', () => {
+      togglechangePasswordAnimation();
+      const oldPassword = document.getElementById('oldPW');
+      const newPassword = document.getElementById('newPW');
+      const confirmNewPW = document.getElementById('confirmNewPW');
+      const changePWFDB = document.getElementById('changePWFDB');
+      let isValid = true;
+
+      if (oldPassword.value === '') {
+        oldPassword.style.borderBottom = 'red 5px solid';
+        changePWFDB.textContent = 'Es dürfen keine Felder leer bleiben';
+        isValid = false;
+      }
+
+      if (newPassword.value === '') {
+        newPassword.style.borderBottom = 'red 5px solid';
+        changePWFDB.textContent = 'Es dürfen keine Felder leer bleiben';
+        isValid = false;
+      }
+
+      if (confirmNewPW.value === '') {
+        confirmNewPW.style.borderBottom = 'red 5px solid';
+        changePWFDB.textContent = 'Es dürfen keine Felder leer bleiben';
+        isValid = false;
+      }
+
+      if (!validatePassword(newPassword)) {
+        newPassword.style.borderBottom = 'red 5px solid';
+        changePWFDB.textContent = 'Ungültiges Passwort.';
+        isValid = false;
+      } else if (confirmNewPW.value !== newPassword.value) {
+        confirmNewPW.style.borderBottom = 'red 5px solid';
+        newPassword.style.borderBottom = 'red 5px solid';
+        changePWFDB.textContent = 'E-Mail Adressen stimmen nicht überein.';
+        isValid = false;
+      } else if (oldPassword.value === newPassword.value) {
+        oldPassword.style.borderBottom = 'red 5px solid';
+        newPassword.style.borderBottom = 'red 5px solid';
+        changePWFDB.textContent = 'Die neue und alte E-Mail Adresse dürfen nicht gleich sein.';
+        isValid = false;
+      }
+
+      if (isValid) {
+        user.reauthenticateAndRetrieveDataWithCredential(firebase.auth.EmailAuthProvider.credential(user.email, oldPassword.value)).then(() => {
+          user.updatePassword(newPassword.value).then(() => {
+            console.log('success');
+            togglechangePasswordAnimation();
+          });
+        });
+      } else {
+        togglechangePasswordAnimation();
+      }
     });
 
     navBurger.click();
@@ -748,12 +845,12 @@ window.addEventListener('load', () => {
   }
 
   function togglechangeEmailAnimation() {
-    const addEntryLoader = document.getElementById('addEntryLoader')
-    const elements = addEntryLoader.getElementsByTagName('div');
-    const text = document.getElementById('signUpText');
+    const loaderBox = document.getElementById('changeEMLoader')
+    const elements = loaderBox.getElementsByTagName('div');
+    const text = document.getElementById('changeEMText');
 
     text.classList.toggle('hide');
-    signUpLoader.classList.toggle('hide');
+    loaderBox.classList.toggle('hide');
 
     elements[0].classList.toggle('animate');
 
@@ -768,12 +865,12 @@ window.addEventListener('load', () => {
   }
 
   function togglechangePasswordAnimation() {
-    const addEntryLoader = document.getElementById('addEntryLoader')
-    const elements = addEntryLoader.getElementsByTagName('div');
-    const text = document.getElementById('signUpText');
+    const changePWLoader = document.getElementById('changePWLoader')
+    const elements = changePWLoader.getElementsByTagName('div');
+    const text = document.getElementById('changePWText');
 
     text.classList.toggle('hide');
-    signUpLoader.classList.toggle('hide');
+    changePWLoader.classList.toggle('hide');
 
     elements[0].classList.toggle('animate');
 

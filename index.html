@@ -226,6 +226,7 @@
             </div>
             <span id="changeUNText">Speichern</span>
           </div>
+          <p id="changeUsernameFDB">&nbsp;</p>
         </form>
 
         <form id="changeEmail" action="index.html" method="post">
@@ -243,16 +244,17 @@
             </div>
             <span id="changeEMText">Speichern</span>
           </div>
+          <p id="changeEmailFDB">&nbsp;</p>
         </form>
 
         <form id="changePassword" action="index.html" method="post">
           <h2>Passwort ändern</h2>
+          <span>altes Passwort</span>
+          <input type="password" id="oldPW">
           <span>neues Passwort</span>
           <input type="password" id="newPW">
           <span>neues Passwort wiederholen</span>
           <input type="password" id="confirmNewPW">
-          <span>altes Passwort</span>
-          <input type="password" id="oldPW">
 
           <div class="button" id="changePWBtn">
             <div class="loader hide" id="changePWLoader">
@@ -262,6 +264,7 @@
             </div>
             <span id="changePWText">Speichern</span>
           </div>
+          <p id="changePWFDB">&nbsp;</p>
         </form>
 
         <form id="delAccWrapper">
@@ -272,8 +275,8 @@
           <input type="password" id="deleteAccPW">
 
           <div class="button" id="deleteAccBtn">
-          <span id="deleteAccText">Account löschen</span>
-        </div>
+            <span id="deleteAccText">Account löschen</span>
+          </div>
 
           <div id="deleteAccPopUp">
             <h2>Account lösche</h2>
@@ -287,7 +290,6 @@
               </div>
               <span id="deleteAccPopUpText">Account löschen</span>
             </div>
-            <p id="changeUsernameFDB">&nbsp;</p>
           </div>
 
         </form>
