@@ -68,9 +68,12 @@ window.addEventListener('load', () => {
     if (user) {
       printEntries(user.uid);
 
+      changeDisplayProperty('kontoError', 'none');
+      changeDisplayProperty('kontoError', 'none');
       changeDisplayProperty('user', 'none');
       changeDisplayProperty('signOut', 'block');
       changeDisplayProperty('addWrapper', 'block');
+      changeDisplayProperty('formWrapper', 'block');
 
       document.getElementById('addFDB').textContent = '';
 
@@ -92,6 +95,8 @@ window.addEventListener('load', () => {
       document.getElementById('usernameField').textContent = 'nicht eingeloggt.';
 
       changeDisplayProperty('addWrapper', 'none');
+      changeDisplayProperty('formWrapper', 'none');
+      changeDisplayProperty('kontoError', 'block');
     }
   });
 
@@ -99,14 +104,18 @@ window.addEventListener('load', () => {
     hideAll();
     changeDisplayProperty('signUp', 'block');
     changeDisplayProperty('accountWrapper', 'block');
+    changeDisplayProperty('signUpHeadline', 'block');
     changeDisplayProperty('signIn', 'none');
+    changeDisplayProperty('signInHeadline', 'none');
   });
 
   gotToSignIn.addEventListener('click', () => {
     hideAll();
     changeDisplayProperty('signIn', 'block');
     changeDisplayProperty('accountWrapper', 'block');
+    changeDisplayProperty('signInHeadline', 'block');
     changeDisplayProperty('signUp', 'none');
+    changeDisplayProperty('signUpHeadline', 'none');
   });
 
   signUpBtn.addEventListener('click', () => {
@@ -276,6 +285,7 @@ window.addEventListener('load', () => {
     if (name.value === '') {
       isNameValid = false;
       name.style.borderBottom = 'red 5px solid';
+      printErrorMessage(addFDB, 'Es dürfen keine Felder leer bleiben.');
       name.removeEventListener('focus', () => {
         name.style.borderBottom = 'lightgray 5px solid';
       });
@@ -295,6 +305,7 @@ window.addEventListener('load', () => {
     if (reason.value === '') {
       isReasonValid = false;
       reason.style.borderBottom = 'red 5px solid';
+      printErrorMessage(addFDB, 'Es dürfen keine Felder leer bleiben.');
       reason.removeEventListener('focus', () => {
         reason.style.borderBottom = 'lightgray 5px solid';
       });
@@ -314,10 +325,12 @@ window.addEventListener('load', () => {
     if (sum.value === '') {
       isSumValid = false;
       sum.style.borderBottom = 'red 5px solid';
+      printErrorMessage(addFDB, 'Es dürfen keine Felder leer bleiben.');
       sum.removeEventListener('focus', () => {
         sum.style.borderBottom = 'lightgray 5px solid';
       });
     } else if (sum.value <= 0) {
+      isSumValid = false;
       printErrorMessage(addFDB, 'Ungültiger Betrag.');
       sum.style.borderBottom = 'red 5px solid';
       sum.removeEventListener('focus', () => {
@@ -357,7 +370,6 @@ window.addEventListener('load', () => {
         }
       });
     } else {
-      printErrorMessage(addFDB, 'Es dürfen keine Felder leer bleiben.');
       toggleAddEntryAnimation();
     }
   });
@@ -415,7 +427,7 @@ window.addEventListener('load', () => {
     if (firebase.auth().currentUser !== null) {
       printDeletedEntries(firebase.auth().currentUser.uid);
     } else {
-      deletedFDB.textContent = 'Sie müssen eingeloggt sein um diese Funktion nutzen zu können.';
+      deletedFDB.textContent = 'Sie müssen eingeloggt sein um Ihre gelöschten Einträge sehen zu können.';
     }
   });
 
