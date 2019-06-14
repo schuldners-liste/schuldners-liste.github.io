@@ -322,6 +322,12 @@ window.addEventListener('load', () => {
       sum.removeEventListener('focus', () => {
         sum.style.borderBottom = 'lightgray 5px solid';
       });
+    } else if (sum.value <= 0) {
+      printErrorMessage(addFDB, 'Ungültiger Betrag.');
+      sum.style.borderBottom = 'red 5px solid';
+      sum.removeEventListener('focus', () => {
+        sum.style.borderBottom = 'lightgray 5px solid';
+      });
     } else {
       sum.style.borderBottom = 'lightgray 5px solid';
       sum.addEventListener('focus', () => {
