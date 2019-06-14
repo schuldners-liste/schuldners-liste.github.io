@@ -439,7 +439,10 @@ window.addEventListener('load', () => {
     const changeUsername = document.getElementById('changeUNBtn');
     const changeEmail = document.getElementById('changeEMpBtn');
     const changePassword = document.getElementById('changePWBtn');
+    const deleteAccBtn = document.getElementById('deleteAccBtn')
     const user = firebase.auth().currentUser;
+
+    clearValues();
 
     changeUsername.addEventListener('click', () => {
       toggleChangeUserNameAnimation();
@@ -575,6 +578,38 @@ window.addEventListener('load', () => {
       } else {
         togglechangePasswordAnimation();
       }
+    });
+
+    deleteAccBtn.addEventListener('click', () => {
+      const deleteAccPopUp = document.getElementById('deleteAccPopUp');
+
+      const password = document.getElementById('deleteAccPW');
+      const deleteFDB = document.getElementById('deleteFDB');
+      const deleteAccPopUpBtn = document.getElementById('deleteAccPopUpBtn');
+      let isValid = true;
+
+      if (password.value === '') {
+        password.style.borderBottom = 'red 5px solid';
+        deleteFDB.textContent = 'Es dürfen keine Felder leer bleiben';
+        isValid = false;
+      }
+
+      if (isValid) {
+        user.reauthenticateAndRetrieveDataWithCredential(firebase.auth.EmailAuthProvider.credential(user.email, password.value)).then(() => {
+          deleteAccPopUp.style.display = 'block';
+
+          deleteAccPopUpBtn.addEventListener('click', () => {
+              user.delete().then(() => {
+                  console.log('success');
+              });
+
+              firebase.database().ref('users/' + user.uid + '/userdata').remove().then(() => {
+                console.log('successfully deleted');
+              });
+          });
+        });
+      }
+
     });
 
     navBurger.click();
@@ -1005,6 +1040,31 @@ window.addEventListener('load', () => {
         // The write failed...
       } else {
         // Data saved successfully!
+      }
+    });
+  }
+
+  function clearValues() {
+    const elements = [document.getElementById('deleteAccPW'),
+                      document.getElementById('oldPW'),
+                      document.getElementById('newPW'),
+                      document.getElementById('confirmNewPW'),
+                      document.getElementById('newEmail'),
+                      document.getElementById('emailPW'),
+                      document.getElementById('newUsername'),
+                      document.getElementById('usernamePW'),
+                      document.getElementById('changeUsernameFDB'),
+                      document.getElementById('changeEmailFDB'),
+                      document.getElementById('changePWFDB'),
+                      document.getElementById('deleteFDB')
+                     ]
+    const elementArray = Array.from(elements);
+
+    elementArray.forEach((item) => {
+      if (item.id.includes('FDB')) {
+        item.textContent = '';
+      } else {
+        item.value = '';
       }
     });
   }
