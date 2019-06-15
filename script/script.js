@@ -599,6 +599,7 @@ window.addEventListener('load', () => {
       const password = document.getElementById('deleteAccPW');
       const deleteFDB = document.getElementById('deleteFDB');
       const deleteAccPopUpBtn = document.getElementById('deleteAccPopUpBtn');
+      const closePopUp = document.getElementById('closePopUp');
       let isValid = true;
 
       if (password.value === '') {
@@ -622,6 +623,10 @@ window.addEventListener('load', () => {
           });
         });
       }
+
+      closePopUp.addEventListener('click', () => {
+        changeDisplayProperty('deleteAccPopUp', 'none');
+      });
 
     });
 

@@ -17,6 +17,9 @@ h1 {
   margin-left: 2vw;
   margin-right: 2vw;
   color: red;
+}
+
+#deletedFDB, #entryFDB {
   position: absolute;
   top: 25vw;
 }
@@ -314,4 +317,17 @@ padding-bottom: 50vh;
   box-shadow: 0px 0px 24px 1px rgba(189,189,189,0.5);
   background-color: white;
   border-radius: 20px;
+  text-align: justify;
+  padding: 3vw;
+}
+
+#deleteAccPopUpBtn {
+  width: 35vw !important;
+}
+
+#closePopUp {
+  position: absolute;
+  top: 2vw;
+  right: 2vw;
+  font-size: 8vw;
 }
