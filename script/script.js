@@ -29,6 +29,7 @@ window.addEventListener('load', () => {
   const security = document.getElementById('security');
   const deleted = document.getElementById('deleted');
   const support = document.getElementById('support');
+  const entries = document.getElementById('entries');
   // const settings = document.getElementById('settings');
   const konto = document.getElementById('konto');
   const disableNav = document.getElementById('disableNav');
@@ -360,13 +361,13 @@ window.addEventListener('load', () => {
         if (error) {
           // The write failed...
         } else {
-          homeIcon.click();
           printEntries(userId);
           name.value = '';
           reason.value = '';
           sum.value = '';
           initDateValue();
           toggleAddEntryAnimation();
+          homeIcon.click();
         }
       });
     } else {
@@ -429,6 +430,11 @@ window.addEventListener('load', () => {
     } else {
       deletedFDB.textContent = 'Sie müssen eingeloggt sein um Ihre gelöschten Einträge sehen zu können.';
     }
+  });
+
+  entries.addEventListener('click', () => {
+    homeIcon.click();
+    navBurger.click();
   });
 
   support.addEventListener('click', () => {
