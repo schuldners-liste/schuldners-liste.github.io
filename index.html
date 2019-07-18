@@ -24,14 +24,15 @@
       </div>
       <div id="nav">
         <div id="textWrapper">
-          <img src="./img/banner2.jpg" alt="Banner">
+          <img src="./img/banner_green.svg" alt="cannot display image" id="banner">
           <p>Eingeloggt als: <span id="usernameField"></span></p>
           <hr>
           <p id="konto"><i class="fas fa-user"></i> Konto</p>
           <p id="entries"><i class="fas fa-clipboard-list"></i> Einträge</p>
+          <p id="deleted"><i class="fas fa-trash-alt"></i> Gelöscht</p>
+          <p id="theme"><i class="fas fa-brush"></i> Theme</p>
           <p id="info"><i class="fas fa-info-circle"></i> Informationen</p>
           <p id="security"><i class="fas fa-shield-alt"></i> Datenschutz & Sicherheit</p>
-          <p id="deleted"><i class="fas fa-trash-alt"></i> Gelöscht</p>
           <p id="support"><i class="fas fa-comment"></i> Feedback & Support</p>
           <!-- <p id="settings"><i class="fas fa-cog"></i> Einstellungen</p> -->
           <hr>
@@ -167,9 +168,16 @@
           <li>App individualisieren</li>
         </ul>
       </div>
-      <p id="version">Version 1.0, letztes Update: 16.06.2019 07:43 Uhr.</p>
+      <p id="version">Version 1.1, letztes Update: 18.07.2019 17:51 Uhr.</p>
     </div>
 
+    <div id="themeWrapper">
+      <h1>Theme</h1>
+      <div id="themeContent">
+        <p id="themeFDB"></p>
+      </div>
+    </div>
+    
     <div id="securityWrapper">
       <h1>Datenschutz & Sicherheit</h1>
       <div class="specialTextWrapper">
@@ -329,7 +337,7 @@
 
     </div>
 
-    <footer>
+    <footer id="footer">
       <i class="fas fa-sign-out-alt" id="signOut"></i>
       <i class='fas fa-user' id='user'></i>
       <!-- <i class='fas fa-home' id='home'></i> -->
