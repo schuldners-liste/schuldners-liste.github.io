@@ -11,7 +11,6 @@ window.addEventListener('load', () => {
   };
 
   firebase.initializeApp(config);
-  const database = firebase.database();
 
   firebase.auth().languageCode = 'de';
 
@@ -30,6 +29,7 @@ window.addEventListener('load', () => {
   const deleted = document.getElementById('deleted');
   const support = document.getElementById('support');
   const entries = document.getElementById('entries');
+  const theme = document.getElementById('theme');
   // const settings = document.getElementById('settings');
   const konto = document.getElementById('konto');
   const disableNav = document.getElementById('disableNav');
@@ -83,6 +83,10 @@ window.addEventListener('load', () => {
 
       firebase.database().ref('users/' + user.uid + '/userdata').once('value').then((snapshot) => {
         document.getElementById('usernameField').textContent = snapshot.val().username;
+      });
+
+      firebase.database().ref(`users/${user.uid}/settings/theme`).once('value').then((snapshot) => {
+        changeTheme(snapshot.val().color, snapshot.val().hex);
       });
     } else {
       changeDisplayProperty('user', 'block');
@@ -432,6 +436,51 @@ window.addEventListener('load', () => {
     }
   });
 
+  theme.addEventListener('click', () => {
+    const themeFDB = document.getElementById('themeFDB');
+    const themeContent = document.getElementById('themeContent');
+    hideAll();
+    changeDisplayProperty('themeWrapper', 'block');
+
+    navBurger.click();
+
+    if (firebase.auth().currentUser !== null) {
+      firebase.database().ref('public/themes').once('value').then((snapshot) => {
+        const colors = snapshot.val();
+
+        for (let i = 0; i < colors.length; i++) {
+          const wrapper = document.getElementById('themeContent');
+
+          const color = colors[i].color;
+          const hex = colors[i].hex;
+
+          let box = document.createElement('div');
+          let img = document.createElement('img');
+
+          img.src = `./img/banner_${color}.svg`;
+          img.alt = 'cannot display image';
+
+          box.setAttribute('class', 'themeBox');
+
+          box.appendChild(img);
+
+          box.addEventListener('click', () => {
+            firebase.database().ref(`users/${firebase.auth().currentUser.uid}/settings/theme`).set({
+              color: color,
+              hex: hex
+            });
+            changeTheme(color, hex);
+            document.getElementById('banner').src = `./img/banner_${color}.svg`;
+          });
+          wrapper.appendChild(box);
+        }
+      });
+      themeFDB.textContent = ''; 
+    } else {
+      themeFDB.textContent = 'Sie müssen eingeloggt sein um dieses Feature nutzen zu können.';
+    }
+  });
+
   entries.addEventListener('click', () => {
     homeIcon.click();
     navBurger.click();
@@ -643,6 +692,16 @@ window.addEventListener('load', () => {
     firebase.database().ref('users/' + userId + '/userdata').set({
       username: username,
       email: email
+    }, (error) => {
+      if (error) {
+        // The write failed...
+      } else {
+        // Data saved successfully!
+      }
+    });
+
+    firebase.database().ref('users/' + userId + '/settings').update({
+      theme: 'green'
     }, (error) => {
       if (error) {
         // The write failed...
@@ -1092,6 +1151,47 @@ window.addEventListener('load', () => {
       }
     });
   }
+
+  function changeTheme(color, hex) {
+    const backgroundElms = [
+      document.getElementById('footer')
+    ];
+
+    const inputElms = [
+      document.getElementById('emailSignIn'),
+      document.getElementById('passwordSignIn'),
+      document.getElementById('emailSignUp'),
+      document.getElementById('usernameSignUp'),
+      document.getElementById('passwordSignUp'),
+      document.getElementById('sum'),
+      document.getElementById('date'),
+      document.getElementById('reason'),
+      document.getElementById('name'),
+      document.getElementById('newUsername'),
+      document.getElementById('usernamePW'),
+      document.getElementById('newEmail'),
+      document.getElementById('emailPW'),
+      document.getElementById('oldPW'),
+      document.getElementById('newPW'),
+      document.getElementById('confirmNewPW'),
+      document.getElementById('deleteAccPW')
+    ];
+
+    for (const element of backgroundElms) {
+      element.style.backgroundColor = hex;
+    }
+
+    for (const element of inputElms) {
+      element.addEventListener('focus', () => {
+        element.style.borderColor = hex;
+      });
+      
+      element.addEventListener('blur', () => {
+        element.style.borderColor = 'lightgray';
+      });
+    }
+    document.getElementById('banner').src = `./img/banner_${color}.svg`;
+  }
 });
 
 function changeDisplayProperty(id, property) {
@@ -1108,7 +1208,8 @@ function hideAll() {
                     document.getElementById('deletedWrapper'),
                     document.getElementById('supportWrapper'),
                     // document.getElementById('settingsWrapper'),
-                    document.getElementById('kontoWrapper')
+                    document.getElementById('kontoWrapper'),
+                    document.getElementById('themeWrapper')
                   ];
 
   for (const element of elements) {
