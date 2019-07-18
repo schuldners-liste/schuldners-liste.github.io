@@ -36,11 +36,13 @@ window.addEventListener('load', () => {
 
   userIcon.addEventListener('click', () => {
 
-    const inputs = [document.getElementById('emailSignUp'),
-                    document.getElementById('usernameSignUp'),
-                    document.getElementById('passwordSignUp'),
-                    document.getElementById('emailSignIn'),
-                    document.getElementById('passwordSignIn')];
+    const inputs = [
+      document.getElementById('emailSignUp'),
+      document.getElementById('usernameSignUp'),
+      document.getElementById('passwordSignUp'),
+      document.getElementById('emailSignIn'),
+      document.getElementById('passwordSignIn')
+    ];
 
     for (const input of inputs) {
       input.value = '';
@@ -92,8 +94,12 @@ window.addEventListener('load', () => {
       changeDisplayProperty('user', 'block');
       changeDisplayProperty('signOut', 'none');
 
-      const patternWrapper = document.getElementById('entryWrapper');
+      let patternWrapper = document.getElementById('entryWrapper');
       while (patternWrapper.firstChild) patternWrapper.removeChild(patternWrapper.firstChild);
+
+      patternWrapper = document.getElementById('themeContent');
+      while (patternWrapper.firstChild) patternWrapper.removeChild(patternWrapper.firstChild);
+      document.getElementById('themeFDB').textContent = 'Sie müssen eingeloggt sein um dieses Feature nutzen zu können.';
 
       document.getElementById('entryFDB').textContent = 'Keine Einträge verfügbar.';
       document.getElementById('addFDB').textContent = 'Sie müssen angemeldet sein um Einträge erstellen zu können.';
@@ -438,11 +444,14 @@ window.addEventListener('load', () => {
 
   theme.addEventListener('click', () => {
     const themeFDB = document.getElementById('themeFDB');
-    const themeContent = document.getElementById('themeContent');
+
     hideAll();
     changeDisplayProperty('themeWrapper', 'block');
 
     navBurger.click();
+
+    const patternWrapper = document.getElementById('themeContent');
+    while (patternWrapper.firstChild) patternWrapper.removeChild(patternWrapper.firstChild);
 
     if (firebase.auth().currentUser !== null) {
       firebase.database().ref('public/themes').once('value').then((snapshot) => {
@@ -1031,7 +1040,8 @@ window.addEventListener('load', () => {
     const messages = ['The password is invalid or the user does not have a password.',
                       'The email address is badly formatted.',
                       'Too many unsuccessful login attempts.  Please include reCaptcha verification or try again later',
-                      'There is no user record corresponding to this identifier. The user may have been deleted.'
+                      'There is no user record corresponding to this identifier. The user may have been deleted.',
+                      'A network error (such as timeout, interrupted connection or unreachable host) has occurred.'
                      ]
 
     if (email.value === '') {
@@ -1066,6 +1076,10 @@ window.addEventListener('load', () => {
       if (errorMsg === messages[3]) {
         signInFDB.textContent = 'Es wurde keine Account mit der eingegebenen E-Mail Adresse gefunden.';
         emailInvalid = true;
+      }
+
+      if (errorMsg === messages[4]) {
+        signInFDB.textContent = 'Zeitüberschreitung beim Anmelden. Versuche Sie es später erneut.'
       }
     }
 
@@ -1200,17 +1214,18 @@ function changeDisplayProperty(id, property) {
 
 function hideAll() {
 
-  const elements = [document.getElementById('contentWrapper'),
-                    document.getElementById('accountWrapper'),
-                    document.getElementById('plusWrapper'),
-                    document.getElementById('infoWrapper'),
-                    document.getElementById('securityWrapper'),
-                    document.getElementById('deletedWrapper'),
-                    document.getElementById('supportWrapper'),
-                    // document.getElementById('settingsWrapper'),
-                    document.getElementById('kontoWrapper'),
-                    document.getElementById('themeWrapper')
-                  ];
+  const elements = [
+    document.getElementById('contentWrapper'),
+    document.getElementById('accountWrapper'),
+    document.getElementById('plusWrapper'),
+    document.getElementById('infoWrapper'),
+    document.getElementById('securityWrapper'),
+    document.getElementById('deletedWrapper'),
+    document.getElementById('supportWrapper'),
+    // document.getElementById('settingsWrapper'),
+    document.getElementById('kontoWrapper'),
+    document.getElementById('themeWrapper')
+  ];
 
   for (const element of elements) {
     element.style.display = 'none';
