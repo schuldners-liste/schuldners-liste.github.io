@@ -71,6 +71,10 @@ window.addEventListener('load', () => {
     if (user) {
       printEntries(user.uid);
 
+      theme.click();
+      homeIcon.click();
+      navBurger.click();
+
       changeDisplayProperty('kontoError', 'none');
       changeDisplayProperty('kontoError', 'none');
       changeDisplayProperty('user', 'none');
@@ -88,6 +92,7 @@ window.addEventListener('load', () => {
       });
 
       firebase.database().ref(`users/${user.uid}/settings/theme`).once('value').then((snapshot) => {
+        document.getElementById(`${snapshot.val().color}Theme`).getElementsByTagName('i')[0].style.display = 'block';
         changeTheme(snapshot.val().color, snapshot.val().hex);
       });
     } else {
@@ -452,7 +457,7 @@ window.addEventListener('load', () => {
 
     const patternWrapper = document.getElementById('themeContent');
     while (patternWrapper.firstChild) patternWrapper.removeChild(patternWrapper.firstChild);
-
+    
     if (firebase.auth().currentUser !== null) {
       firebase.database().ref('public/themes').once('value').then((snapshot) => {
         const colors = snapshot.val();
@@ -465,25 +470,44 @@ window.addEventListener('load', () => {
 
           let box = document.createElement('div');
           let img = document.createElement('img');
+          let icon = document.createElement('i');
 
           img.src = `./img/banner_${color}.svg`;
           img.alt = 'cannot display image';
 
-          box.setAttribute('class', 'themeBox');
+          icon.setAttribute('class', 'far fa-check-circle');
+          icon.style.color = 'white';
+
+          box.classList.add('themeBox');
+          box.setAttribute('id', `${color}Theme`);
 
           box.appendChild(img);
+          box.appendChild(icon);
 
           box.addEventListener('click', () => {
             firebase.database().ref(`users/${firebase.auth().currentUser.uid}/settings/theme`).set({
               color: color,
               hex: hex
             });
+
             changeTheme(color, hex);
             document.getElementById('banner').src = `./img/banner_${color}.svg`;
+            
+            const elements = document.getElementsByClassName('fa-check-circle');
+
+            for (const element of elements) {
+              element.style.color = 'white';
+            }
+            icon.style.color = '#44c144';
           });
           wrapper.appendChild(box);
         }
       });
+
+      firebase.database().ref(`users/${firebase.auth().currentUser.uid}/settings/theme`).once('value').then((snapshot) => {
+        document.getElementById(`${snapshot.val().color}Theme`).getElementsByTagName('i')[0].style.color = '#44c144';
+      });	
+
       themeFDB.textContent = ''; 
     } else {
       themeFDB.textContent = 'Sie müssen eingeloggt sein um dieses Feature nutzen zu können.';
