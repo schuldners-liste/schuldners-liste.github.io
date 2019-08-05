@@ -216,7 +216,7 @@ padding-bottom: 50vh;
 
 /* Liste */
 
-#entryWrapper {
+#entryWrapper, #themeContent {
 height: 70vh;
 position: relative;
 left: 0;
@@ -331,7 +331,7 @@ padding-bottom: 50vh;
 
 /* Theme */
 
-#themeContent {
+/* #themeContent {
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -339,7 +339,7 @@ padding-bottom: 50vh;
   height: 73vh;
   overflow-y: scroll;
   padding-bottom: 50vh;
-}
+} */
 
 .themeBox {
   width: 60%;
