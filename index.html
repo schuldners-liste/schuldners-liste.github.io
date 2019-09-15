@@ -49,12 +49,12 @@
       <div id="signIn">
 
         <span id="emailSignInSpan">E-Mail Adresse</span>
-        <input type="text" id="emailSignIn">
+        <input autocomplete="on" type="text" id="emailSignIn">
 
         <br><br><br>
 
         <span id="passwordSignInSpan">Passwort</span>
-        <input type="password" id="passwordSignIn">
+        <input autocomplete="on" type="password" id="passwordSignIn">
 
         <p id="signInFDB"></p>
 
@@ -78,17 +78,17 @@
       <div id="signUp">
 
         <span id="emailSignInSpan">E-Mail Adresse</span>
-        <input type="text" id="emailSignUp">
+        <input autocomplete="on" type="text" id="emailSignUp">
 
         <br><br><br>
 
         <span id="usernameSignUpSpan">Benutzername</span>
-        <input type="text" id="usernameSignUp">
+        <input autocomplete="on" type="text" id="usernameSignUp">
 
         <br><br><br>
 
         <span id="passwordSignUpSpan">Passwort</span>
-        <input type="password" id="passwordSignUp">
+        <input autocomplete="on" type="password" id="passwordSignUp">
 
         <p id="signUpFDB"></p>
 
@@ -119,22 +119,22 @@
 
       <div id="addWrapper">
         <span id="nameSpan">Name des Schuldners</span>
-        <input type="text" id="name">
+        <input autocomplete="on" type="text" id="name">
 
         <br><br><br>
 
         <span id="reasonSpan">Grund</span>
-        <input type="text" id="reason">
+        <input autocomplete="on" type="text" id="reason">
 
         <br><br><br>
 
         <span id="dateSpan">Datum</span>
-        <input type="date" id="date" value="">
+        <input autocomplete="on" type="date" id="date" value="">
 
         <br><br><br>
 
         <span id="sumSpan">Betrag</span>
-        <input type="number" id="sum" step="0.01">
+        <input autocomplete="on" type="number" id="sum" step="0.01">
 
 
         <br><br>
@@ -248,9 +248,9 @@
         <form id="changeUsername" action="index.html" method="post">
           <h2>Benutzernamen ändern</h2>
           <span>neuer Benutzername</span>
-          <input type="text" id="newUsername">
+          <input autocomplete="on" type="text" id="newUsername">
           <span>Passwort</span>
-          <input type="password" id="usernamePW">
+          <input autocomplete="on" autocomplete="on" type="password" id="usernamePW">
 
           <div class="button" id="changeUNBtn">
             <div class="loader hide" id="changeUNLoader">
@@ -266,9 +266,9 @@
         <form id="changeEmail" action="index.html" method="post">
           <h2>E-Mail Adresse ändern</h2>
           <span>neue E-Mail Adresse</span>
-          <input type="text" id="newEmail">
+          <input autocomplete="on" type="text" id="newEmail">
           <span>Passwort</span>
-          <input type="password" id="emailPW">
+          <input autocomplete="on" type="password" id="emailPW">
 
           <div class="button" id="changeEMpBtn">
             <div class="loader hide" id="changeEMLoader">
@@ -284,11 +284,11 @@
         <form id="changePassword" action="index.html" method="post">
           <h2>Passwort ändern</h2>
           <span>altes Passwort</span>
-          <input type="password" id="oldPW">
+          <input autocomplete="on" type="password" id="oldPW">
           <span>neues Passwort</span>
-          <input type="password" id="newPW">
+          <input autocomplete="on" type="password" id="newPW">
           <span>neues Passwort wiederholen</span>
-          <input type="password" id="confirmNewPW">
+          <input autocomplete="on" type="password" id="confirmNewPW">
 
           <div class="button" id="changePWBtn">
             <div class="loader hide" id="changePWLoader">
@@ -306,7 +306,7 @@
           <h2>Account löschen</h2>
 
           <span>Passwort</span>
-          <input type="password" id="deleteAccPW">
+          <input autocomplete="on" type="password" id="deleteAccPW">
 
           <div class="button" id="deleteAccBtn">
             <span id="deleteAccText">Account löschen</span>
