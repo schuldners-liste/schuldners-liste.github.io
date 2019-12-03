@@ -1,0 +1,60 @@
+.person {
+    width: 77vw;
+    height: auto;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-direction: column;
+    margin: 2vmin 0;
+    padding: 0 5vw;
+    border: 2px solid rgb(237, 62, 96);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.person .personHeader {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.person .personHeader h2 {
+    margin: 0;
+    font-size: 4.5vmin;
+}
+
+.person .personHeader > div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+    width: 20vw;
+}
+
+.person .personHeader > div i {
+    font-size: 5vmin;
+}
+
+.person .personHeader > div p {
+    font-size: 5vmin;
+}
+
+.debt {
+    width: 100%;
+    text-align: justify;
+}
+
+.debt {
+    margin: 1.5vh 0;
+}
+
+.debt p {
+    margin-top: 0;
+    margin-bottom: 0;
+    font-size: 40px;
+}
+
+.debt b {
+    font-weight: 900;
+}
