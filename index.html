@@ -2,345 +2,265 @@
 <html lang='de' dir='ltr'>
   <head>
     <meta charset='utf-8'>
+    <meta name="theme-color" content="">
     <title>Schulden Verwaltung</title>
     <link rel="icon" href="img/favicon.ico">
-    <link rel='stylesheet' href='style/style.css'>
-    <link rel="stylesheet" href="style/nav.css">
+    <link rel="stylesheet" href="./style/account.css">
+    <link rel="stylesheet" href="./style/content.css" media="screen and (min-width: 350px)">
+    <link rel="stylesheet" href="./style/footer.css" media="screen and (min-width: 350px)">
+    <link rel="stylesheet" href="./style/header.css" media="screen and (min-width: 350px)">
+    <link rel='stylesheet' href='style/entries.css' media="screen and (min-width: 350px)">
+    <link rel="stylesheet" href="./style/main.css" media="screen and (min-width: 350px)">
+    <!-- <link rel='stylesheet' href='style/style.css' media="screen and (min-width: 350px)"> -->
+    <link rel="stylesheet" href="style/nav.css" media="screen and (min-width: 350px)">
     <link href='https://fonts.googleapis.com/css?family=Roboto:300,500' rel='stylesheet'>
     <link href='https://fonts.googleapis.com/css?family=Roboto:200,400' rel='stylesheet'>
-    <link href='https://use.fontawesome.com/releases/v5.8.1/css/all.css' rel='stylesheet' integrity='sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf' crossorigin='anonymous'>
-    <script src='script/script.js' charset='utf-8'></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato&display=swap">
+    <script src="./script/nav.js"></script>
+    <script src='script/script.js'></script>
+    <script src="./script/account.js"></script>
     <script src="https://www.gstatic.com/firebasejs/6.1.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/6.1.0/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/6.1.0/firebase-database.js"></script>
+    <script src="https://kit.fontawesome.com/e7df220bd7.js" crossorigin="anonymous"></script>
   </head>
   <body>
+    <header id="header">
+        <i class="fas fa-bars" id="navBurger"></i>
+  
+        <h1 id="headlineText">Einträge</h1>
+    </header>
 
-    <nav id="navWrapper">
-      <div id="navBurger">
-        <p id="burger1"></p>
-        <p id="burger2"></p>
-        <p id="burger3"></p>
-      </div>
-      <div id="nav">
-        <div id="textWrapper">
-          <img src="./img/banner_green.svg" alt="cannot display image" id="banner">
-          <p>Eingeloggt als: <span id="usernameField"></span></p>
-          <hr>
-          <p id="konto"><i class="fas fa-user"></i> Konto</p>
-          <p id="entries"><i class="fas fa-clipboard-list"></i> Einträge</p>
-          <p id="deleted"><i class="fas fa-trash-alt"></i> Gelöscht</p>
-          <p id="theme"><i class="fas fa-brush"></i> Theme</p>
-          <p id="info"><i class="fas fa-info-circle"></i> Informationen</p>
-          <p id="security"><i class="fas fa-shield-alt"></i> Datenschutz & Sicherheit</p>
-          <p id="support"><i class="fas fa-comment"></i> Feedback & Support</p>
-          <!-- <p id="settings"><i class="fas fa-cog"></i> Einstellungen</p> -->
-          <hr>
-          <p id="copyright">© Copyright by Jonas Dorfinger (2019)</p>
-        </div>
+    <nav id="nav" style="right: 101vw;">
+      <div id="textWrapper">
+        <img src="./img/banner_green.svg" alt="cannot display image" id="banner">
+        <p>Eingeloggt als: <span id="usernameField"> &nbsp; </span></p>
+        <hr>
+        <p id="konto"><i class="fas fa-user"></i> Konto</p>
+        <p id="entries"><i class="fas fa-clipboard-list"></i> Einträge</p>
+        <p id="deleted"><i class="fas fa-trash-alt"></i> Gelöscht</p>
+        <p id="theme"><i class="fas fa-brush"></i> Theme</p>
+        <p id="security"><i class="fas fa-shield-alt"></i> Datenschutz & Sicherheit</p>
+        <p id="support"><i class="fas fa-comment"></i> Feedback & Support</p>
+        <p id="copyright">© Copyright by Jonas Dorfinger (2019)</p>
       </div>
     </nav>
 
     <div id="disableNav"></div>
 
-    <div id='accountWrapper'>
-      <h1 id="signInHeadline">Anmelden</h1>
-
-      <div id="signIn">
-
-        <span id="emailSignInSpan">E-Mail Adresse</span>
-        <input autocomplete="on" type="text" id="emailSignIn">
-
-        <br><br><br>
-
-        <span id="passwordSignInSpan">Passwort</span>
-        <input autocomplete="on" type="password" id="passwordSignIn">
-
-        <p id="signInFDB"></p>
-
-        <br><br>
-
-        <div class="button" id="signInBtn">
-          <div class="loader hide" id="signInLoader">
-            <div></div>
-            <div></div>
-            <div></div>
-          </div>
-          <span id="signInText">Anmelden</span>
-        </div>
-
-        <p>Noch keinen Account? <label id="goToSignUp">Registrieren</label>.</p>
-
+    <div id="mainContent">  
+      <div id='contentWrapper'>
+        <div id="entryWrapper"></div>
+        <p id="entryFDB"></p>
       </div>
-
-      <h1 id="signUpHeadline">Registrieren</h1>
-
-      <div id="signUp">
-
-        <span id="emailSignInSpan">E-Mail Adresse</span>
-        <input autocomplete="on" type="text" id="emailSignUp">
-
-        <br><br><br>
-
-        <span id="usernameSignUpSpan">Benutzername</span>
-        <input autocomplete="on" type="text" id="usernameSignUp">
-
-        <br><br><br>
-
-        <span id="passwordSignUpSpan">Passwort</span>
-        <input autocomplete="on" type="password" id="passwordSignUp">
-
-        <p id="signUpFDB"></p>
-
-        <br><br>
-
-        <div class="button" id="signUpBtn">
-          <div class="loader hide" id="signUpLoader">
-            <div></div>
-            <div></div>
-            <div></div>
-          </div>
-          <span id="signUpText">Registrieren</span>
-        </div>
-
-        <p>Bereits registriert? <label id="goToSignIn">Anmelden</label>.</p>
-
-      </div>
-    </div>
-
-    <div id='contentWrapper'>
-      <h1>Einträge</h1>
-      <div id="entryWrapper"></div>
-      <p id="entryFDB"></p>
-    </div>
-
-    <div id='plusWrapper'>
-      <h1>Eintrag erstellen</h1>
-
-      <div id="addWrapper">
-        <span id="nameSpan">Name des Schuldners</span>
-        <input autocomplete="on" type="text" id="name">
-
-        <br><br><br>
-
-        <span id="reasonSpan">Grund</span>
-        <input autocomplete="on" type="text" id="reason">
-
-        <br><br><br>
-
-        <span id="dateSpan">Datum</span>
-        <input autocomplete="on" type="date" id="date" value="">
-
-        <br><br><br>
-
-        <span id="sumSpan">Betrag</span>
-        <input autocomplete="on" type="number" id="sum" step="0.01">
-
-
-        <br><br>
-
-        <div class="button" id="addEntryBtn">
-          <div class="loader hide" id="addEntryLoader">
-            <div></div>
-            <div></div>
-            <div></div>
-          </div>
-          <span id="addEntryText">Erstellen</span>
-        </div>
-
-
-      </div>
-      <p id="addFDB"></p>
-    </div>
-
-    <div id="infoWrapper">
-      <h1>Informationen</h1>
-      <div class="specialTextWrapper">
-        <p>Verfolgen und verwalten Sie Ihre Darlehen einfach und bequem. </p>
-        <p>Schuldners Liste ist für StudentInnen und SchülerInnen die ideale App, da sie für eher kleinere Beträge entwickelt wurde, ist aber dennoch nach oben hin bis ins Unendliche skalierbar.</p>
-
-        <p style="margin-top: 3vh">Standardfunktionen:</p>
-        <ul>
-          <li>Sehen Sie auf einen Blick, wem Sie wie viel Geld geliehen haben.</li>
-          <li>Sortierung nach Höhe des Betrages/Datum</li>
-          <li>Speichern der letzten 50 Darlehen</li>
-          <li>Individueller Kundensupport</li>
-          <li>App individualisieren</li>
-        </ul>
-      </div>
-      <p id="version">Version 1.1, letztes Update: 18.07.2019 17:51 Uhr.</p>
-    </div>
-
-    <div id="themeWrapper">
-      <h1>Theme</h1>
-      <p id="themeFDB"></p>
-      <div id="themeContent">
-      </div>
-    </div>
-    
-    <div id="securityWrapper">
-      <h1>Datenschutz & Sicherheit</h1>
-      <div class="specialTextWrapper">
-        <p>In diesem Text kläre ich Sie auf wie Ihre Daten auf dieser Website gespeichert und verarbeitet werden.</p>
-
-
-        <p class="headline">Sie haben folgende Rechte: </p>
-        <ul>
-          <li>Recht auf Auskunft</li>
-          <li>Recht auf Löschung (Recht auf Vergessen werden)</li>
-          <li>Recht auf Widerspruch gegen die Verarbeitung</li>
-        </ul>
-
-        <p class="headline">Recht auf Auskunft</p>
-        <p>Sie haben Anspruch auf Ihre Daten, wenn Sie Wissen möchten welche Daten von Ihnen gespeichert sind, bin ich als Entwickler dazu angehalten Sie über Ihre Daten zu informieren.</p>
-        <p>Sie können mir eine E-Mail schreiben oder mich auf andere Art und Weisen kontaktieren, ich werde Ihnen unverzüglich Ihre Daten zu kommen lassen.</p>
-
-        <p class="headline">Recht auf Löschung</p>
-        <p>Sie können Ihren Account unter den Konto Einstellungen löschen. Sie haben jedoch auch das Recht Ihre Daten aus den Backups der Datenbank zu entfernen. Kontaktieren Sie mich um dieses Recht zu geltend zu machen.</p>
-
-        <p class="headline">Datenbank</p>
-        <p>Unsere Website verwendet Funktionen des Datenbankdienstes Google Firebase. Dazu wird die Browser IndexedDB verwendet. Die IndexedDB API ist eine Programmierschnittstelle, die es Webseiten mittels JavaScript erlaubt, strukturierte Daten im Browser zu speichern. Diese Daten werden wieder gelöscht sobald Sie den Browser schließen. Wenn Sie die App heruntergeladen haben werden diese Daten nicht gelöscht sondern gespeichert um es Ihnen zu ermöglichen angemeldet zu bleiben auch wenn Sie die App schließen. Da es sich um einen Google Dienst handelt, hat Google Zugang allen Datenbank einträgen.</p>
-
-        <p>Mit dieser App wird kein Geld verdient, Ihre Daten werden ebenfalls nicht an Dritte weiterverkauft.</p>
-
-
-        <p>Um einen Ausfall des Server vorzubeugen wird jeden Freitag Abend ein Backup der Datenbank  erstellt.</p>
-
-        <br><br><br><br><br><br><br><br><br><br><br><br>
-
-      </div>
-    </div>
-
-    <div id="deletedWrapper">
-      <h1>Gelöschte Einträge</h1>
-      <div id="deletedEntriesWrapper"></div>
-      <p id="deletedFDB"></p>
-    </div>
-
-    <div id="supportWrapper">
-      <h1>Feedback & Support</h1>
-      <div class="specialTextWrapper">
-        <p>Nur durch Ihr Feedback kann Schuldners Liste verbessert werden, schreiben Sie mir eine E-Mail mit Ihrer Kritik. Egal ob positiv oder negativ, ich freue mich über Ihre E-Mail.</p>
-        <!-- <p>Nutzen Sie gerne das Formular unten um mir Ihr Feedback zu senden.</p> -->
-        <!-- <br> -->
-        <p>Brauchen Sie Hilfe oder haben Sie einen Fehler entdeckt? Kontaktieren Sie mich jederzeit auch auf einen meiner Social Media Kanäle.</p>
-
-        <p>Instagram: @jdprdctn</p>
-        <p>Twitter: @jdprdctn</p>
-        <p>E-Mail: jonas.dofinger@gmx.at</p>
-      </div>
-    </div>
-
-    <!-- <div id="settingsWrapper">
-      <h1>Einstellungen</h1>
-      <div class="specialTextWrapper">
-        <p>Alle Einträge löschen.</p>
-        <p>Theme ändern (beta)</p>
-        <p>Benachritigungen (beta)</p>
-        <p>Sortierungs Einstellungen</p>
-      </div>
-    </div> -->
-
-    <div id="kontoWrapper">
-      <h1>Konto</h1>
-
-      <div id="formWrapper">
-        <form id="changeUsername" action="index.html" method="post">
-          <h2>Benutzernamen ändern</h2>
-          <span>neuer Benutzername</span>
-          <input autocomplete="on" type="text" id="newUsername">
-          <span>Passwort</span>
-          <input autocomplete="on" autocomplete="on" type="password" id="usernamePW">
-
-          <div class="button" id="changeUNBtn">
-            <div class="loader hide" id="changeUNLoader">
+  
+      <div id='plusWrapper'>
+        <div id="addWrapper">
+          <span id="nameSpan">Name des Schuldners</span>
+          <input autocomplete="on" type="text" id="name">
+  
+          <br><br><br>
+  
+          <span id="reasonSpan">Grund</span>
+          <input autocomplete="on" type="text" id="reason">
+  
+          <br><br><br>
+  
+          <span id="dateSpan">Datum</span>
+          <input autocomplete="on" type="date" id="date" value="">
+  
+          <br><br><br>
+  
+          <span id="sumSpan">Betrag</span>
+          <input autocomplete="on" type="number" id="sum" step="0.01">
+  
+  
+          <br><br>
+  
+          <div class="button" id="addEntryBtn">
+            <div class="loader hide" id="addEntryLoader">
               <div></div>
               <div></div>
               <div></div>
             </div>
-            <span id="changeUNText">Speichern</span>
+            <span id="addEntryText">Erstellen</span>
           </div>
-          <p id="changeUsernameFDB">&nbsp;</p>
-        </form>
-
-        <form id="changeEmail" action="index.html" method="post">
-          <h2>E-Mail Adresse ändern</h2>
-          <span>neue E-Mail Adresse</span>
-          <input autocomplete="on" type="text" id="newEmail">
-          <span>Passwort</span>
-          <input autocomplete="on" type="password" id="emailPW">
-
-          <div class="button" id="changeEMpBtn">
-            <div class="loader hide" id="changeEMLoader">
-              <div></div>
-              <div></div>
-              <div></div>
-            </div>
-            <span id="changeEMText">Speichern</span>
-          </div>
-          <p id="changeEmailFDB">&nbsp;</p>
-        </form>
-
-        <form id="changePassword" action="index.html" method="post">
-          <h2>Passwort ändern</h2>
-          <span>altes Passwort</span>
-          <input autocomplete="on" type="password" id="oldPW">
-          <span>neues Passwort</span>
-          <input autocomplete="on" type="password" id="newPW">
-          <span>neues Passwort wiederholen</span>
-          <input autocomplete="on" type="password" id="confirmNewPW">
-
-          <div class="button" id="changePWBtn">
-            <div class="loader hide" id="changePWLoader">
-              <div></div>
-              <div></div>
-              <div></div>
-            </div>
-            <span id="changePWText">Speichern</span>
-          </div>
-          <p id="changePWFDB">&nbsp;</p>
-        </form>
-
-        <form id="delAccWrapper">
-
-          <h2>Account löschen</h2>
-
-          <span>Passwort</span>
-          <input autocomplete="on" type="password" id="deleteAccPW">
-
-          <div class="button" id="deleteAccBtn">
-            <span id="deleteAccText">Account löschen</span>
-          </div>
-
-          <p id="deleteFDB"></p>
-
-          <div id="deleteAccPopUp">
-            <h2>Account löschen</h2>
-            <i class="fas fa-times"  id="closePopUp"></i>
-            <p>Sind Sie sich sicher, dass Sie Ihren Account löschen möchten? Dieser Schritt kann nicht Rückgängig gemacht werden.</p>
-            <div class="button" id="deleteAccPopUpBtn">
-              <div class="loader hide" id="deleteAccLoader">
+  
+  
+        </div>
+        <p id="addFDB"></p>
+      </div>
+  
+      <div id="themeWrapper">
+        <p id="themeFDB"></p>
+        <div id="themeContent"></div>
+      </div>
+      
+      <div id="securityWrapper">      
+        <div class="specialTextWrapper">
+          <p>In diesem Text kläre ich Sie auf wie Ihre Daten auf dieser Website gespeichert und verarbeitet werden.</p>
+  
+  
+          <p class="headline">Sie haben folgende Rechte: </p>
+          <ul>
+            <li>Recht auf Auskunft</li>
+            <li>Recht auf Löschung (Recht auf Vergessen werden)</li>
+            <li>Recht auf Widerspruch gegen die Verarbeitung</li>
+          </ul>
+  
+          <p class="headline">Recht auf Auskunft</p>
+          <p>Sie haben Anspruch auf Ihre Daten, wenn Sie Wissen möchten welche Daten von Ihnen gespeichert sind, bin ich als Entwickler dazu angehalten Sie über Ihre Daten zu informieren.</p>
+          <p>Sie können mir eine E-Mail schreiben oder mich auf andere Art und Weisen kontaktieren, ich werde Ihnen unverzüglich Ihre Daten zu kommen lassen.</p>
+  
+          <p class="headline">Recht auf Löschung</p>
+          <p>Sie können Ihren Account unter den Konto Einstellungen löschen. Sie haben jedoch auch das Recht Ihre Daten aus den Backups der Datenbank zu entfernen. Kontaktieren Sie mich um dieses Recht zu geltend zu machen.</p>
+  
+          <p class="headline">Datenbank</p>
+          <p>Unsere Website verwendet Funktionen des Datenbankdienstes Google Firebase. Dazu wird die Browser IndexedDB verwendet. Die IndexedDB API ist eine Programmierschnittstelle, die es Webseiten mittels JavaScript erlaubt, strukturierte Daten im Browser zu speichern. Diese Daten werden wieder gelöscht sobald Sie den Browser schließen. Wenn Sie die App heruntergeladen haben werden diese Daten nicht gelöscht sondern gespeichert um es Ihnen zu ermöglichen angemeldet zu bleiben auch wenn Sie die App schließen. Da es sich um einen Google Dienst handelt, hat Google Zugang allen Datenbank einträgen.</p>
+  
+          <p>Mit dieser App wird kein Geld verdient, Ihre Daten werden ebenfalls nicht an Dritte weiterverkauft.</p>
+  
+  
+          <p>Um einen Ausfall des Server vorzubeugen wird jeden Freitag Abend ein Backup der Datenbank  erstellt.</p>
+  
+          <br><br><br><br><br><br><br><br><br><br><br><br>
+  
+        </div>
+      </div>
+  
+      <div id="deletedWrapper">
+        <div id="deletedEntriesWrapper"></div>
+        <p id="deletedFDB"></p>
+      </div>
+  
+      <div id="supportWrapper">      
+        <div class="specialTextWrapper">
+          <p>Nur durch Ihr Feedback kann Schuldners Liste verbessert werden, schreiben Sie mir eine E-Mail mit Ihrer Kritik. Egal ob positiv oder negativ, ich freue mich über Ihre E-Mail.</p>
+          <p>Brauchen Sie Hilfe oder haben Sie einen Fehler entdeckt? Kontaktieren Sie mich jederzeit auch auf einen meiner Social Media Kanäle.</p>
+  
+          <p>Instagram: @jdprdctn</p>
+          <p>Twitter: @jdprdctn</p>
+          <p>E-Mail: jonas.dofinger@gmx.at</p>
+        </div>
+      </div>
+  
+      <div id="kontoWrapper">
+        <div id="formWrapper">
+          <form id="changeUsername" action="index.html" method="post">
+            <h2>Benutzernamen ändern</h2>
+            <span>neuer Benutzername</span>
+            <input autocomplete="on" type="text" id="newUsername">
+            <span>Passwort</span>
+            <input autocomplete="on" autocomplete="on" type="password" id="usernamePW">
+  
+            <div class="button" id="changeUNBtn">
+              <div class="loader hide" id="changeUNLoader">
                 <div></div>
                 <div></div>
                 <div></div>
               </div>
-              <span id="deleteAccPopUpText">Ja, ich bin mir sicher</span>
+              <span id="changeUNText">Speichern</span>
             </div>
-          </div>
-
-        </form>
-
-        <br><br><br><br><br><br><br><br><br><br><br><br>
+            <p id="changeUsernameFDB">&nbsp;</p>
+          </form>
+  
+          <form id="changeEmail" action="index.html" method="post">
+            <h2>E-Mail Adresse ändern</h2>
+            <span>neue E-Mail Adresse</span>
+            <input autocomplete="on" type="text" id="newEmail">
+            <span>Passwort</span>
+            <input autocomplete="on" type="password" id="emailPW">
+  
+            <div class="button" id="changeEMpBtn">
+              <div class="loader hide" id="changeEMLoader">
+                <div></div>
+                <div></div>
+                <div></div>
+              </div>
+              <span id="changeEMText">Speichern</span>
+            </div>
+            <p id="changeEmailFDB">&nbsp;</p>
+          </form>
+  
+          <form id="changePassword" action="index.html" method="post">
+            <h2>Passwort ändern</h2>
+            <span>altes Passwort</span>
+            <input autocomplete="on" type="password" id="oldPW">
+            <span>neues Passwort</span>
+            <input autocomplete="on" type="password" id="newPW">
+            <span>neues Passwort wiederholen</span>
+            <input autocomplete="on" type="password" id="confirmNewPW">
+  
+            <div class="button" id="changePWBtn">
+              <div class="loader hide" id="changePWLoader">
+                <div></div>
+                <div></div>
+                <div></div>
+              </div>
+              <span id="changePWText">Speichern</span>
+            </div>
+            <p id="changePWFDB">&nbsp;</p>
+          </form>
+  
+          <form id="delAccWrapper">
+  
+            <h2>Account löschen</h2>
+  
+            <span>Passwort</span>
+            <input autocomplete="on" type="password" id="deleteAccPW">
+  
+            <div class="button" id="deleteAccBtn">
+              <span id="deleteAccText">Account löschen</span>
+            </div>
+  
+            <p id="deleteFDB"></p>
+  
+            <div id="deleteAccPopUp">
+              <h2>Account löschen</h2>
+              <i class="fas fa-times"  id="closePopUp"></i>
+              <p>Sind Sie sich sicher, dass Sie Ihren Account löschen möchten? Dieser Schritt kann nicht Rückgängig gemacht werden.</p>
+              <div class="button" id="deleteAccPopUpBtn">
+                <div class="loader hide" id="deleteAccLoader">
+                  <div></div>
+                  <div></div>
+                  <div></div>
+                </div>
+                <span id="deleteAccPopUpText">Ja, ich bin mir sicher</span>
+              </div>
+            </div>
+  
+          </form>
+  
+          <br><br><br><br><br><br><br><br><br><br><br><br>
+        </div>
+  
+        <p id="kontoError">Sie müssen angemeldet sein um Ihre Account Einstellungen ändern zu können.</p>
+  
       </div>
+    </div>
 
-      <p id="kontoError">Sie müssen angemeldet sein um Ihre Account Einstellungen ändern zu können.</p>
+    <div id="fullScreenContent">
+      <div id="signInWrapper">
+        <h1>Anmelden</h1>
 
+        <div id="continueWithGoogle">
+          <img src="./img/google_logo.svg" alt="cannot display image"> <p>mit Google anmelden</p>
+        </div>
+  
+        <div id="continueWithEmail">
+          <input type="text" placeholder="E-Mail Adresse" id="email">
+          <input type="text" placeholder="Passwort" id="email">
+        </div>
+
+        <div class="btnWrapper">
+            <div class="button" id="signInBtn">Anmelden</div>
+        </div>
+      </div>
     </div>
 
     <footer id="footer">
       <i class="fas fa-sign-out-alt" id="signOut"></i>
       <i class='fas fa-user' id='user'></i>
-      <!-- <i class='fas fa-home' id='home'></i> -->
       <i class="fas fa-clipboard-list" id="home"></i>
       <i class="fas fa-plus" id="plus"></i>
     </footer>
