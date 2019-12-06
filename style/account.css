@@ -48,8 +48,8 @@
 }
 
 .fadeOut {
-    transform: scale(1.6);
-    opacity: 0;
+    transform: scale(1.6) !important;
+    opacity: 0 !important;
 }
 
 .fadeIn {
@@ -70,10 +70,6 @@
     transition: left 300ms ease-in-out, transform 300ms ease-in-out, opacity 300ms ease-in-out;
     transform: scale(.4);
     opacity: 0;
-}
-
-#signUpWrapper {
-    /* left: 100vw; */
 }
 
 #continueWithGoogle {
@@ -136,9 +132,6 @@ input:focus {
     outline: none;
     padding: 3vmin;
     font-weight: bold;
-}
-
-#signInBtn {
     background: #03a87c;
     color: white;
     border: #03a87c;
