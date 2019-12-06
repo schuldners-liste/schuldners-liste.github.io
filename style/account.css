@@ -1,27 +1,85 @@
-#fullScreenContent {
+#logInScreen {
     text-align: center;
     width: 100vw;
-    height: 100vw;
+    height: 100vh;
     display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-direction: row;
     font-size: 4.5vmin;
+    position: fixed;
+    top: 0;
+    left: 0;
 }
 
-#signInWrapper {
+#startScreen  {
     width: 100vw;
-    height: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    background: white;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+    z-index: 99;
+    transition: transform 300ms ease-in-out, opacity 300ms ease-in-out;
+}
+
+#startScreen img {
+    width: 55vw;
+    margin: 10vh 0 3vh 0;
+}
+
+#startScreen #buttonWrapper {
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-direction: row;
+    margin: 10vh 0;
+}
+
+.startButton {
+    background: #6593DD;
+    color: white;
+    box-shadow: 0px 3px 6px 0px rgba(0,0,0,0.4);
+    padding: 1.5vh 2vw;
+    border-radius: 10px;
+}
+
+.fadeOut {
+    transform: scale(1.6);
+    opacity: 0;
+}
+
+.fadeIn {
+    transform: scale(1) !important;
+    opacity: 1 !important;
+}
+
+#signInWrapper, #signUpWrapper {
+    width: 100vw;
+    height: 65vh;
+    position: absolute;
+    top: 0;
+    left: 0;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    transition: left 300ms ease-in-out, transform 300ms ease-in-out, opacity 300ms ease-in-out;
+    transform: scale(.4);
+    opacity: 0;
+}
+
+#signUpWrapper {
+    /* left: 100vw; */
 }
 
 #continueWithGoogle {
-    background: #4285F4;
-    width: 80vw;
-    color: white;
+    background: #fff;
+    width: 60vw;
+    color: #4285F4;
     display: flex;
     justify-content: flex-start;
     align-items: center;
@@ -29,30 +87,42 @@
     font-family: 'Roboto', 'sans serif';
     border-radius: 10px;
     padding: 1vmin;
-    margin-bottom: 4vh;
     box-shadow: 0px 3px 6px 1px rgba(191,191,191,1);
     position: absolute;
     bottom: 20vh;
+    left: 20vw;
+    user-select: none;
+    transition: transform 300ms ease-in-out, opacity 300ms ease-in-out;
+    transform: scale(.4);
+    opacity: 0;
 }
 
 #continueWithGoogle img {
-    width: 15vw;
-    margin: 0 1vw 0 0;
+    width: 12vw;
+    margin: 0 2vw 0 0;
+}
+
+#passwordForgot, #goToSignUp, #goToSignIn {
+    width: 70vw;
+    text-align: left;
+    color: cornflowerblue;
+    text-decoration: underline;
+    font-size: 4vmin;
 }
 
 input {
     border: none;
-    border-bottom: 5px solid lightgray;
+    border-bottom: 6px solid lightgray;
     width: 70vw;
     font-size: 5vmin;
     margin: 1.5vh 0;
     padding: .1rem;
     outline: none;
-    transition: 150ms ease-in-out border-color;
+    transition: 200ms ease-in-out border-color;
 }
 
 input:focus {
-    border-color: #4285F4;
+    border-color: #03a87c;
 }
 
 .btnWrapper {
@@ -62,17 +132,22 @@ input:focus {
 }
 
 .button {
-    border-radius: 15px;
+    border-radius: 7px;
     outline: none;
     padding: 3vmin;
     font-weight: bold;
 }
 
 #signInBtn {
-    background: #4285F4;
+    background: #03a87c;
     color: white;
-    border: #4285F4;
+    border: #03a87c;
     box-shadow: 1px 3px 5px 0px rgba(143,143,143,1);
     letter-spacing: .35px;
     user-select: none;
+    margin-bottom: 5vh;
+}
+
+#logInScreen p {
+    margin: .5vh 0;
 }
