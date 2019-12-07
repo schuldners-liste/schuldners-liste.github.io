@@ -106,10 +106,14 @@
     font-size: 4vmin;
 }
 
+.continueWithEmail {
+    width: 70vw;
+}
+
 input {
     border: none;
     border-bottom: 6px solid lightgray;
-    width: 70vw;
+    width: 90%;
     font-size: 5vmin;
     margin: 1.5vh 0;
     padding: .1rem;
@@ -143,4 +147,20 @@ input:focus {
 
 #logInScreen p {
     margin: .5vh 0;
+}
+
+#unUpFeedback, #emUpFeedback, #emInFeedback {
+    color: red;
+    font-size: 3.5vmin;
+    text-align: left;
+    margin: 0 0 1vh 4vw !important;
+    width: 90%;
+}
+
+#pwUpFeedback, #pwInFeedback {
+    color: red;
+    font-size: 3.5vmin;
+    text-align: left;
+    margin: 0 0 3vh 4vw !important;
+    width: 70vw;
 }
