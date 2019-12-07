@@ -2,29 +2,28 @@
 <html lang='de' dir='ltr'>
   <head>
     <meta charset='utf-8'>
-    <meta name="theme-color" content="">
+    <meta name="theme-color" content="#3fa9f5">
     <title>Schulden Verwaltung</title>
     <link rel="icon" href="img/favicon.ico">
-    <link rel="stylesheet" href="./style/account.css">
-    <!-- <link rel="stylesheet" href="./style/content.css"> -->
-    <!-- <link rel="stylesheet" href="./style/footer.css"> -->
-    <!-- <link rel="stylesheet" href="./style/header.css"> -->
-    <!-- <link rel='stylesheet' href='style/entries.css'> -->
+    <!-- CSS Files -->
     <link rel="stylesheet" href="./style/main.css">
-    <!-- <link rel='stylesheet' href='style/style.css' media="screen and (min-width: 350px)"> -->
-    <!-- <link rel="stylesheet" href="style/nav.css"> -->
-    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <link rel="stylesheet" href="./style/account.css">
+    <link rel="stylesheet" href="./style/loadingAnimation.css">
+    <!-- JavaScript Files -->
+    <script src="./script/main.js"></script>
+    <script src="./script/account.js"></script>
+    <!-- Fonts -->
     <link href='https://fonts.googleapis.com/css?family=Roboto:300,500' rel='stylesheet'>
     <link href='https://fonts.googleapis.com/css?family=Roboto:200,400' rel='stylesheet'>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato&display=swap">
-    <!-- <script src="./script/nav.js"></script> -->
-    <!-- <script src='script/script.js'></script> -->
-    <script src="./script/account.js"></script>
+    <!-- Libraries -->
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <script src="https://kit.fontawesome.com/e7df220bd7.js" crossorigin="anonymous"></script>
+    <!-- Firebase -->
     <script src="https://www.gstatic.com/firebasejs/6.1.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/6.1.0/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/6.1.0/firebase-database.js"></script>
-    <script src="https://kit.fontawesome.com/e7df220bd7.js" crossorigin="anonymous"></script>
   </head>
   <body>
     <div id="logInScreen">
@@ -46,13 +45,26 @@
       <div id="signInWrapper">
         <h1>Anmelden</h1>
           
-        <div id="continueWithEmail">
+        <div class="continueWithEmail">
           <input type="text" placeholder="E-Mail Adresse" id="emailIn">
-          <input type="text" placeholder="Passwort" id="passwordIn">
+          <p id="emInFeedback"></p>
+          <input type="password" placeholder="Passwort" id="passwordIn">
+          <p id="pwInFeedback"></p>
         </div>
 
         <div class="btnWrapper">
-          <div class="button" id="signInBtn">Anmelden</div>
+          <div class="button" id="signInBtn">
+            <span id="signInBtnText">Anmelden</span>
+          
+            <div id="signInloader" class="hide">
+              <div class="lds-ellipsis">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+              </div>
+            </div>
+          </div>
         </div>
 
         <p id="passwordForgot">Passwort vergessen?</p>
@@ -62,15 +74,28 @@
       <div id="signUpWrapper">
         <h1>Registrieren</h1>
 
-        
-        <div id="continueWithEmail">
+        <div class="continueWithEmail">
           <input type="text" placeholder="E-Mail Adresse" id="emailUp">
+          <p id="emUpFeedback"></p>
           <input type="text" placeholder="Benutzername" id="usernameUp">
-          <input type="text" placeholder="Passwort" id="passwordUp">
+          <p id="unUpFeedback"></p>
+          <input type="password" placeholder="Passwort" id="passwordUp">
+          <p id="pwUpFeedback"></p>
         </div>
         
         <div class="btnWrapper">
-          <div class="button" id="signUpBtn">Registrieren</div>
+          <div class="button" id="signUpBtn">
+            <span id="signUpBtnText">Registrieren</span>
+
+            <div id="signUploader" class="hide">
+              <div class="lds-ellipsis">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+              </div>
+            </div>
+          </div>
         </div>
         
         <p id="goToSignIn">bereits registriert? Anmelden!</p>
@@ -83,6 +108,22 @@
       <div id="continueWithGoogle">
         <img src="./img/google_logo.svg" alt="cannot display image"> <p>mit Google fortfahren</p>
       </div>
+    </div>
+
+    <div id="mainScreen">
+      <header id="header">
+        <i class="fas fa-bars" id="bars"></i>
+      </header>
+
+      <main id="mainContent">
+
+      </main>
+
+      <footer id="footer">
+        <i class="fas fa-trash-alt"></i>
+        <i class="fas fa-clipboard-list"></i>
+        <i class="fas fa-plus"></i>
+      </footer>
     </div>
   </body>
 </html>
