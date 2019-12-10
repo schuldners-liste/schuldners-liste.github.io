@@ -6,15 +6,20 @@
     <title>Schulden Verwaltung</title>
     <link rel="icon" href="img/favicon.ico">
     <!-- CSS Files -->
+    <link rel="stylesheet" href="./style/nav.css">
     <link rel="stylesheet" href="./style/main.css">
     <link rel="stylesheet" href="./style/footer.css">
     <link rel="stylesheet" href="./style/header.css">
     <link rel="stylesheet" href="./style/content.css">
     <link rel="stylesheet" href="./style/account.css">
+    <link rel="stylesheet" href="./style/createEntry.css">
     <link rel="stylesheet" href="./style/loadingAnimation.css">
     <!-- JavaScript Files -->
+    <script src="./script/nav.js"></script>
     <script src="./script/main.js"></script>
+    <script src="./script/entries.js"></script>
     <script src="./script/account.js"></script>
+    <script src="./script/navAction.js"></script>
     <!-- Fonts -->
     <link href='https://fonts.googleapis.com/css?family=Roboto:300,500' rel='stylesheet'>
     <link href='https://fonts.googleapis.com/css?family=Roboto:200,400' rel='stylesheet'>
@@ -29,9 +34,9 @@
     <script src="https://www.gstatic.com/firebasejs/6.1.0/firebase-database.js"></script>
   </head>
   <body>
-    <div id="logInScreen">
+    <div id="logInScreen" class="hide">
       <div id="startScreen">
-        <img src="./img/logo.png" alt="cannot display image" data-aos="fade-down" data-aos-duration="500" data-aos-easing="ease-in-out">
+        <img src="./img/banner_blue.svg" alt="cannot display image" data-aos="fade-down" data-aos-duration="500" data-aos-easing="ease-in-out">
         <h1 data-aos="fade-down" data-aos-delay="150" data-aos-duration="400" data-aos-easing="ease-out">Willkommen!</h1>
 
         <div id="buttonWrapper">
@@ -113,9 +118,10 @@
       </div>
     </div>
 
-    <div id="mainScreen">
+    <div id="mainScreen" class="hide">
       <header id="header">
         <i class="fas fa-bars" id="bars"></i>
+        <h1 id="title">Einträge</h1>
       </header>
 
       <nav id="nav">
@@ -140,6 +146,7 @@
       <div id="disableNav" style="display: none;"></div>
 
       <main id="mainContent">
+        <div id="entriesWindow"></div>
 
         <div id="createEntryWindow" class="hide">
           <div id="switchType">
@@ -221,9 +228,9 @@
       </main>
 
       <footer id="footer">
-        <i class="fas fa-trash-alt"></i>
-        <i class="fas fa-clipboard-list"></i>
-        <i class="fas fa-plus"></i>
+        <i class="fas fa-trash-alt" id="deletedFooter"></i>
+        <i class="fas fa-clipboard-list" id="entriesFooter"></i>
+        <i class="fas fa-plus" id="addEntryFooter"></i>
       </footer>
     </div>
   </body>
