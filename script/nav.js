@@ -1,7 +1,9 @@
 window.addEventListener('load', () => {
-  const navBurger = document.getElementById('navBurger');
+  const bars = document.getElementById('bars');
   const disableNav = document.getElementById('disableNav');
   let previousX;
+
+  document.getElementById('nav').style.right = (window.innerWidth / 100) * 101 + 'px';
 
   document.body.addEventListener("touchstart", (eve) => {
     const maxRight = (window.innerWidth / 100) * 20;
@@ -36,7 +38,7 @@ window.addEventListener('load', () => {
       
           console.log(parseInt(nav.style.right));
           
-          if (parseInt(nav.style.right) <= 500) {
+          if (parseInt(nav.style.right) <= 650) {
             nav.style.right = (window.innerWidth / 100) * 20 + 'px';
             previousX = parseInt(nav.style.right);
             disableNav.style.display = 'block';
@@ -49,8 +51,6 @@ window.addEventListener('load', () => {
           setTimeout(() => {
             nav.style.transition = 'none';
           }, 510);
-
-          // document.body.removeEventListener('touchmove', touchmoveFunction);
         }
       }
 
@@ -60,11 +60,11 @@ window.addEventListener('load', () => {
 
       document.body.addEventListener("touchend", touchendFunction);
     } else {
-      console.log('startX bigger than 50');
+      // console.log('startX bigger than 50');
     }
   });
 
-  navBurger.addEventListener('touchstart', () => {
+  bars.addEventListener('touchstart', () => {
     setTimeout(() => {
       nav.style.transition = 'right 500ms ease-out';
 
@@ -84,7 +84,7 @@ window.addEventListener('load', () => {
     }, 100);
   });
 
-  disableNav.addEventListener('touchstart', () => {
+  disableNav.addEventListener('click', () => {
     setTimeout(() => {
       nav.style.transition = 'right 500ms ease-in-out';
 
