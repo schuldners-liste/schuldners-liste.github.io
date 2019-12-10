@@ -1,4 +1,3 @@
-/* nav bar */
 #nav {
   height: 100vh;
   background-color: white;
@@ -7,7 +6,8 @@
   box-shadow: 7px 0px 5px 1px rgba(189,189,189,0.5);
   position: fixed;
   top: 0;
-  font-size: 300%;
+  right: 101vw;
+  font-size: 4.9vmin;
   display: flex;
   justify-content: center;
   z-index: 101;
@@ -32,15 +32,21 @@
   width: 80%;
 }
 
-#copyright {
-  font-size: 60% !important;
-  text-align: center;
-  margin: 0 auto !important;
+#usernameField {
+  font-size: 4.5vmin;
+  margin: 4vh 0 0 0 !important;
 }
 
-#usernameField {
-  font-size: 100%;
-  font-weight: bold;;
+#iconWrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#signOut {
+  margin: 0;
+  transform: rotate(180deg);
 }
 
 #disableNav {
