@@ -1,4 +1,5 @@
 window.addEventListener('load', () => {
+
   const config = {
     apiKey: "AIzaSyC193EbS7F1xds4fLyh4iujaF30j-XhhrY",
     authDomain: "schuldners-liste-development.firebaseapp.com",
@@ -11,8 +12,9 @@ window.addEventListener('load', () => {
 
   firebase.initializeApp(config);
 
+  firebase.auth().languageCode = 'de';
+
   document.getElementById('nav').style.right = (window.innerWidth / 100) * parseInt(document.getElementById('nav').style.right) + 'px';
-  changeHeadline('Einträge');
 
   const userIcon = document.getElementById('user');
   const homeIcon = document.getElementById('home');
@@ -23,6 +25,7 @@ window.addEventListener('load', () => {
   const signUpBtn = document.getElementById('signUpBtn');
   const signInBtn = document.getElementById('signInBtn');
   const addEntryBtn = document.getElementById('addEntryBtn');
+  const info = document.getElementById('info');
   const security = document.getElementById('security');
   const deleted = document.getElementById('deleted');
   const support = document.getElementById('support');
@@ -31,7 +34,7 @@ window.addEventListener('load', () => {
   const konto = document.getElementById('konto');
 
   userIcon.addEventListener('click', () => {
-    changeHeadline('Anmelden');
+
     const inputs = [
       document.getElementById('emailSignUp'),
       document.getElementById('usernameSignUp'),
@@ -45,20 +48,18 @@ window.addEventListener('load', () => {
     }
 
     hideAll();
-    changeDisplayProperty('accountWrapper', 'flex');
+    changeDisplayProperty('accountWrapper', 'block');
   });
 
   homeIcon.addEventListener('click', () => {
     hideAll();
-    changeDisplayProperty('contentWrapper', 'flex');
-    changeHeadline('Einträge');
+    changeDisplayProperty('contentWrapper', 'block');
   });
 
   plusIcon.addEventListener('click', () => {
     hideAll();
     initDateValue();
-    changeDisplayProperty('plusWrapper', 'flex');
-    changeHeadline('Eintrag erstellen');
+    changeDisplayProperty('plusWrapper', 'block');
   });
 
   signOutIcon.addEventListener('click', () => {
@@ -94,7 +95,6 @@ window.addEventListener('load', () => {
         changeTheme(snapshot.val().color, snapshot.val().hex);
       });
     } else {
-      toggleFullScreenContent();
       changeDisplayProperty('user', 'block');
       changeDisplayProperty('signOut', 'none');
 
@@ -115,173 +115,171 @@ window.addEventListener('load', () => {
     }
   });
 
-  // gotToSignUp.addEventListener('click', () => {
-  //   hideAll();
-  //   changeHeadline('Registrieren');
-  //   changeDisplayProperty('signUp', 'block');
-  //   changeDisplayProperty('accountWrapper', 'flex');
-  //   changeDisplayProperty('signUpHeadline', 'block');
-  //   changeDisplayProperty('signIn', 'none');
-  //   changeDisplayProperty('signInHeadline', 'none');
-  // });
+  gotToSignUp.addEventListener('click', () => {
+    hideAll();
+    changeDisplayProperty('signUp', 'block');
+    changeDisplayProperty('accountWrapper', 'block');
+    changeDisplayProperty('signUpHeadline', 'block');
+    changeDisplayProperty('signIn', 'none');
+    changeDisplayProperty('signInHeadline', 'none');
+  });
 
-  // gotToSignIn.addEventListener('click', () => {
-  //   hideAll();
-  //   changeHeadline('Anmelden');
-  //   changeDisplayProperty('signIn', 'block');
-  //   changeDisplayProperty('accountWrapper', 'flex');
-  //   changeDisplayProperty('signInHeadline', 'block');
-  //   changeDisplayProperty('signUp', 'none');
-  //   changeDisplayProperty('signUpHeadline', 'none');
-  // });
+  gotToSignIn.addEventListener('click', () => {
+    hideAll();
+    changeDisplayProperty('signIn', 'block');
+    changeDisplayProperty('accountWrapper', 'block');
+    changeDisplayProperty('signInHeadline', 'block');
+    changeDisplayProperty('signUp', 'none');
+    changeDisplayProperty('signUpHeadline', 'none');
+  });
 
-  // signUpBtn.addEventListener('click', () => {
-  //   const email = document.getElementById('emailSignUp');
-  //   const username = document.getElementById('usernameSignUp');
-  //   const password = document.getElementById('passwordSignUp');
-  //   const auth = firebase.auth();
-  //   let invalid = false;
+  signUpBtn.addEventListener('click', () => {
+    const email = document.getElementById('emailSignUp');
+    const username = document.getElementById('usernameSignUp');
+    const password = document.getElementById('passwordSignUp');
+    const auth = firebase.auth();
+    let invalid = false;
 
-  //   printErrorMessage(signUpFDB, '');
+    printErrorMessage(signUpFDB, '');
 
-  //   toggleSignUpAnimation();
+    toggleSignUpAnimation();
 
-  //   if (email.value === '') {
-  //     invalid = true;
-  //     printErrorMessage(signUpFDB, 'Es dürfen keine Felder leer bleiben.');
-  //     emailInvalid = true;
-  //   } else {
-  //     emailInvalid = false;
-  //     invalid = false;
-  //   }
+    if (email.value === '') {
+      invalid = true;
+      printErrorMessage(signUpFDB, 'Es dürfen keine Felder leer bleiben.');
+      emailInvalid = true;
+    } else {
+      emailInvalid = false;
+      invalid = false;
+    }
 
-  //   if (password.value === '') {
-  //     invalid = true;
-  //     printErrorMessage(signUpFDB, 'Es dürfen keine Felder leer bleiben.');
-  //     pwInvalid = true;
-  //   } else {
-  //     pwInvalid = false;
-  //     invalid = false;
-  //   }
+    if (password.value === '') {
+      invalid = true;
+      printErrorMessage(signUpFDB, 'Es dürfen keine Felder leer bleiben.');
+      pwInvalid = true;
+    } else {
+      pwInvalid = false;
+      invalid = false;
+    }
 
-  //   if (username.value === '') {
-  //     invalid = true;
-  //     printErrorMessage(signUpFDB, 'Es dürfen keine Felder leer bleiben.');
-  //     userInvalid = true;
-  //   } else {
-  //     userInvalid = false;
-  //     invalid = false;
-  //   }
+    if (username.value === '') {
+      invalid = true;
+      printErrorMessage(signUpFDB, 'Es dürfen keine Felder leer bleiben.');
+      userInvalid = true;
+    } else {
+      userInvalid = false;
+      invalid = false;
+    }
 
-  //   if (!emailInvalid && !pwInvalid && !userInvalid) {
-  //     if (email.value.includes('@')) {
-  //       if (!validateEmail(email)) {
-  //         printErrorMessage(signUpFDB, 'Die eingegebene E-Mail Adresse ist ungültig.');
-  //         emailInvalid = true;
-  //       } else if (!validatePassword(password)) {
-  //         printErrorMessage(signUpFDB, 'Das eingegebene Passwort ist ungültig.');
-  //         pwInvalid = true;
-  //       }
-  //     } else {
-  //       printErrorMessage(signUpFDB, 'Die eingegebene E-Mail Adresse ist ungültig.');
-  //       emailInvalid = true;
-  //     }
-  //   }
+    if (!emailInvalid && !pwInvalid && !userInvalid) {
+      if (email.value.includes('@')) {
+        if (!validateEmail(email)) {
+          printErrorMessage(signUpFDB, 'Die eingegebene E-Mail Adresse ist ungültig.');
+          emailInvalid = true;
+        } else if (!validatePassword(password)) {
+          printErrorMessage(signUpFDB, 'Das eingegebene Passwort ist ungültig.');
+          pwInvalid = true;
+        }
+      } else {
+        printErrorMessage(signUpFDB, 'Die eingegebene E-Mail Adresse ist ungültig.');
+        emailInvalid = true;
+      }
+    }
 
-  //   if (emailInvalid) {
-  //     email.style.borderBottom = 'red 5px solid';
-  //     email.removeEventListener('focus', () => {
-  //       email.style.borderBottom = 'lightgray 5px solid';
-  //     });
-  //   } else {
-  //     email.style.borderBottom = 'lightgray 5px solid';
-  //     email.addEventListener('focus', () => {
-  //       email.style.borderBottom = '#5ac878 5px solid';
-  //     });
+    if (emailInvalid) {
+      email.style.borderBottom = 'red 5px solid';
+      email.removeEventListener('focus', () => {
+        email.style.borderBottom = 'lightgray 5px solid';
+      });
+    } else {
+      email.style.borderBottom = 'lightgray 5px solid';
+      email.addEventListener('focus', () => {
+        email.style.borderBottom = '#5ac878 5px solid';
+      });
 
-  //     email.addEventListener('blur', () => {
-  //       email.style.borderBottom = 'lightgray 5px solid';
-  //     });
-  //   }
+      email.addEventListener('blur', () => {
+        email.style.borderBottom = 'lightgray 5px solid';
+      });
+    }
 
-  //   if (pwInvalid) {
-  //     password.style.borderBottom = 'red 5px solid';
-  //     password.removeEventListener('focus', () => {
-  //       password.style.borderBottom = 'lightgray 5px solid';
-  //     });
-  //   } else {
-  //     password.style.borderBottom = 'lightgray 5px solid';
-  //     password.addEventListener('focus', () => {
-  //       password.style.borderBottom = '#5ac878 5px solid';
-  //     });
+    if (pwInvalid) {
+      password.style.borderBottom = 'red 5px solid';
+      password.removeEventListener('focus', () => {
+        password.style.borderBottom = 'lightgray 5px solid';
+      });
+    } else {
+      password.style.borderBottom = 'lightgray 5px solid';
+      password.addEventListener('focus', () => {
+        password.style.borderBottom = '#5ac878 5px solid';
+      });
 
-  //     password.addEventListener('blur', () => {
-  //       password.style.borderBottom = 'lightgray 5px solid';
-  //     });
-  //   }
+      password.addEventListener('blur', () => {
+        password.style.borderBottom = 'lightgray 5px solid';
+      });
+    }
 
-  //   if (userInvalid) {
-  //     username.style.borderBottom = 'red 5px solid';
-  //     username.removeEventListener('focus', () => {
-  //       username.style.borderBottom = 'lightgray 5px solid';
-  //     });
-  //   } else {
-  //     username.style.borderBottom = 'lightgray 5px solid';
-  //     username.addEventListener('focus', () => {
-  //       username.style.borderBottom = '#5ac878 5px solid';
-  //     });
+    if (userInvalid) {
+      username.style.borderBottom = 'red 5px solid';
+      username.removeEventListener('focus', () => {
+        username.style.borderBottom = 'lightgray 5px solid';
+      });
+    } else {
+      username.style.borderBottom = 'lightgray 5px solid';
+      username.addEventListener('focus', () => {
+        username.style.borderBottom = '#5ac878 5px solid';
+      });
 
-  //     username.addEventListener('blur', () => {
-  //       username.style.borderBottom = 'lightgray 5px solid';
-  //     });
-  //   }
+      username.addEventListener('blur', () => {
+        username.style.borderBottom = 'lightgray 5px solid';
+      });
+    }
 
-  //   signUpFDB.style.color = 'red';
+    signUpFDB.style.color = 'red';
 
-  //   if (signUpFDB.textContent !== '') {
-  //     toggleSignUpAnimation();
-  //   }
+    if (signUpFDB.textContent !== '') {
+      toggleSignUpAnimation();
+    }
 
-  //   if (!emailInvalid && !pwInvalid && !userInvalid) {
-  //     const promise = auth.createUserWithEmailAndPassword(email.value, password.value);
-  //         promise.catch((error) => {
-  //           if (error.message === 'The email address is already in use by another account.') {
-  //             printErrorMessage(signUpFDB, 'Die eingegebene E-Mail Adresse wurde bereits verwendet.');
-  //             toggleSignUpAnimation();
-  //             email.style.borderBottom = 'red 5px solid';
-  //             email.removeEventListener('focus', () => {
-  //               email.style.borderBottom = 'lightgray 5px solid';
-  //             });
-  //           }
-  //         });
+    if (!emailInvalid && !pwInvalid && !userInvalid) {
+      const promise = auth.createUserWithEmailAndPassword(email.value, password.value);
+          promise.catch((error) => {
+            if (error.message === 'The email address is already in use by another account.') {
+              printErrorMessage(signUpFDB, 'Die eingegebene E-Mail Adresse wurde bereits verwendet.');
+              toggleSignUpAnimation();
+              email.style.borderBottom = 'red 5px solid';
+              email.removeEventListener('focus', () => {
+                email.style.borderBottom = 'lightgray 5px solid';
+              });
+            }
+          });
 
-  //         promise.then(() => {
-  //           const userId = firebase.auth().currentUser.uid;
-  //           writeUserToDatabase(username.value, email.value, userId);
-  //           homeIcon.click();
-  //           toggleSignUpAnimation();
-  //         });
-  //   }
-  // });
+          promise.then(() => {
+            const userId = firebase.auth().currentUser.uid;
+            writeUserToDatabase(username.value, email.value, userId);
+            homeIcon.click();
+            toggleSignUpAnimation();
+          });
+    }
+  });
 
-  // signInBtn.addEventListener('click', () => {
-  //   const email = document.getElementById('emailSignIn');
-  //   const password = document.getElementById('passwordSignIn');
-  //   const auth = firebase.auth();
+  signInBtn.addEventListener('click', () => {
+    const email = document.getElementById('emailSignIn');
+    const password = document.getElementById('passwordSignIn');
+    const auth = firebase.auth();
 
-  //   toggleSignInAnimation();
+    toggleSignInAnimation();
 
-  //   const promise = auth.signInWithEmailAndPassword(email.value, password.value);
-  //     promise.catch((error) => {
-  //       toggleSignInAnimation();
-  //       signInErrorHandling(email, password, error);
-  //     });
+    const promise = auth.signInWithEmailAndPassword(email.value, password.value);
+        promise.catch((error) => {
+          toggleSignInAnimation();
+          signInErrorHandling(email, password, error);
+        });
 
-  //     promise.then(() => {
-  //       homeIcon.click();
-  //       toggleSignInAnimation();
-  //     });
-  // });
+        promise.then(() => {
+          homeIcon.click();
+          toggleSignInAnimation();
+        });
+  });
 
   addEntryBtn.addEventListener('click', () => {
     const name = document.getElementById('name');
@@ -391,10 +389,16 @@ window.addEventListener('load', () => {
     }
   });
 
+  info.addEventListener('click', () => {
+    hideAll();
+    changeDisplayProperty('infoWrapper', 'block');
+
+    hideNav();
+  });
+
   security.addEventListener('click', () => {
     hideAll();
-    changeHeadline('Datenschutz & Sicherheit');
-    changeDisplayProperty('securityWrapper', 'flex');
+    changeDisplayProperty('securityWrapper', 'block');
 
     hideNav();
   });
@@ -402,8 +406,7 @@ window.addEventListener('load', () => {
   deleted.addEventListener('click', () => {
     const deletedFDB = document.getElementById('deletedFDB');
     hideAll();
-    changeHeadline('Gelöschte Einträge');
-    changeDisplayProperty('deletedWrapper', 'flex');
+    changeDisplayProperty('deletedWrapper', 'block');
 
     hideNav();
 
@@ -418,8 +421,7 @@ window.addEventListener('load', () => {
     const themeFDB = document.getElementById('themeFDB');
 
     hideAll();
-    changeHeadline('Theme');
-    changeDisplayProperty('themeWrapper', 'flex');
+    changeDisplayProperty('themeWrapper', 'block');
 
     hideNav();
 
@@ -466,7 +468,6 @@ window.addEventListener('load', () => {
             for (const element of elements) {
               element.style.color = 'white';
             }
-
             icon.style.color = '#44c144';
           });
           wrapper.appendChild(box);
@@ -485,21 +486,19 @@ window.addEventListener('load', () => {
 
   entries.addEventListener('click', () => {
     homeIcon.click();
-    changeHeadline('Einträge');
     hideNav();
   });
 
   support.addEventListener('click', () => {
     hideAll();
-    changeDisplayProperty('supportWrapper', 'flex');
-    changeHeadline('Feedback & Support');
+    changeDisplayProperty('supportWrapper', 'block');
+
     hideNav();
   });
 
   konto.addEventListener('click', () => {
     hideAll();
-    changeHeadline('Konto');
-    changeDisplayProperty('kontoWrapper', 'flex');
+    changeDisplayProperty('kontoWrapper', 'block');
 
     const changeUsername = document.getElementById('changeUNBtn');
     const changeEmail = document.getElementById('changeEMpBtn');
@@ -767,11 +766,11 @@ window.addEventListener('load', () => {
 
         headerName.textContent = entries[i][0].name;
         headerTotalPrice.textContent = '23,50€';
-        headerIcon.setAttribute('class', 'fas fa-angle-right');
+        headerIcon.setAttribute('class', 'fas fa-angle-down');
 
         header.addEventListener('click', () => {
-          // newPerson.classList.toggle('makeBigger');
-          document.getElementById('contentWrapper').classList.toggle('showDetailed');
+          newPerson.classList.toggle('makeBigger');
+          headerIcon.classList.toggle('turn180deg');
         });
 
         headerIconWrapper.appendChild(headerTotalPrice);
@@ -786,34 +785,34 @@ window.addEventListener('load', () => {
         newPerson.setAttribute('class', 'person');
 
 
-        // for (let j = 0; j < entries[i].length; j++) {
-        //   const newDebt = document.createElement('div');
+        for (let j = 0; j < entries[i].length; j++) {
+          const newDebt = document.createElement('div');
 
-        //   let date = entries[i][j].date;
-        //   // format sum (e.g. from 35600 to 35 600)
-        //   entries[i][j].sum = entries[i][j].sum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
-        //   entries[i][j].sum = entries[i][j].sum.replace('.', ',');
-        //   let sum = entries[i][j].sum;
-        //   let name = entries[i][j].name;
-        //   let reason = entries[i][j].reason;
-        //   let timestamp = entries[i][j].timestamp;
+          let date = entries[i][j].date;
+          // format sum (e.g. from 35600 to 35 600)
+          entries[i][j].sum = entries[i][j].sum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+          entries[i][j].sum = entries[i][j].sum.replace('.', ',');
+          let sum = entries[i][j].sum;
+          let name = entries[i][j].name;
+          let reason = entries[i][j].reason;
+          let timestamp = entries[i][j].timestamp;
 
-        //   const texte = [{strong: 'Grund:', text: reason}, {strong: 'Was:', text: sum}, {strong: 'Erstellt am:', text: date}]
+          const texte = [{strong: 'Grund:', text: reason}, {strong: 'Was:', text: sum}, {strong: 'Erstellt am:', text: date}]
 
-        //   for (const text of texte) {
-        //     const strong = document.createElement('b');
-        //     const element = document.createElement('p');
+          for (const text of texte) {
+            const strong = document.createElement('b');
+            const element = document.createElement('p');
 
-        //     strong.textContent = text.strong + ' ';
-        //     element.appendChild(strong);
-        //     element.textContent += text.text;
-        //     newDebt.appendChild(element);
-        //   }
+            strong.textContent = text.strong + ' ';
+            element.appendChild(strong);
+            element.textContent += text.text;
+            newDebt.appendChild(element);
+          }
 
-        //   newDebt.setAttribute('class', 'debt')
-        //   newPerson.appendChild(newDebt);
+          newDebt.setAttribute('class', 'debt')
+          newPerson.appendChild(newDebt);
           
-        // }
+        }
 
         contentWrapper.appendChild(newPerson);
       }
@@ -1203,8 +1202,6 @@ window.addEventListener('load', () => {
       document.getElementById('deleteAccPW')
     ];
 
-    const meta = document.querySelector('meta[name=theme-color]'); meta.setAttribute("content", hex);
-
     for (const element of backgroundElms) {
       element.style.backgroundColor = hex;
     }
@@ -1232,6 +1229,7 @@ function hideAll() {
     document.getElementById('contentWrapper'),
     document.getElementById('accountWrapper'),
     document.getElementById('plusWrapper'),
+    document.getElementById('infoWrapper'),
     document.getElementById('securityWrapper'),
     document.getElementById('deletedWrapper'),
     document.getElementById('supportWrapper'),
@@ -1288,22 +1286,4 @@ function validatePassword(password) {
 function validateEmail(email) {
   const splitEmail = email.value.split('@');
   return splitEmail.length === 2 && splitEmail[1].split('.').length === 2 && splitEmail[1].split('.')[1].length >= 2;
-}
-
-function changeHeadline(newText) {
-  document.getElementById('headlineText').textContent = newText;
-}
-
-function toggleFullScreenContent() {
-  const boxesToHide = [
-    document.getElementById('header'),
-    document.getElementById('nav'),
-    document.getElementById('disableNav'),
-    document.getElementById('mainContent'),
-    document.getElementById('footer')
-  ];
-
-  for (const box of boxesToHide) {
-    box.classList.toggle('hide');
-  }
 }
