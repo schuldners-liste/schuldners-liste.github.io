@@ -6,6 +6,16 @@ body {
     margin: 0 auto;
 }
 
+#mainScreen {
+    background: white;
+    width: 100vw;
+    height: 100vh;
+}
+
 .hide {
     display: none !important;
+}
+
+::-webkit-scrollbar {
+    display: none;
 }
