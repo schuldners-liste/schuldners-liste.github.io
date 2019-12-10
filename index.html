@@ -120,6 +120,83 @@
 
       <main id="mainContent">
 
+        <div id="createEntryWindow" class="hide">
+          <div id="switchType">
+            <h2 id="moneyType">Geld</h2>
+            <h2 id="objectType">Objekt</h2>
+            <div id="currentType"></div>
+          </div>
+
+          <div class="createEntryWrapper" id="createMoneyEntry">
+            <div class="getDataBox">
+              <p>Name des Schuldners</p>
+              <input id="choosePerson" value="Person auswählen" readonly>
+              <p class="feedback" id="nameMoneyFDB"></p>
+            </div>
+
+            <div class="getDataBox">
+              <p>Datum</p>
+              <input type="date" id="dateMoney">
+              <p class="feedback" id="dateMoneyFDB"></p>
+            </div>
+
+            <div class="getDataBox">
+              <p>Begründung</p>
+              <input type="text" id="reasonMoney">
+              <p class="feedback" id="reasonMoneyFDB"></p>
+            </div>
+
+            <div class="getDataBox">
+              <p>Betrag</p>
+              <input type="number" id="sumMoney">
+              <p class="feedback" id="sumMoneyFDB"></p>
+            </div>
+
+            <div class="button" id="createEntryMoney">
+              <span>Erstellen</span>
+            </div>
+          </div>
+
+          <div class="createEntryWrapper" id="createObjectEntry">
+            <div class="getDataBox">
+                <p>Name des Schuldners</p>
+                <input id="choosePersonObject" value="Person auswählen" readonly>
+                <p class="feedback" id="nameObjectFDB"></p>
+              </div>
+  
+              <div class="getDataBox">
+                <p>Datum</p>
+                <input type="date" id="dateObject">
+                <p class="feedback" id="dateObjectFDB"></p>
+              </div>
+  
+              <div class="getDataBox">
+                <p>Begründung</p>
+                <input type="text" id="reasonObject">
+                <p class="feedback" id="reasonObjectFDB"></p>
+              </div>
+  
+              <div class="getDataBox">
+                <p>Objekt</p>
+                <input type="text" id="object">
+                <p class="feedback" id="objectFDB"></p>
+              </div>
+
+              <div class="getDataBox">
+                <p>Wert in Euro</p>
+                <input type="number" id="wothObject">
+                <p class="feedback" id="worthObjectFDB"></p>
+              </div>
+  
+              <div class="button" id="createEntryObject">
+                <span>Erstellen</span>
+              </div>
+          </div>
+        </div>
+
+        <div id="deletedEntriesWindow" class="hide">
+          <p>übersicht aller gelöschten einträge</p>
+        </div>
       </main>
 
       <footer id="footer">
