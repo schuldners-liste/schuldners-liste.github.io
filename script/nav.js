@@ -9,6 +9,8 @@ window.addEventListener('load', () => {
     const maxRight = (window.innerWidth / 100) * 20;
     let touchobj = eve.changedTouches[0];
     let startX = parseInt(touchobj.clientX);
+    console.log('startX: ' + startX);
+    
     previousX = startX;
     let touchendFunction;
     let touchmoveFunction;
@@ -16,6 +18,8 @@ window.addEventListener('load', () => {
     if (startX <= 50) {
       touchmoveFunction = (eve) => {
         if (startX <= 50) {
+          console.log(startX);
+          
           touchobj = eve.changedTouches[0];
           let xCoord = parseInt(touchobj.clientX);
           let diff = xCoord - previousX;
