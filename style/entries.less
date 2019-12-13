@@ -1,0 +1,71 @@
+/* default properties */
+@defaultColor: #486491;
+
+/* entries */
+.entry {
+    width: 70vw;
+    padding: 0 5vw;
+    margin: 1vh 0;
+    border: 1px solid @defaultColor;
+    border-radius: 10px;
+    font-size: 4vmin;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.entry .arrowAndMoneyWrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.entry .arrowAndMoneyWrapper p {
+    margin-right: 2vw;
+}
+
+.errorMessage {
+    color: red;
+    width: 80vw;
+    text-align: left;
+    font-size: 4vmin;
+}
+
+#entryWrapper {
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    position: fixed;
+    left: 0;
+    transition: left 300ms ease-in-out;
+}
+
+#detailedEntriesWrapper {
+    width: 100vw;
+    /* max-height: 81vh;
+    min-height: 81vh; */
+    height: 81vh;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+    position: fixed;
+    left: 100vw;
+    font-size: 4vmin;
+    overflow-y: scroll;
+    transition: left 300ms ease-in-out;
+}
+
+#detailedEntriesWrapper .detailedEntry {
+    width: 80vw;
+    border: 1px solid @defaultColor;
+    border-radius: 10px;
+    margin: 2vh 0;
+    padding: 0 2vw;
+}
+
+#detailedEntriesWrapper .detailedEntry p {
+    margin: 1vh 0;
+}

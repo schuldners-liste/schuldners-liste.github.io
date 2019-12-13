@@ -6,20 +6,23 @@
     <title>Schulden Verwaltung</title>
     <link rel="icon" href="img/favicon.ico">
     <!-- CSS Files -->
-    <link rel="stylesheet" href="./style/nav.css">
-    <link rel="stylesheet" href="./style/main.css">
-    <link rel="stylesheet" href="./style/footer.css">
-    <link rel="stylesheet" href="./style/header.css">
-    <link rel="stylesheet" href="./style/content.css">
-    <link rel="stylesheet" href="./style/account.css">
-    <link rel="stylesheet" href="./style/createEntry.css">
-    <link rel="stylesheet" href="./style/loadingAnimation.css">
+    <link rel="stylesheet/less" type="text/css" href="./style/nav.less">
+    <link rel="stylesheet/less" type="text/css" href="./style/main.less">
+    <link rel="stylesheet/less" type="text/css" href="./style/footer.less">
+    <link rel="stylesheet/less" type="text/css" href="./style/header.less">
+    <link rel="stylesheet/less" type="text/css" href="./style/content.less">
+    <link rel="stylesheet/less" type="text/css" href="./style/entries.less">
+    <link rel="stylesheet/less" type="text/css" href="./style/account.less">
+    <link rel="stylesheet/less" type="text/css" href="./style/createEntry.less">
+    <link rel="stylesheet/less" type="text/css" href="./style/loadingAnimation.less">
     <!-- JavaScript Files -->
     <script src="./script/nav.js"></script>
     <script src="./script/main.js"></script>
     <script src="./script/entries.js"></script>
     <script src="./script/account.js"></script>
+    <script src="./script/less.min.js"></script>
     <script src="./script/navAction.js"></script>
+    <script src="./script/hammer.min.js"></script>
     <!-- Fonts -->
     <link href='https://fonts.googleapis.com/css?family=Roboto:300,500' rel='stylesheet'>
     <link href='https://fonts.googleapis.com/css?family=Roboto:200,400' rel='stylesheet'>
@@ -146,7 +149,9 @@
       <div id="disableNav" style="display: none;"></div>
 
       <main id="mainContent">
-        <div id="entriesWindow"></div>
+        <div id="entriesWindow">
+          <div id="entryWrapper"></div>
+        </div>
 
         <div id="createEntryWindow" class="hide">
           <div id="switchType">
