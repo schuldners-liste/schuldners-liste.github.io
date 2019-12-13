@@ -507,7 +507,7 @@ function createPersonSelection(wrapperID, user) {
                 feedback.textContent = ''
 
                 person.addEventListener('focus', () => {
-                    person.style.borderColor = '#3fa9f5';
+                    person.style.borderColor = '#486491';
                 });
 
                 person.addEventListener('blur', () => {
@@ -564,12 +564,14 @@ function createPersonSelection(wrapperID, user) {
 }
 
 function printEntriesOverview(person) {
-    const contentWrapper = document.getElementById('entriesWindow');
+    const contentWrapper = document.getElementById('entryWrapper');
     
     while (contentWrapper.firstChild) contentWrapper.removeChild(contentWrapper.firstChild);
  
     // check if person array is not null
     if (person.length > 0) {
+        printDetailedEntries(person);
+
         for (let i = 0; i < person.length; i++) {
             const entries = person[i];
             const newEntry = document.createElement('div');
@@ -589,13 +591,25 @@ function printEntriesOverview(person) {
             }        
     
             sum.textContent = `${totalSum}€`;
-    
+            
+            newEntry.addEventListener('click', () => {
+                const detailedBox  = document.getElementById('detailed' + entries.name.replace(' ', ''));
+
+                detailedBox.classList.remove('hide');
+
+                setTimeout(() => {
+                    contentWrapper.style.left = '-100vw';
+                    document.getElementById('detailedEntriesWrapper').style.left = 0;
+                }, 5);
+            });
+
             arrowAndMoneyWrapper.appendChild(sum);
             arrowAndMoneyWrapper.appendChild(arrowRight);
             arrowAndMoneyWrapper.classList.add('arrowAndMoneyWrapper');
             newEntry.appendChild(name);
             newEntry.appendChild(arrowAndMoneyWrapper);
             newEntry.classList.add('entry');
+            newEntry.setAttribute('id', 'overview' + entries.name.replace(' ', ''));
             contentWrapper.appendChild(newEntry);
         }
     } else {
@@ -604,4 +618,74 @@ function printEntriesOverview(person) {
         text.classList.add('errorMessage');
         contentWrapper.appendChild(text);
     }
+}
+
+function printDetailedEntries(person) {
+    const contentWrapper = document.createElement('div');
+    
+    while (contentWrapper.firstChild) contentWrapper.removeChild(contentWrapper.firstChild);
+ 
+    for (let i = 0; i < person.length; i++) {
+        const entries = person[i];
+        const personBox = document.createElement('div');
+        
+        for (const entry of entries) {
+            console.log(entry);
+            const newEntry = document.createElement('div');
+
+            const personEntries = [];
+
+            personEntries.push({prefix: 'Grund:', content: entry.reason});
+
+            let date = new Date(entry.date);
+            date = `${('0' + date.getDate()).slice(-2)}.${('0' + (date.getMonth() + 1)).slice(-2)}.${date.getFullYear()}`;
+
+            personEntries.push({prefix: 'Datum:', content: date});
+
+            if (entry.type === 'object') {
+                personEntries.push({prefix: 'Objekt:', content: entry.object});
+                personEntries.push({prefix: 'Wert:', content: `${entry.sum}€`});
+            } else {
+                personEntries.push({prefix: 'Betrag:', content: `${entry.sum}€`});
+            }
+
+            for (const personEntry of personEntries) {
+                const prefix = document.createElement('strong');
+                const content = document.createElement('p');
+
+                prefix.textContent = `${personEntry.prefix} `;
+                content.appendChild(prefix);
+                content.innerHTML += personEntry.content;
+
+                newEntry.appendChild(content);
+            }
+
+            console.log(personEntries);
+            
+            newEntry.classList.add('detailedEntry');
+            personBox.appendChild(newEntry);
+        }
+        
+        personBox.setAttribute('id', 'detailed' + entries.name.replace(' ', ''));
+        personBox.classList.add('hide')
+        contentWrapper.appendChild(personBox);
+    }
+
+    contentWrapper.setAttribute('id', 'detailedEntriesWrapper');
+    document.getElementById('entriesWindow').appendChild(contentWrapper);
+    
+    const hammer = new Hammer(contentWrapper);
+
+    hammer.on('swiperight', () => {
+        const divs = document.querySelectorAll('#detailedEntriesWrapper > div');
+
+        document.getElementById('entryWrapper').style.left = 0;
+        contentWrapper.style.left = '100vw';
+
+        setTimeout(() => {
+            for (const div of divs) {
+                div.classList.add('hide');
+            }
+        }, 310);
+    });
 }
