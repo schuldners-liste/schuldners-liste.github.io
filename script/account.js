@@ -75,39 +75,15 @@ window.addEventListener('load', () => {
             // email value is empty
             emInFeedback.textContent = 'Bitte geben Sie eine E-Mail Adresse ein.';
             isValid = false;
-            email.style.borderColor = 'red';
-
-            email.addEventListener('focus', () => {
-                email.style.borderColor = 'red';
-            });
-
-            email.addEventListener('blur', () => {
-                email.style.borderColor = 'red';
-            });
+            email.classList.add('errorInput');
         } else if (validateEmail(email)) {
             // email is valid
             emInFeedback.textContent = '';
-            email.style.borderColor = 'lightgray';
-
-            email.addEventListener('focus', () => {
-                email.style.borderColor = '#03a87c';
-            });
-
-            email.addEventListener('blur', () => {
-                email.style.borderColor = 'lightgray';
-            });
+            email.classList.remove('errorInput');
         } else {
             // email is invalid
             emInFeedback.textContent = 'Ungültige E-Mail Adresse.';
-            email.style.borderColor = 'red';
-
-            email.addEventListener('focus', () => {
-                email.style.borderColor = 'red';
-            });
-
-            email.addEventListener('blur', () => {
-                email.style.borderColor = 'red';
-            });
+            email.classList.add('errorInput');
             
             isValid = false;
         }
@@ -116,27 +92,11 @@ window.addEventListener('load', () => {
             // password value is empty
             pwInFeedback.textContent = 'Bitte geben Sie ein Passwort ein.';
             isValid = false;
-            password.style.borderColor = 'red';
-
-            password.addEventListener('focus', () => {
-                password.style.borderColor = 'red';
-            });
-
-            password.addEventListener('blur', () => {
-                password.style.borderColor = 'red';
-            });
+            password.classList.add('errorInput');
         } else {
             // password is valid
             pwInFeedback.textContent = '';
-            password.style.borderColor = 'lightgray';
-
-            password.addEventListener('focus', () => {
-                password.style.borderColor = '#03a87c';
-            });
-
-            password.addEventListener('blur', () => {
-                password.style.borderColor = 'lightgray';
-            });
+            password.classList.remove('errorInput');
         }
 
         if (isValid) {
@@ -155,25 +115,10 @@ window.addEventListener('load', () => {
                     if (msg.message === errorMsg) {
                         if (msg.affected === 'em') {
                             emUpFeedback.textContent = msg.feedback;
-                            email.style.borderColor = 'red';
-                            email.addEventListener('focus', () => {
-                                email.style.borderColor = 'red';
-                            });
-
-                            email.addEventListener('blur', () => {
-                                email.style.borderColor = 'red';
-                            });
+                            email.classList.add('errorInput');
                         } else if (msg.affected === 'pw') {
                             pwUpFeedback.textContent = msg.feedback;
-                            password.style.borderColor = 'red';
-
-                            password.addEventListener('focus', () => {
-                                password.style.borderColor = 'red';
-                            });
-
-                            password.addEventListener('blur', () => {
-                                password.style.borderColor = 'red';
-                            });
+                            password.classList.add('errorInput');
                         }
                     }
                 }
@@ -224,39 +169,15 @@ window.addEventListener('load', () => {
             // email value is empty
             emUpFeedback.textContent = 'Bitte geben Sie eine E-Mail Adresse ein.';
             isValid = false;
-            email.style.borderColor = 'red';
-
-            email.addEventListener('focus', () => {
-                email.style.borderColor = 'red';
-            });
-
-            email.addEventListener('blur', () => {
-                email.style.borderColor = 'red';
-            });
+            email.classList.add('errorInput');
         } else if (validateEmail(email)) {
             // email is valid
             emUpFeedback.textContent = '';
-            email.style.borderColor = 'lightgray';
-
-            email.addEventListener('focus', () => {
-                email.style.borderColor = '#03a87c';
-            });
-
-            email.addEventListener('blur', () => {
-                email.style.borderColor = 'lightgray';
-            });
+            email.classList.remove('errorInput');
         } else {
             // email is invalid
             emUpFeedback.textContent = 'Ungültige E-Mail Adresse.';
-            email.style.borderColor = 'red';
-
-            email.addEventListener('focus', () => {
-                email.style.borderColor = 'red';
-            });
-
-            email.addEventListener('blur', () => {
-                email.style.borderColor = 'red';
-            });
+            email.classList.add('errorInput');
             
             isValid = false;
         }
@@ -266,54 +187,22 @@ window.addEventListener('load', () => {
             // username value is empty
             unUpFeedback.textContent = 'Bitte geben Sie einen Benutzernamen ein.';
             isValid = false;
-            username.style.borderColor = 'red';
-
-            username.addEventListener('focus', () => {
-                username.style.borderColor = 'red';
-            });
-
-            username.addEventListener('blur', () => {
-                username.style.borderColor = 'red';
-            });
+            username.classList.add('errorInput');
         } else {
             // username is valid
             unUpFeedback.textContent = '';
-            username.style.borderColor = 'lightgray';
-
-            username.addEventListener('focus', () => {
-                username.style.borderColor = '#03a87c';
-            });
-
-            username.addEventListener('blur', () => {
-                username.style.borderColor = 'lightgray';
-            });
+            username.classList.remove('errorInput');
         }
 
         if (password.value === '' || password.value === ' ') {
             // password value is empty
             pwUpFeedback.textContent = 'Bitte geben Sie ein Passwort ein.';
             isValid = false;
-            password.style.borderColor = 'red';
-
-            password.addEventListener('focus', () => {
-                password.style.borderColor = 'red';
-            });
-
-            password.addEventListener('blur', () => {
-                password.style.borderColor = 'red';
-            });
+            password.classList.add('errorInput');
         } else if (validatePassword(password)) {
             // password is valid
             pwUpFeedback.textContent = '';
-            password.style.borderColor = 'lightgray';
-
-            password.addEventListener('focus', () => {
-                password.style.borderColor = '#03a87c';
-            });
-
-            password.addEventListener('blur', () => {
-                password.style.borderColor = 'lightgray';
-            });
+            password.classList.remove('errorInput');
         } else {
             if (!/[a-z]/.test(password.value)) {
                 // no lower case letters
@@ -332,17 +221,7 @@ window.addEventListener('load', () => {
                 pwUpFeedback.textContent = 'Es ist ein unbekannter Fehler aufgetreten, versuchen Sie es später erneut.';
             }
 
-            // password is invalid
-            password.style.borderColor = 'red';
-
-            password.addEventListener('focus', () => {
-                password.style.borderColor = 'red';
-            });
-
-            password.addEventListener('blur', () => {
-                password.style.borderColor = 'red';
-            });
-            
+            password.classList.add('errorInput');
             isValid = false;
         }
 
@@ -362,25 +241,10 @@ window.addEventListener('load', () => {
                     if (msg.message === errorMsg) {
                         if (msg.affected === 'em') {
                             emUpFeedback.textContent = msg.feedback;
-                            email.style.borderColor = 'red';
-                            email.addEventListener('focus', () => {
-                                email.style.borderColor = 'red';
-                            });
-
-                            email.addEventListener('blur', () => {
-                                email.style.borderColor = 'red';
-                            });
+                            email.classList.add('errorInput');
                         } else if (msg.affected === 'pw') {
                             pwUpFeedback.textContent = msg.feedback;
-                            password.style.borderColor = 'red';
-
-                            password.addEventListener('focus', () => {
-                                password.style.borderColor = 'red';
-                            });
-
-                            password.addEventListener('blur', () => {
-                                password.style.borderColor = 'red';
-                            });
+                            password.classList.add('errorInput');
                         }
                     }
                 }
@@ -437,17 +301,9 @@ window.addEventListener('load', () => {
 
         for (const input of inputs) {
             input.value = '';
-
-            input.style.borderColor = 'lightgray';
-
-            input.addEventListener('focus', () => {
-                input.style.borderColor = '#03a87c';
-            });
-
-            input.addEventListener('blur', () => {
-                input.style.borderColor = 'lightgray';
-            });
         }
+
+        input.classList.remove('errorInput');
 
         for (const feedback of feedbacks) {
             feedback.textContent = '';
@@ -468,15 +324,7 @@ window.addEventListener('load', () => {
         for (const input of inputs) {
             input.value = '';
 
-            input.style.borderColor = 'lightgray';
-
-            input.addEventListener('focus', () => {
-                input.style.borderColor = '#03a87c';
-            });
-
-            input.addEventListener('blur', () => {
-                input.style.borderColor = 'lightgray';
-            });
+            input.classList.remove('errorInput');
         }
 
         for (const feedback of feedbacks) {
