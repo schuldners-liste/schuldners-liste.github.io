@@ -490,6 +490,10 @@ function validatePassword(password) {
 }
 
 function validateEmail(email) {
-    const splitEmail = email.value.split('@');
-    return splitEmail.length === 2 && splitEmail[1].split('.').length === 2 && splitEmail[1].split('.')[1].length >= 2;
+    if (email.value.includes('@')) {
+        const splitEmail = email.value.split('@');
+        return splitEmail.length === 2 && splitEmail[1].split('.').length === 2 && splitEmail[1].split('.')[1].length >= 2 && splitEmail[1].split('.')[0].length >= 3;
+    } else {
+        return false;
+    }
 }
