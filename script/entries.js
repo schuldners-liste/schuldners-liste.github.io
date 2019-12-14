@@ -12,6 +12,17 @@ window.addEventListener('load', () => {
     const createEntryMoney = document.getElementById('createEntryMoney');
     const createEntryObject = document.getElementById('createEntryObject');
 
+    // Hammers
+    const createMoneyHammer = new Hammer(createMoneyEntry);
+    createMoneyHammer.on('swipeleft', () => {
+        objectType.click();
+    });
+
+    const createObjectHammer = new Hammer(createObjectEntry);
+    createObjectHammer.on('swiperight', () => {
+        moneyType.click();
+    });
+
     moneyType.addEventListener('click', () => {
         currentType.style.left = '20vw';
         createMoneyEntry.style.left = 0;
