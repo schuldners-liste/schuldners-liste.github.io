@@ -1,7 +1,7 @@
 window.addEventListener('load', () => {
     // Global Variables
-    let createdNewUser = false;
-    
+
+
     // Create Entry
     const moneyType = document.getElementById('moneyType');
     const objectType = document.getElementById('objectType');
@@ -12,7 +12,10 @@ window.addEventListener('load', () => {
     const createEntryMoney = document.getElementById('createEntryMoney');
     const createEntryObject = document.getElementById('createEntryObject');
 
-    // Hammers
+    // execute when loaded
+    sessionStorage.setItem('createdNewUser', false);
+
+    // Library to switch types with swipe gestures
     const createMoneyHammer = new Hammer(createMoneyEntry);
     createMoneyHammer.on('swipeleft', () => {
         objectType.click();
@@ -23,16 +26,25 @@ window.addEventListener('load', () => {
         moneyType.click();
     });
 
+    // switch types when clicked
     moneyType.addEventListener('click', () => {
         currentType.style.left = '20vw';
         createMoneyEntry.style.left = 0;
         createObjectEntry.style.left = '105vw';
+
+        setTimeout(() => {
+            clearCreateInputs();
+        }, 310);
     });
 
     objectType.addEventListener('click', () => {
         currentType.style.left = '60vw';
         createObjectEntry.style.left = 0;
         createMoneyEntry.style.left = '-105vw';
+
+        setTimeout(() => {
+            clearCreateInputs();
+        }, 310);
     });
 
     firebase.auth().onAuthStateChanged((user) => {
@@ -47,10 +59,12 @@ window.addEventListener('load', () => {
                 const person = [];
                 let tempEntries;
 
+                // convert given array to array with "normal" indizes
                 for (const key in snapshot.val()) {
                     person.push(snapshot.val()[key]);
                 }
                 
+                // create array which includes all entries
                 for (let i = 0; i < person.length; i++) {
                     const entry = person[i];
                     tempEntries = [];
@@ -86,127 +100,73 @@ window.addEventListener('load', () => {
         if (name.value === 'Person auswählen') {
             isValid = false;
             nameMoneyFDB.textContent = 'Bitte wählen Sie einen Namen aus.';
-            name.style.borderColor = 'red';
-
-            name.addEventListener('focus', () => {
-                name.style.borderColor = 'red';
-            });
-
-            name.addEventListener('blur', () => {
-                name.style.borderColor = 'red';
-            });
+            name.classList.add('errorInput');
         } else {
-            name.style.borderColor = 'lightgray';
             nameMoneyFDB.textContent = ''
-
-            name.addEventListener('focus', () => {
-                name.style.borderColor = '#3fa9f5';
-            });
-
-            name.addEventListener('blur', () => {
-                name.style.borderColor = 'lightgray';
-            });
+            name.classList.remove('errorInput');
         }
 
         // validate date
         if (date.value === '') {
             isValid = false;
             dateMoneyFDB.textContent = 'Bitte geben Sie ein Datum ein.';
-            date.style.borderColor = 'red';
-
-            date.addEventListener('focus', () => {
-                date.style.borderColor = 'red';
-            });
-
-            date.addEventListener('blur', () => {
-                date.style.borderColor = 'red';
-            });
+            date.classList.add('errorInput');
         } else {
-            date.style.borderColor = 'lightgray';
             dateMoneyFDB.textContent = ''
-
-            date.addEventListener('focus', () => {
-                date.style.borderColor = '#3fa9f5';
-            });
-
-            date.addEventListener('blur', () => {
-                date.style.borderColor = 'lightgray';
-            });
+            date.classList.remove('errorInput');
         }
 
         // validate reason
         if (reason.value === '' || reason.value === ' ') {
             isValid = false;
             reasonMoneyFDB.textContent = 'Bitte geben Sie eine Begründung ein.';
-            reason.style.borderColor = 'red';
-
-            reason.addEventListener('focus', () => {
-                reason.style.borderColor = 'red';
-            });
-
-            reason.addEventListener('blur', () => {
-                reason.style.borderColor = 'red';
-            });
+            reason.classList.add('errorInput');
         } else {
-            reason.style.borderColor = 'lightgray';
             reasonMoneyFDB.textContent = ''
-
-            reason.addEventListener('focus', () => {
-                reason.style.borderColor = '#3fa9f5';
-            });
-
-            reason.addEventListener('blur', () => {
-                reason.style.borderColor = 'lightgray';
-            });
+            reason.classList.remove('errorInput');
         }
         
         // validate sum
         if (sum.value === '' || sum.value === ' ') {
             isValid = false;
             sumMoneyFDB.textContent = 'Bitte geben Sie einen Betrag ein.';
-            sum.style.borderColor = 'red';
-
-            sum.addEventListener('focus', () => {
-                sum.style.borderColor = 'red';
-            });
-
-            sum.addEventListener('blur', () => {
-                sum.style.borderColor = 'red';
-            });
+            sum.classList.add('errorInput');
         } else {
-            sum.style.borderColor = 'lightgray';
             sumMoneyFDB.textContent = ''
-
-            sum.addEventListener('focus', () => {
-                sum.style.borderColor = '#3fa9f5';
-            });
-
-            sum.addEventListener('blur', () => {
-                sum.style.borderColor = 'lightgray';
-            });
+            sum.classList.remove('errorInput');
         }
 
         if (isValid) {
             const entryID = new Date().getTime();
-            let wrapper = document.getElementById('personWrapper');
-            
-            if (createdNewUser) {
-                const person = document.createElement('p');
-                person.textContent = name.value;
+            const wrappers = [
+                document.getElementById('personWrapper'),
+                document.getElementById('personObjectWrapper')
+            ];
 
-                person.addEventListener('click', () => {
-                    wrapper.style.opacity = 0;
-                    wrapper.style.transform = 'scale(0.4)';
-                    choosePerson.value = name.value;
-
-                    setTimeout(() => {
-                        wrapper.classList.remove('hide');
-                    }, 210);
-                });
-                
-                wrapper.appendChild(person);
+            // check if a new person is created
+            // when a new person is created, the person has to be added to the person selection pop up
+            if (sessionStorage.getItem('createdNewUser') === 'true') {
+                for (const wrapper of wrappers) {
+                    const person = document.createElement('p');
+                    person.textContent = name.value;
+    
+                    person.addEventListener('click', () => {
+                        wrapper.style.opacity = 0;
+                        wrapper.style.transform = 'scale(0.4)';
+                        if (wrapper.id.includes('Object')) document.getElementById('choosePersonObject').value = name.value;
+                        else choosePerson.value = name.value;
+    
+                        setTimeout(() => {
+                            wrapper.classList.add('hide');
+                        }, 210);
+                    });
+                    
+                    wrapper.appendChild(person);
+                    wrapper.appendChild(document.createElement('hr'));
+                }
             }
 
+            // store new entry in database
             firebase.database().ref(`users/${firebase.auth().currentUser.uid}/entries/${name.value}/${entryID}`).set({
                 date: date.value,
                 reason: reason.value,
@@ -216,9 +176,26 @@ window.addEventListener('load', () => {
                 restored: false
             });
 
+            // store name in database if not stored yet
             firebase.database().ref(`users/${firebase.auth().currentUser.uid}/entries/${name.value}`).update({
                 name: name.value
             });
+
+            // create array with current entry, used to print to the entry overview
+            let createdEntry = [[{date: date.value, reason: reason.value, entryID: entryID, sum: sum.value *= 1, type: 'money', restored: false}]];
+            createdEntry[0].name = name.value;
+            
+            // check if person already exists
+            const persons = document.querySelectorAll('#detailedEntriesWrapper > div');
+
+            for (const person of persons) {
+                console.log(person.id);
+                console.log(name.value.name.replace(' ', ''));
+
+                if (person.id === ('detailed' + name.value.name.replace(' ', ''))) {
+                    console.log('equal');
+                }
+            }
 
             clearCreateInputs();
             document.getElementById('entriesFooter').click();
@@ -242,151 +219,79 @@ window.addEventListener('load', () => {
         if (name.value === 'Person auswählen') {
             isValid = false;
             nameObjectFDB.textContent = 'Bitte wählen Sie einen Namen aus.';
-            name.style.borderColor = 'red';
-
-            name.addEventListener('focus', () => {
-                name.style.borderColor = 'red';
-            });
-
-            name.addEventListener('blur', () => {
-                name.style.borderColor = 'red';
-            });
+            name.classList.add('errorInput');
         } else {
-            name.style.borderColor = 'lightgray';
             nameObjectFDB.textContent = '';
-
-            name.addEventListener('focus', () => {
-                name.style.borderColor = '#3fa9f5';
-            });
-
-            name.addEventListener('blur', () => {
-                name.style.borderColor = 'lightgray';
-            });
+            name.classList.remove('errorInput');
         }
 
         // validate date
         if (date.value === '') {
             isValid = false;
             dateObjectFDB.textContent = 'Bitte geben Sie ein Datum ein.';
-            date.style.borderColor = 'red';
-
-            date.addEventListener('focus', () => {
-                date.style.borderColor = 'red';
-            });
-
-            date.addEventListener('blur', () => {
-                date.style.borderColor = 'red';
-            });
+            date.classList.add('errorInput');
         } else {
-            date.style.borderColor = 'lightgray';
             dateObjectFDB.textContent = '';
-
-            date.addEventListener('focus', () => {
-                date.style.borderColor = '#3fa9f5';
-            });
-
-            date.addEventListener('blur', () => {
-                date.style.borderColor = 'lightgray';
-            });
+            date.classList.remove('errorInput');
         }
 
         // validate reason
         if (reason.value === '' || reason.value === ' ') {
             isValid = false;
             reasonObjectFDB.textContent = 'Bitte geben Sie eine Begründung ein.';
-            reason.style.borderColor = 'red';
-
-            reason.addEventListener('focus', () => {
-                reason.style.borderColor = 'red';
-            });
-
-            reason.addEventListener('blur', () => {
-                reason.style.borderColor = 'red';
-            });
+            reason.classList.add('errorInput');
         } else {
-            reason.style.borderColor = 'lightgray';
             reasonObjectFDB.textContent = '';
-
-            reason.addEventListener('focus', () => {
-                reason.style.borderColor = '#3fa9f5';
-            });
-
-            reason.addEventListener('blur', () => {
-                reason.style.borderColor = 'lightgray';
-            });
+            reason.classList.remove('errorInput');
         }
         
         // validate worth
         if (worth.value === '' || worth.value === ' ') {
             isValid = false;
             worthObjectFDB.textContent = 'Bitte geben Sie einen Betrag ein.';
-            worth.style.borderColor = 'red';
-
-            worth.addEventListener('focus', () => {
-                worth.style.borderColor = 'red';
-            });
-
-            worth.addEventListener('blur', () => {
-                worth.style.borderColor = 'red';
-            });
+            worth.classList.add('errorInput');
         } else {
-            worth.style.borderColor = 'lightgray';
             worthObjectFDB.textContent = '';
-
-            worth.addEventListener('focus', () => {
-                worth.style.borderColor = '#3fa9f5';
-            });
-
-            worth.addEventListener('blur', () => {
-                worth.style.borderColor = 'lightgray';
-            });
+            worth.classList.remove('errorInput');
         }
 
         // validate object
         if (object.value === '' || object.value === ' ') {
             isValid = false;
             objectFDB.textContent = 'Bitte geben Sie einen Betrag ein.';
-            object.style.borderColor = 'red';
-
-            object.addEventListener('focus', () => {
-                object.style.borderColor = 'red';
-            });
-
-            object.addEventListener('blur', () => {
-                object.style.borderColor = 'red';
-            });
+            object.classList.add('errorInput');
         } else {
-            object.style.borderColor = 'lightgray';
             objectFDB.textContent = '';
-
-            object.addEventListener('focus', () => {
-                object.style.borderColor = '#3fa9f5';
-            });
-
-            object.addEventListener('blur', () => {
-                object.style.borderColor = 'lightgray';
-            });
+            object.classList.remove('errorInput');
         }
 
         if (isValid) {
             const entryID = new Date().getTime();
-            let wrapper = document.getElementById('personWrapper');
-            
-            if (createdNewUser) {
-                const person = document.createElement('p');
-                person.textContent = name.value;
+            const wrappers = [
+                document.getElementById('personWrapper'),
+                document.getElementById('personObjectWrapper')
+            ];
 
-                person.addEventListener('click', () => {
-                    wrapper.style.opacity = 0;
-                    wrapper.style.transform = 'scale(0.4)';
-                    choosePerson.value = name.value;
+            if (sessionStorage.getItem('createdNewUser') === 'true') {
+                for (const wrapper of wrappers) {
+                    const person = document.createElement('p');
+                    person.textContent = name.value;
+    
+                    person.addEventListener('click', () => {
+                        wrapper.style.opacity = 0;
+                        wrapper.style.transform = 'scale(0.4)';
 
-                    setTimeout(() => {
-                        wrapper.classList.remove('hide');
-                    }, 210);
-                });
+                        if (!wrapper.id.includes('Object'))
+                        document.getElementById('choosePerson').value = name.value;
+    
+                        setTimeout(() => {
+                            wrapper.classList.add('hide');
+                        }, 210);
+                    });
 
-                wrapper.appendChild(person);
+                    wrapper.appendChild(person);
+                    wrapper.appendChild(document.createElement('hr'));
+                }
             }
 
             firebase.database().ref(`users/${firebase.auth().currentUser.uid}/entries/${name.value}/${entryID}`).set({
@@ -405,11 +310,8 @@ window.addEventListener('load', () => {
 
             let createdEntry = [[{date: date.value, reason: reason.value, entryID: entryID, sum: worth.value *= 1, object: object.value, type: 'object', restored: false}]];
             createdEntry[0].name = name.value;
-
-            console.log(createdEntry);
             
-
-            // printEntriesOverview();
+            printEntriesOverview(createdEntry, true);
             document.getElementById('entriesFooter').click();
             clearCreateInputs();
         }
@@ -436,6 +338,7 @@ function clearCreateInputs() {
         input.value = '';
     }
 
+    document.getElementById('wothObject').value = 0;
     document.getElementById('choosePerson').value = 'Person auswählen';
     document.getElementById('choosePersonObject').value = 'Person auswählen';
 }
@@ -445,7 +348,7 @@ function createPersonSelection(wrapperID, user) {
 
     firebase.database().ref(`users/${user.uid}/entries`).once('value').then((snapshot) => {
         const wrapper = document.createElement('div');
-        const personWrapper = document.createElement('personWrapper');
+        const personWrapper = document.createElement('div');
         let choosePerson;
         if (wrapperID.includes('Money')) choosePerson = document.getElementById('choosePerson');
         else choosePerson = document.getElementById('choosePersonObject');
@@ -459,12 +362,13 @@ function createPersonSelection(wrapperID, user) {
                     wrapper.style.opacity = 0;
                     wrapper.style.transform = 'scale(0.4)';
                     choosePerson.value = key;
-                    createdNewUser = false;
+                    sessionStorage.setItem('createdNewUser', false);
 
                     setTimeout(() => {
-                        wrapper.classList.remove('hide');
+                        wrapper.classList.add('hide');
                     }, 210);
                 });
+
                 personWrapper.appendChild(person);
                 personWrapper.appendChild(document.createElement('hr'));
             }
@@ -504,26 +408,10 @@ function createPersonSelection(wrapperID, user) {
             if (person.value === '' || person.value === ' ') {
                 isValid = false;
                 feedback.textContent = 'Bitte geben Sie einen Namen ein.';
-                person.style.borderColor = 'red';
-
-                person.addEventListener('focus', () => {
-                    person.style.borderColor = 'red';
-                });
-
-                person.addEventListener('blur', () => {
-                    person.style.borderColor = 'red';
-                });
+                person.classList.add('errorInput');
             } else {
-                person.style.borderColor = 'lightgray';
                 feedback.textContent = ''
-
-                person.addEventListener('focus', () => {
-                    person.style.borderColor = '#486491';
-                });
-
-                person.addEventListener('blur', () => {
-                    person.style.borderColor = 'lightgray';
-                });
+                person.classList.remove('errorInput');
             }
 
             if (isValid) {
@@ -531,11 +419,13 @@ function createPersonSelection(wrapperID, user) {
                 wrapper.style.transform = 'scale(0.4)';
                 choosePerson.value = person.value;
 
-                createdNewUser = true;
-
+                sessionStorage.setItem('createdNewUser', true);
+                
                 setTimeout(() => {
-                    wrapper.classList.remove('hide');
+                    wrapper.classList.add('hide');
                     person.value = '';
+                    feedback.textContent = ''
+                    person.classList.remove('errorInput');
                 }, 210);
             }
         });
@@ -553,10 +443,9 @@ function createPersonSelection(wrapperID, user) {
 
             wrapper.style.opacity = 0;
             wrapper.style.transform = 'scale(0.4)';
-            choosePerson.value = person.value;
 
             setTimeout(() => {
-                wrapper.classList.remove('hide');
+                wrapper.classList.add('hide');
             }, 210);
         });
         
@@ -574,14 +463,15 @@ function createPersonSelection(wrapperID, user) {
     });
 }
 
-function printEntriesOverview(person) {
+function printEntriesOverview(person, addedLater) {
     const contentWrapper = document.getElementById('entryWrapper');
-    
+
+    if (!addedLater)
     while (contentWrapper.firstChild) contentWrapper.removeChild(contentWrapper.firstChild);
  
     // check if person array is not null
     if (person.length > 0) {
-        printDetailedEntries(person);
+        printDetailedEntries(person, false);
 
         for (let i = 0; i < person.length; i++) {
             const entries = person[i];
@@ -597,6 +487,7 @@ function printEntriesOverview(person) {
             
             // calculate total sum
             let totalSum = 0;
+
             for (const entry of entries) {
                 totalSum += entry.sum;
             }        
@@ -631,9 +522,10 @@ function printEntriesOverview(person) {
     }
 }
 
-function printDetailedEntries(person) {
+function printDetailedEntries(person, addedLater) {
     const contentWrapper = document.createElement('div');
     
+    if (!addedLater)
     while (contentWrapper.firstChild) contentWrapper.removeChild(contentWrapper.firstChild);
  
     for (let i = 0; i < person.length; i++) {
@@ -641,7 +533,6 @@ function printDetailedEntries(person) {
         const personBox = document.createElement('div');
         
         for (const entry of entries) {
-            console.log(entry);
             const newEntry = document.createElement('div');
 
             const personEntries = [];
@@ -670,8 +561,6 @@ function printDetailedEntries(person) {
 
                 newEntry.appendChild(content);
             }
-
-            console.log(personEntries);
             
             newEntry.classList.add('detailedEntry');
             personBox.appendChild(newEntry);
