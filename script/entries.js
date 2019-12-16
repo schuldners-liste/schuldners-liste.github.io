@@ -95,7 +95,6 @@ window.addEventListener('load', () => {
         const reason = document.getElementById('reasonMoney');
         const sum = document.getElementById('sumMoney');
 
-
         // validate name
         if (name.value === 'Person auswählen') {
             isValid = false;
