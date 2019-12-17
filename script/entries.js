@@ -1,7 +1,6 @@
 window.addEventListener('load', () => {
     // Global Variables
 
-
     // Create Entry
     const moneyType = document.getElementById('moneyType');
     const objectType = document.getElementById('objectType');
