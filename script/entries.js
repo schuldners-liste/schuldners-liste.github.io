@@ -14,6 +14,7 @@ window.addEventListener('load', () => {
 
     // execute when loaded
     sessionStorage.setItem('createdNewUser', false);
+    initDisablePersonSelection();
 
     // Library to switch types with swipe gestures
     const createMoneyHammer = new Hammer(createMoneyEntry);
@@ -363,6 +364,9 @@ function createPersonSelection(wrapperID, user) {
                     choosePerson.value = key;
                     sessionStorage.setItem('createdNewUser', false);
 
+                    document.getElementById('disableObjectPersonSelection').classList.add('hide');
+                    document.getElementById('disableMoneyPersonSelection').classList.add('hide');
+
                     setTimeout(() => {
                         wrapper.classList.add('hide');
                     }, 210);
@@ -375,14 +379,10 @@ function createPersonSelection(wrapperID, user) {
 
         choosePerson.addEventListener('click', () => {
             wrapper.classList.remove('hide');
-
             wrapper.style.top = ((window.innerHeight - wrapper.clientHeight) / 4) + 'px';
 
-            // document.getElementsByClassName('hidePopUpBox')[0].classList.remove('hide');
-
-            // setTimeout(() => {
-                // document.getElementsByClassName('hidePopUpBox')[0].style.opacity = 1;
-            // }, 5);
+            if (wrapperID.includes('Money')) document.getElementById('disableMoneyPersonSelection').classList.remove('hide');
+            else document.getElementById('disableObjectPersonSelection').classList.remove('hide');
 
             setTimeout(() => {
                 wrapper.style.opacity = 1;
@@ -419,6 +419,9 @@ function createPersonSelection(wrapperID, user) {
                 choosePerson.value = person.value;
 
                 sessionStorage.setItem('createdNewUser', true);
+
+                if (wrapperID.includes('Money')) document.getElementById('disableMoneyPersonSelection').classList.add('hide');
+                else document.getElementById('disableObjectPersonSelection').classList.add('hide');
                 
                 setTimeout(() => {
                     wrapper.classList.add('hide');
@@ -428,37 +431,22 @@ function createPersonSelection(wrapperID, user) {
                 }, 210);
             }
         });
-
-        // create div box in background to disappear the popup
-        const hidePopUpBox = document.createElement('div');
-        hidePopUpBox.setAttribute('class', 'hidePopUpBox hide');
-
-        hidePopUpBox.addEventListener('click', () => {
-            hidePopUpBox.style.opacity = 0;
-
-            setTimeout(() => {
-                hidePopUpBox.classList.add('hide');
-            }, 210);
-
-            wrapper.style.opacity = 0;
-            wrapper.style.transform = 'scale(0.4)';
-
-            setTimeout(() => {
-                wrapper.classList.add('hide');
-            }, 210);
-        });
         
-        if (wrapperID.includes('Money')) personWrapper.setAttribute('id', 'personWrapper');
-        else personWrapper.setAttribute('id', 'personObjectWrapper');
+        if (wrapperID.includes('Money')) {
+            personWrapper.setAttribute('id', 'personWrapper');
+            wrapper.setAttribute('id', 'moneyPersonSelection');
+        } else {
+            personWrapper.setAttribute('id', 'personObjectWrapper');
+            wrapper.setAttribute('id', 'objectPersonSelection');
+        }
+
+        wrapper.setAttribute('class', 'selectPersonPopUp hide');
+
         wrapper.appendChild(personWrapper);
         wrapper.appendChild(person);
         wrapper.appendChild(feedback);
         wrapper.appendChild(saveBtn);
-        wrapper.setAttribute('class', 'selectPersonPopUp hide');
-        if (wrapperID.includes('Money')) wrapper.setAttribute('id', 'moneyPersonSelection');
-        else wrapper.setAttribute('id', 'objectPersonSelection');
         contentWrapper.appendChild(wrapper);
-        // document.body.appendChild(hidePopUpBox);
     });
 }
 
@@ -586,5 +574,19 @@ function printDetailedEntries(person, addedLater) {
                 div.classList.add('hide');
             }
         }, 310);
+    });
+}
+
+function initDisablePersonSelection() {
+    document.getElementById('disableMoneyPersonSelection').addEventListener('click', () => {
+        document.getElementById('moneyPersonSelection').style.opacity = 0;
+        document.getElementById('moneyPersonSelection').style.transform = 'scale(0.4)';
+        document.getElementById('disableMoneyPersonSelection').classList.add('hide');
+    });
+
+    document.getElementById('disableObjectPersonSelection').addEventListener('click', () => {
+        document.getElementById('objectPersonSelection').style.opacity = 0;
+        document.getElementById('objectPersonSelection').style.transform = 'scale(0.4)';
+        document.getElementById('disableObjectPersonSelection').classList.add('hide');
     });
 }
