@@ -282,6 +282,8 @@ window.addEventListener('load', () => {
                 document.getElementById('personObjectWrapper')
             ];
 
+            // check if a new person is created
+            // when a new person is created, the person has to be added to the person selection pop up
             if (sessionStorage.getItem('createdNewUser') === 'true') {
                 for (const wrapper of wrappers) {
                     const person = document.createElement('p');
@@ -304,6 +306,7 @@ window.addEventListener('load', () => {
                 }
             }
 
+            // store new entry in database
             firebase.database().ref(`users/${firebase.auth().currentUser.uid}/entries/${name.value}/${entryID}`).set({
                 date: date.value,
                 reason: reason.value,
@@ -314,6 +317,7 @@ window.addEventListener('load', () => {
                 restored: false
             });
 
+            // store name in database if not stored yet
             firebase.database().ref(`users/${firebase.auth().currentUser.uid}/entries/${name.value}`).update({
                 name: name.value
             });
