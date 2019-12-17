@@ -180,21 +180,31 @@ window.addEventListener('load', () => {
             firebase.database().ref(`users/${firebase.auth().currentUser.uid}/entries/${name.value}`).update({
                 name: name.value
             });
-
-            // create array with current entry, used to print to the entry overview
-            let createdEntry = [[{date: date.value, reason: reason.value, entryID: entryID, sum: sum.value *= 1, type: 'money', restored: false}]];
-            createdEntry[0].name = name.value;
             
             // check if person already exists
             const persons = document.querySelectorAll('#detailedEntriesWrapper > div');
-
+            let personFound = false;
+            
             for (const person of persons) {
-                console.log(person.id);
-                console.log(name.value.name.replace(' ', ''));
-
-                if (person.id === ('detailed' + name.value.name.replace(' ', ''))) {
-                    console.log('equal');
+                if (person.id === ('detailed' + name.value.replace(' ', ''))) {                    
+                    personFound = true;
                 }
+            }
+
+            let createdEntry;
+            
+            if (!personFound) {
+                // format array with current entry to make sure, that the called method can use the data
+                createdEntry = [[{date: date.value, reason: reason.value, entryID: entryID, sum: sum.value *= 1, type: 'money', restored: false}]];
+                createdEntry[0].name = name.value;
+                
+                printEntriesOverview(createdEntry, true);
+                printDetailedEntries(createdEntry);
+            } else {
+                // format array with current entry to make sure, that the called method can use the data
+                createdEntry = {date: date.value, reason: reason.value, entryID: entryID, sum: sum.value *= 1, type: 'money', restored: false};
+                createdEntry.name = name.value;
+                document.getElementById('detailed' + name.value.replace(' ', '')).appendChild(createDetailedEntry(createdEntry));
             }
 
             clearCreateInputs();
@@ -308,12 +318,34 @@ window.addEventListener('load', () => {
                 name: name.value
             });
 
-            let createdEntry = [[{date: date.value, reason: reason.value, entryID: entryID, sum: worth.value *= 1, object: object.value, type: 'object', restored: false}]];
-            createdEntry[0].name = name.value;
+            // check if person already exists
+            const persons = document.querySelectorAll('#detailedEntriesWrapper > div');
+            let personFound = false;
             
-            printEntriesOverview(createdEntry, true);
-            document.getElementById('entriesFooter').click();
+            for (const person of persons) {
+                if (person.id === ('detailed' + name.value.replace(' ', ''))) {                    
+                    personFound = true;
+                }
+            }
+
+            let createdEntry;
+            
+            if (!personFound) {
+                // format array with current entry to make sure, that the called method can use the data
+                createdEntry = [[{date: date.value, reason: reason.value, entryID: entryID, sum: worth.value *= 1, object: object.value, type: 'object', restored: false}]];
+                createdEntry[0].name = name.value;
+                
+                printEntriesOverview(createdEntry, true);
+                printDetailedEntries(createdEntry);
+            } else {
+                // format array with current entry to make sure, that the called method can use the data
+                createdEntry = {date: date.value, reason: reason.value, entryID: entryID, sum: worth.value *= 1, object: object.value, type: 'object', restored: false};
+                createdEntry.name = name.value;
+                document.getElementById('detailed' + name.value.replace(' ', '')).appendChild(createDetailedEntry(createdEntry));
+            }
+        
             clearCreateInputs();
+            document.getElementById('entriesFooter').click();
         }
     });
 });
@@ -458,7 +490,7 @@ function printEntriesOverview(person, addedLater) {
  
     // check if person array is not null
     if (person.length > 0) {
-        printDetailedEntries(person, false);
+        printDetailedEntries(person);
 
         for (let i = 0; i < person.length; i++) {
             const entries = person[i];
@@ -509,72 +541,74 @@ function printEntriesOverview(person, addedLater) {
     }
 }
 
-function printDetailedEntries(person, addedLater) {
-    const contentWrapper = document.createElement('div');
-    
-    if (!addedLater)
-    while (contentWrapper.firstChild) contentWrapper.removeChild(contentWrapper.firstChild);
- 
-    for (let i = 0; i < person.length; i++) {
-        const entries = person[i];
+function printDetailedEntries(persons) {
+    for (const entries of persons) {
         const personBox = document.createElement('div');
-        
+
         for (const entry of entries) {
-            const newEntry = document.createElement('div');
-
-            const personEntries = [];
-
-            personEntries.push({prefix: 'Grund:', content: entry.reason});
-
-            let date = new Date(entry.date);
-            date = `${('0' + date.getDate()).slice(-2)}.${('0' + (date.getMonth() + 1)).slice(-2)}.${date.getFullYear()}`;
-
-            personEntries.push({prefix: 'Datum:', content: date});
-
-            if (entry.type === 'object') {
-                personEntries.push({prefix: 'Objekt:', content: entry.object});
-                personEntries.push({prefix: 'Wert:', content: `${entry.sum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')}€`});
-            } else {
-                personEntries.push({prefix: 'Betrag:', content: `${entry.sum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')}€`});
-            }
-
-            for (const personEntry of personEntries) {
-                const prefix = document.createElement('strong');
-                const content = document.createElement('p');
-
-                prefix.textContent = `${personEntry.prefix} `;
-                content.appendChild(prefix);
-                content.innerHTML += personEntry.content;
-
-                newEntry.appendChild(content);
-            }
-            
-            newEntry.classList.add('detailedEntry');
-            personBox.appendChild(newEntry);
+            personBox.appendChild(createDetailedEntry(entry));
         }
         
         personBox.setAttribute('id', 'detailed' + entries.name.replace(' ', ''));
-        personBox.classList.add('hide')
-        contentWrapper.appendChild(personBox);
+        personBox.classList.add('hide');
+
+        if (document.getElementById('detailedEntriesWrapper') === null) {
+            const contentWrapper = document.createElement('div');
+            contentWrapper.appendChild(personBox);
+            contentWrapper.setAttribute('id', 'detailedEntriesWrapper');
+            document.getElementById('entriesWindow').appendChild(contentWrapper);
+        } else {
+            document.getElementById('detailedEntriesWrapper').appendChild(personBox);
+        }
+
+        const hammer = new Hammer(document.getElementById('detailedEntriesWrapper'));
+
+        hammer.on('swiperight', () => {
+            const divs = document.querySelectorAll('#detailedEntriesWrapper > div');
+
+            document.getElementById('entryWrapper').style.left = 0;
+            document.getElementById('detailedEntriesWrapper').style.left = '100vw';
+
+            setTimeout(() => {
+                for (const div of divs) {
+                    div.classList.add('hide');
+                }
+            }, 310);
+        });
+    }
+}
+
+function createDetailedEntry(entry) {
+    const newEntry = document.createElement('div');
+    const personEntries = [];
+
+    personEntries.push({prefix: 'Grund:', content: entry.reason});
+
+    let date = new Date(entry.date);
+    date = `${('0' + date.getDate()).slice(-2)}.${('0' + (date.getMonth() + 1)).slice(-2)}.${date.getFullYear()}`;
+
+    personEntries.push({prefix: 'Datum:', content: date});
+
+    if (entry.type === 'object') {
+        personEntries.push({prefix: 'Objekt:', content: entry.object});
+        personEntries.push({prefix: 'Wert:', content: `${entry.sum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')}€`});
+    } else {
+        personEntries.push({prefix: 'Betrag:', content: `${entry.sum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')}€`});
     }
 
-    contentWrapper.setAttribute('id', 'detailedEntriesWrapper');
-    document.getElementById('entriesWindow').appendChild(contentWrapper);
+    for (const personEntry of personEntries) {
+        const prefix = document.createElement('strong');
+        const content = document.createElement('p');
+
+        prefix.textContent = `${personEntry.prefix} `;
+        content.appendChild(prefix);
+        content.innerHTML += personEntry.content;
+
+        newEntry.appendChild(content);
+    }
     
-    const hammer = new Hammer(contentWrapper);
-
-    hammer.on('swiperight', () => {
-        const divs = document.querySelectorAll('#detailedEntriesWrapper > div');
-
-        document.getElementById('entryWrapper').style.left = 0;
-        contentWrapper.style.left = '100vw';
-
-        setTimeout(() => {
-            for (const div of divs) {
-                div.classList.add('hide');
-            }
-        }, 310);
-    });
+    newEntry.classList.add('detailedEntry');
+    return newEntry;
 }
 
 function initDisablePersonSelection() {
