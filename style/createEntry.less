@@ -151,43 +151,13 @@
     border-color: @defaultColor;
 }
 
-.hidePopUpBox {
-    background: #00000069;
+#disableMoneyPersonSelection, #disableObjectPersonSelection {
     width: 100vw;
     height: 100vh;
     position: absolute;
-    top: 0;
+    top: -15vh;
     left: 0;
     opacity: 0;
-    z-index: 0;
+    z-index: 99;
     transition: opacity 200ms ease-in-out;
-}
-
-/* entries */
-.entry {
-    width: 70vw;
-    padding: 0 5vw;
-    border: 3px solid @defaultColor;
-    border-radius: 10px;
-    font-size: 4vmin;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.entry .arrowAndMoneyWrapper {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.entry .arrowAndMoneyWrapper p {
-    margin-right: 2vw;
-}
-
-.errorMessage {
-    color: red;
-    width: 80vw;
-    text-align: left;
-    font-size: 4vmin;
 }
