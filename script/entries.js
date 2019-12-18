@@ -589,6 +589,8 @@ function printDetailedEntries(persons) {
 
 function createDetailedEntry(entry) {
     const newEntry = document.createElement('div');
+    const dataWrapper = document.createElement('div');
+    const iconWrapper = document.createElement('div');
     const personEntries = [];
 
     personEntries.push({prefix: 'Grund:', content: entry.reason});
@@ -613,8 +615,23 @@ function createDetailedEntry(entry) {
         content.appendChild(prefix);
         content.innerHTML += personEntry.content;
 
-        newEntry.appendChild(content);
+        dataWrapper.appendChild(content);
     }
+
+    const editEntryIcon = document.createElement('i');
+    editEntryIcon.setAttribute('class', 'fas fa-edit');
+
+    const deleteEntryIcon = document.createElement('i');
+    deleteEntryIcon.setAttribute('class', 'fas fa-times');
+
+    iconWrapper.appendChild(deleteEntryIcon);
+    iconWrapper.appendChild(editEntryIcon);
+
+    dataWrapper.setAttribute('class', 'entryDataWrapper');
+    iconWrapper.setAttribute('class', 'entryIconWrapper');
+
+    newEntry.appendChild(dataWrapper);
+    newEntry.appendChild(iconWrapper);
     
     newEntry.classList.add('detailedEntry');
     return newEntry;

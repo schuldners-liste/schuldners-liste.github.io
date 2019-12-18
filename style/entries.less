@@ -53,19 +53,41 @@
     flex-direction: column;
     position: fixed;
     left: 100vw;
-    font-size: 4vmin;
+    font-size: 4.5vmin;
     overflow-y: scroll;
     transition: left 300ms ease-in-out;
 }
 
 #detailedEntriesWrapper .detailedEntry {
     width: 80vw;
-    border: 1px solid @defaultColor;
+    border: 1px solid #486491;
     border-radius: 3px;
     margin: 2vh 0;
     padding: 0 2vw;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
 }
 
 #detailedEntriesWrapper .detailedEntry p {
     margin: 1vh 0;
+}
+
+#detailedEntriesWrapper .entryDataWrapper {
+    width: 100%;
+    height: 100%;
+}
+
+#detailedEntriesWrapper .entryIconWrapper {
+    width: 3vw;
+    height: 100%;
+    font-size: 5.5vw;
+    margin: .25vh 2vw;
+}
+
+#detailedEntriesWrapper .entryIconWrapper i {
+    text-align: center;
+    width: 5.5vw;
+    margin: .7vh 0;
 }
