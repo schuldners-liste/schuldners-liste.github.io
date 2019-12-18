@@ -6,8 +6,8 @@ window.addEventListener('load', () => {
         {navElement: document.getElementById('deletedFooter'), name: 'Gelöscht', window: document.getElementById('deletedEntriesWindow')},
         {navElement: document.getElementById('entriesFooter'), name: 'Einträge', window: document.getElementById('entriesWindow')},
         {navElement: document.getElementById('addEntryFooter'), name: 'Eintrag erstellen', window: document.getElementById('createEntryWindow')},
+        {navElement: document.getElementById('deletedNav'), name: 'Gelöscht', window: document.getElementById('deletedEntriesWindow')},
         {navElement: document.getElementById('entriesNav'), name: 'Einträge', window: document.getElementById('entriesWindow')},
-        {navElement: document.getElementById('deletedNav'), name: 'Eintrag erstellen', window: document.getElementById('deletedEntriesWindow')},
     ];
 
     
