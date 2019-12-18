@@ -4,6 +4,7 @@ window.addEventListener('load', () => {
   let previousX;
   let touchendFunction;
   let touchmoveFunction;
+  let touchmoveAllowed = false;
 
   document.getElementById('nav').style.right = (window.innerWidth / 100) * 110 + 'px';
 
@@ -16,8 +17,10 @@ window.addEventListener('load', () => {
     previousX = startX;
     
     if (startX <= 50) {
+      touchmoveAllowed = true;
+
       touchmoveFunction = (eve) => {
-        if (startX <= 50) {
+        if (startX <= 50 && touchmoveAllowed) {
           touchobj = eve.changedTouches[0];
           let xCoord = parseInt(touchobj.clientX);
           let diff = xCoord - previousX;
@@ -30,7 +33,7 @@ window.addEventListener('load', () => {
             nav.style.right = (parseInt(currentPosition) - diff) + 'px';
           }
         }
-        
+
         console.log("do anything");
       }
 
@@ -48,11 +51,7 @@ window.addEventListener('load', () => {
             previousX = parseInt(nav.style.right);
             disableNav.style.display = 'none';
 
-            touchmoveFunction = () => {
-              console.log('sorry, removed function');
-            }
-
-            console.log('removed');
+            touchmoveAllowed = false;
           }
       
           setTimeout(() => {
@@ -73,6 +72,8 @@ window.addEventListener('load', () => {
     setTimeout(() => {
       nav.style.transition = 'right 500ms ease-out';
 
+      touchmoveAllowed = true;
+      
       if (nav.style.right === (window.innerWidth / 100) * 20 + 'px') {
         nav.style.right = (window.innerWidth / 100) * 110 + 'px';
         previousX = parseInt(nav.style.right);
@@ -98,9 +99,7 @@ window.addEventListener('load', () => {
         previousX = parseInt(nav.style.right);
         disableNav.style.display = 'none';
 
-        touchmoveFunction = () => {
-          console.log('sorry, removed function');
-        }
+        touchmoveAllowed = false;
       }
 
       setTimeout(() => {
