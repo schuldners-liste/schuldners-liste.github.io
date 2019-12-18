@@ -515,6 +515,7 @@ function printEntriesOverview(person, addedLater) {
             }        
     
             sum.textContent = `${totalSum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')}€`;
+            sum.textContent = sum.textContent.replace('.', ',');
             
             newEntry.addEventListener('click', () => {
                 const detailedBox  = document.getElementById('detailed' + entries.name.replace(' ', ''));
@@ -606,6 +607,8 @@ function createDetailedEntry(entry) {
     } else {
         personEntries.push({prefix: 'Betrag:', content: `${entry.sum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')}€`});
     }
+
+    personEntries[personEntries.length - 1].content = personEntries[personEntries.length - 1].content.replace('.', ',');
 
     for (const personEntry of personEntries) {
         const prefix = document.createElement('strong');
