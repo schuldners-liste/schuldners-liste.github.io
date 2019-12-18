@@ -68,7 +68,7 @@ window.addEventListener('load', () => {
     }
   });
 
-  bars.addEventListener('touchstart', () => {
+  bars.addEventListener('click', () => {
     setTimeout(() => {
       nav.style.transition = 'right 500ms ease-out';
 
