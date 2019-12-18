@@ -525,6 +525,10 @@ function printEntriesOverview(person, addedLater) {
                     contentWrapper.style.left = '-100vw';
                     document.getElementById('detailedEntriesWrapper').style.left = 0;
                 }, 5);
+
+                setTimeout(()  => {
+                    changeHeadline(entries.name);
+                }, 300);
             });
 
             arrowAndMoneyWrapper.appendChild(sum);
@@ -576,6 +580,8 @@ function printDetailedEntries(persons) {
                 for (const div of divs) {
                     div.classList.add('hide');
                 }
+
+                changeHeadline('Einträge');
             }, 310);
         });
     }
@@ -626,4 +632,8 @@ function initDisablePersonSelection() {
         document.getElementById('objectPersonSelection').style.transform = 'scale(0.4)';
         document.getElementById('disableObjectPersonSelection').classList.add('hide');
     });
+}
+
+function changeHeadline(text) {
+    document.getElementById('title').textContent = text;
 }
