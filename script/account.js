@@ -301,9 +301,9 @@ window.addEventListener('load', () => {
 
         for (const input of inputs) {
             input.value = '';
+            input.classList.remove('errorInput');
         }
 
-        input.classList.remove('errorInput');
 
         for (const feedback of feedbacks) {
             feedback.textContent = '';
