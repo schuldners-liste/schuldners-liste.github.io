@@ -27,6 +27,20 @@ window.addEventListener('load', () => {
         for (const window of windows) {
             window.window.classList.add('hide');
         }
+
+        // reset entry overview window
+        const divs = document.querySelectorAll('#detailedEntriesWrapper > div');
+
+        document.getElementById('entryWrapper').style.left = 0;
+        document.getElementById('detailedEntriesWrapper').style.left = '100vw';
+
+        setTimeout(() => {
+            for (const div of divs) {
+                div.classList.add('hide');
+            }
+
+            if (!document.getElementById('entriesWindow').className.includes('hide')) changeHeadline('Einträge');            
+        }, 310);
     }
 
     signOut.addEventListener('click', () => {
