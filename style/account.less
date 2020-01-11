@@ -171,3 +171,70 @@
 .errorInput:focus {
     border-color: red !important;
 }
+
+/* forgot password */
+#passwordForgotWrapper {
+    width: 75vw;
+    height: 50vh;
+    padding: 0 5vw;
+    box-shadow: 0 3px 10px 2px rgba(143,143,143,.5);
+    border-radius: 5px;
+    background: white;
+    font-size: 4vmin;
+    opacity: 0;
+    transform: scale(.6);
+    position: absolute;
+    top: 12vh;
+    left: 7.5vw;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+    z-index: 102;
+    transition: transform 200ms ease-in-out, opacity 200ms ease-in-out;
+}
+
+#disablePasswordForgotWrapper {
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 101;
+}
+
+#forgotPWEmail {
+    margin-bottom: 0 !important;
+}
+
+#forgotButtonWrapper {
+    width: 90%;
+    height: auto;
+    margin: .8vh 0 0 0;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+#sendForgotEmail {
+    width: 23%;
+    padding: 2vmin !important;
+    margin-bottom: 0 !important;
+}
+
+.infoText {
+    font-size: 3.5vmin;
+    text-align: left;
+    margin: 4vh 0 0 0 !important;
+}
+
+#fgtEMFeedback {
+    width: 90%;
+    text-align: left;
+    font-size: 3vmin;
+    color: red;
+}
+
+.infoText i {
+    margin-right: 1vw;
+}
