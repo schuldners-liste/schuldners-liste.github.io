@@ -53,7 +53,6 @@
             <span>Registrieren</span>
           </div>
         </div>
-
       </div>
 
       <div id="signInWrapper">
@@ -115,9 +114,22 @@
         <p id="goToSignIn">bereits registriert? Anmelden!</p>
       </div>
 
-      <div id="passwordForgotWrapper">
+      <div id="passwordForgotWrapper" class="hide">
+        <h2>Passwort zurücksetzen</h2>
+
+        <input type="email" id="forgotPWEmail" placeholder="E-Mail Adresse">
+        <p id="fgtEMFeedback"> &nbsp; </p>
         
+        <div id="forgotButtonWrapper">
+          <div class="button" id="sendForgotEmail">
+            Senden
+          </div>
+        </div>
+
+        <p class="infoText"><i class="fas fa-info-circle"></i> Geben Sie die E-Mail Adresse Ihre Accounts ein, um einen Link zum Zurücksetzen das Passwortes zu erhalten.</p>
       </div>
+
+      <div id="disablePasswordForgotWrapper" class="hide"></div>
 
       <div id="continueWithGoogle">
         <img src="./img/google_logo.svg" alt="cannot display image"> <p>mit Google fortfahren</p>
