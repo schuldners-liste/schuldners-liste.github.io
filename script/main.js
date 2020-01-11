@@ -12,6 +12,7 @@ window.addEventListener('load', () => {
     };
 
     firebase.initializeApp(firebaseConfig);
+    firebase.auth().useDeviceLanguage();
 
     firebase.auth().onAuthStateChanged((user) => {
         if (user) {
