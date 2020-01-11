@@ -8,6 +8,10 @@ window.addEventListener('load', () => {
     const continueWithSignUp = document.getElementById('continueWithSignUp');
     const signInButton = document.getElementById('signInBtn');
     const signUpButton = document.getElementById('signUpBtn');
+    const passwordForgot = document.getElementById('passwordForgot');
+    const passwordForgotWrapper = document.getElementById('passwordForgotWrapper');
+    const disablePasswordForgotWrapper = document.getElementById('disablePasswordForgotWrapper');
+    const sendForgotEmail = document.getElementById('sendForgotEmail');
 
     AOS.init();
 
@@ -59,6 +63,49 @@ window.addEventListener('load', () => {
         setTimeout(() => {
             clearSignUp();
         }, 310);
+    });
+
+    passwordForgot.addEventListener('click', () => {
+        passwordForgotWrapper.classList.remove('hide');
+
+        setTimeout(() => {
+            passwordForgotWrapper.style.opacity = 1;
+            passwordForgotWrapper.style.transform = 'scale(1)';
+        }, 10);
+
+        disablePasswordForgotWrapper.classList.remove('hide');
+    });
+
+    disablePasswordForgotWrapper.addEventListener('click', () => {
+        disablePasswordForgotWrapper.classList.add('hide');
+        passwordForgotWrapper.style.opacity = 0;
+        passwordForgotWrapper.style.transform = 'scale(.6)';
+        
+        setTimeout(() => {
+            passwordForgotWrapper.classList.add('hide');
+        }, 210);
+    });
+
+    sendForgotEmail.addEventListener('click', () => {
+        const email = document.getElementById('forgotPWEmail');
+        const fdb = document.getElementById('fgtEMFeedback');
+
+        if (email.value === '' || email.value === ' ') {
+            email.classList.add('errorInput');
+            fdb.textContent = 'Es muss eine E-Mail Adresse eingegeben sein.';
+        } else if (!validateEmail(email)) {
+            email.classList.add('errorInput');
+            fdb.textContent = 'Ungültige E-Mail Adresse.';
+        } else {
+            email.classList.remove('errorInput');
+            fdb.innerHTML = '&nbsp;';
+
+            firebase.auth().sendPasswordResetEmail(email.value).then(() => {
+                console.log('email sent');
+            }).catch((error) => {
+                console.log('an error occured');
+            });
+        }
     });
 
     signInButton.addEventListener('click', () => {
@@ -333,10 +380,12 @@ window.addEventListener('load', () => {
     }
 });
 
+// @param input Element
 function validatePassword(password) {
     return /[a-z]/.test(password.value) && /[A-Z]/.test(password.value) && /[0-9]/.test(password.value) && password.value.length > 5;
 }
 
+// @param input Element
 function validateEmail(email) {
     if (email.value.includes('@')) {
         const splitEmail = email.value.split('@');
