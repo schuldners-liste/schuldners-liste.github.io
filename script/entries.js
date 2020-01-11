@@ -594,41 +594,71 @@ function createDetailedEntry(entry) {
     const iconWrapper = document.createElement('div');
     const personEntries = [];
 
-    personEntries.push({prefix: 'Grund:', content: entry.reason});
+    personEntries.push({prefix: 'Grund:', content: entry.reason, element: 'textarea'});
 
     let date = new Date(entry.date);
     date = `${('0' + date.getDate()).slice(-2)}.${('0' + (date.getMonth() + 1)).slice(-2)}.${date.getFullYear()}`;
 
-    personEntries.push({prefix: 'Datum:', content: date});
+    personEntries.push({prefix: 'Datum:', content: date, element: 'text'});
 
     if (entry.type === 'object') {
-        personEntries.push({prefix: 'Objekt:', content: entry.object});
-        personEntries.push({prefix: 'Wert:', content: `${entry.sum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')}€`});
+        personEntries.push({prefix: 'Objekt:', content: entry.object, element: 'text'});
+        personEntries.push({prefix: 'Wert:', content: `${entry.sum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')}€`, element: 'text'});
     } else {
-        personEntries.push({prefix: 'Betrag:', content: `${entry.sum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')}€`});
+        personEntries.push({prefix: 'Betrag:', content: `${entry.sum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')}€`, element: 'text'});
     }
 
     personEntries[personEntries.length - 1].content = personEntries[personEntries.length - 1].content.replace('.', ',');
 
     for (const personEntry of personEntries) {
+        const row = document.createElement('div');
         const prefix = document.createElement('strong');
-        const content = document.createElement('p');
+        let content;
+        if (personEntry.element === 'textarea') {
+            content = document.createElement(personEntry.element);
+            content.setAttribute('rows', '1');
+        } else {
+            content = document.createElement('input');
+            content.type = personEntry.element;
+            content.innerHTML += '€';
+        }
 
         prefix.textContent = `${personEntry.prefix} `;
         content.appendChild(prefix);
-        content.innerHTML += personEntry.content;
+        content.value = personEntry.content;
+        content.readOnly = true;
 
-        dataWrapper.appendChild(content);
+        row.setAttribute('class', 'detailedRow');
+
+        row.appendChild(prefix);
+        row.appendChild(content);
+        dataWrapper.appendChild(row);
     }
-
-    const editEntryIcon = document.createElement('i');
-    editEntryIcon.setAttribute('class', 'fas fa-edit');
 
     const deleteEntryIcon = document.createElement('i');
     deleteEntryIcon.setAttribute('class', 'fas fa-times');
+    
+    const editEntryIcon = document.createElement('i');
+    editEntryIcon.setAttribute('class', 'fas fa-edit');
+    
+    const saveEntryIcon = document.createElement('i');
+    saveEntryIcon.setAttribute('class', 'fas fa-check hide');
+
+    editEntryIcon.addEventListener('click', () => {
+        editEntryIcon.classList.add('hide');
+        deleteEntryIcon.classList.add('hide');
+        saveEntryIcon.classList.remove('hide');
+    });
+
+    saveEntryIcon.addEventListener('click', () => {
+        saveEntryIcon.classList.add('hide');
+        editEntryIcon.classList.remove('hide');
+        deleteEntryIcon.classList.remove('hide');
+    });
 
     iconWrapper.appendChild(deleteEntryIcon);
     iconWrapper.appendChild(editEntryIcon);
+    iconWrapper.appendChild(saveEntryIcon);
 
     dataWrapper.setAttribute('class', 'entryDataWrapper');
     iconWrapper.setAttribute('class', 'entryIconWrapper');
