@@ -91,20 +91,18 @@ window.addEventListener('load', () => {
   });
 
   disableNav.addEventListener('click', () => {
+    nav.style.transition = 'right 500ms ease-in-out';
+
+    if (Math.round(document.getElementById('nav').style.right.substring(0, document.getElementById('nav').style.right.length - 2)) === Math.round((window.innerWidth / 100) * 20)) {
+      nav.style.right = (window.innerWidth / 100) * 110 + 'px';
+      previousX = parseInt(nav.style.right);
+      disableNav.style.display = 'none';
+
+      touchmoveAllowed = false;
+    }
+
     setTimeout(() => {
-      nav.style.transition = 'right 500ms ease-in-out';
-
-      if (document.getElementById('nav').style.right === (window.innerWidth / 100) * 20 + 'px') {
-        nav.style.right = (window.innerWidth / 100) * 110 + 'px';
-        previousX = parseInt(nav.style.right);
-        disableNav.style.display = 'none';
-
-        touchmoveAllowed = false;
-      }
-
-      setTimeout(() => {
-        nav.style.transition = 'none';
-      }, 510);
-    }, 100);
+      nav.style.transition = 'none';
+    }, 510);
   });
 });
