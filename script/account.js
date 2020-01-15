@@ -68,6 +68,9 @@ window.addEventListener('load', () => {
     passwordForgot.addEventListener('click', () => {
         passwordForgotWrapper.classList.remove('hide');
 
+        signInWrapper.style.filter = 'blur(2px)';
+        continueWithGoogle.style.filter = 'blur(2px)';
+
         setTimeout(() => {
             passwordForgotWrapper.style.opacity = 1;
             passwordForgotWrapper.style.transform = 'scale(1)';
@@ -77,18 +80,27 @@ window.addEventListener('load', () => {
     });
 
     disablePasswordForgotWrapper.addEventListener('click', () => {
+        const email = document.getElementById('forgotPWEmail');
+        const fdb = document.getElementById('fgtEMFeedback');
         disablePasswordForgotWrapper.classList.add('hide');
         passwordForgotWrapper.style.opacity = 0;
         passwordForgotWrapper.style.transform = 'scale(.6)';
+        signInWrapper.style.filter = 'blur(0)';
+        continueWithGoogle.style.filter = 'blur(0)';
         
         setTimeout(() => {
             passwordForgotWrapper.classList.add('hide');
+
+            email.classList.remove('errorInput');
+            email.value = '';
+            fdb.innerHTML = '&nbsp;';
         }, 210);
     });
 
     sendForgotEmail.addEventListener('click', () => {
         const email = document.getElementById('forgotPWEmail');
         const fdb = document.getElementById('fgtEMFeedback');
+        fdb.style.color = 'red';
 
         if (email.value === '' || email.value === ' ') {
             email.classList.add('errorInput');
@@ -101,9 +113,18 @@ window.addEventListener('load', () => {
             fdb.innerHTML = '&nbsp;';
 
             firebase.auth().sendPasswordResetEmail(email.value).then(() => {
-                console.log('email sent');
+                fdb.style.color = 'black';
+                fdb.textContent = 'E-Mail erfolgreich versendet.';
+
+                setTimeout(() => {
+                    disablePasswordForgotWrapper.click();
+                }, 2500);
             }).catch((error) => {
-                console.log('an error occured');
+                if (error.code === 'auth/user-not-found') {
+                    fdb.textContent = 'Es wurde kein Benutzer mit der angegeben E-Mail Adresse gefunden.';
+                } else {
+                    fdb.textContent = 'Es ist ein unbekannter Fehler aufgetreten, bitte versuche es später erneut.';
+                }                
             });
         }
     });
