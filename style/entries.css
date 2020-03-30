@@ -1,12 +1,9 @@
-/* default properties */
-@defaultColor: #486491;
-
 /* entries */
 .entry {
     width: 70vw;
     padding: 0 5vw;
     margin: 1vh 0;
-    border: 1px solid @defaultColor;
+    border: 1px solid #486491;
     border-radius: 3px;
     font-size: 4.5vmin;
     display: flex;
@@ -28,14 +25,14 @@
     margin: 0 2vw;
 }
 
-.errorMessage {
+#entriesErrorMessage, #deletedEntriesErrorMessage {
     color: red;
     width: 80vw;
     text-align: left;
     font-size: 4vmin;
 }
 
-#entryWrapper {
+#entryWrapper, #deletedEntryWrapper {
     width: 100vw;
     display: flex;
     justify-content: center;
@@ -46,10 +43,8 @@
     transition: left 300ms ease-in-out;
 }
 
-#detailedEntriesWrapper {
+#detailedEntriesWrapper, #deletedDetailedEntriesWrapper, #deletedDetailedEntriesWrapper {
     width: 100vw;
-    /* max-height: 81vh;
-    min-height: 81vh; */
     height: 81vh;
     display: flex;
     justify-content: flex-start;
@@ -62,7 +57,7 @@
     transition: left 300ms ease-in-out;
 }
 
-#detailedEntriesWrapper .detailedEntry {
+#detailedEntriesWrapper .detailedEntry, #deletedDetailedEntriesWrapper .detailedEntry {
     width: 80vw;
     border: 1px solid #486491;
     border-radius: 3px;
@@ -74,11 +69,11 @@
     align-items: flex-start;
 }
 
-#detailedEntriesWrapper .detailedEntry p {
+#detailedEntriesWrapper .detailedEntry p, #deletedDetailedEntriesWrapper .detailedEntry p {
     margin: 1vh 0;
 }
 
-#detailedEntriesWrapper .entryDataWrapper {
+#detailedEntriesWrapper .entryDataWrapper, #deletedDetailedEntriesWrapper .entryDataWrapper {
     width: 100%;
     height: 100%;
 }
@@ -100,14 +95,14 @@
     padding: 0;
 }
 
-#detailedEntriesWrapper .entryIconWrapper {
+#detailedEntriesWrapper .entryIconWrapper, #deletedDetailedEntriesWrapper .entryIconWrapper {
     width: 3vw;
     height: 100%;
     font-size: 5.5vw;
     margin: .1vh 2vw .25vh 1.25vw;
 }
 
-#detailedEntriesWrapper .entryIconWrapper i {
+#detailedEntriesWrapper .entryIconWrapper i, #deletedDetailedEntriesWrapper .entryIconWrapper i {
     text-align: center;
     width: 5.5vw;
     margin: .7vh 0;

@@ -1,14 +1,10 @@
-/* default properties */
-@defaultColor: #486491;
-
 footer {
     width: 100%;
     height: 10vh;
     position: fixed;
     left: 0;
     bottom: 0;
-    /* background: #5ac878; */
-    background: @defaultColor;
+    background: #486491;
     display: flex;
     justify-content: space-around;
     align-items: center;

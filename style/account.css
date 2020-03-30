@@ -113,7 +113,7 @@
 #logInScreen input {
     border: none;
     border-bottom: 2px solid lightgray;
-    width: 90%;
+    width: 100%;
     font-size: 5vmin;
     margin: 1.5vh 0;
     padding: .1rem;
@@ -139,7 +139,7 @@
     background: #03a87c;
     color: white;
     border: #03a87c;
-    box-shadow: 1px 3px 5px 0px rgba(143,143,143,1);
+    box-shadow: 1px 1px 9px 0px #dbdbdb;
     letter-spacing: .35px;
     user-select: none;
     margin-bottom: 5vh;
@@ -153,15 +153,15 @@
     color: red;
     font-size: 3.5vmin;
     text-align: left;
-    margin: 0 0 1vh 4vw !important;
-    width: 90%;
+    margin: 0 0 1vh 0 !important;
+    width: 100%;
 }
 
 #pwUpFeedback, #pwInFeedback {
     color: red;
     font-size: 3.5vmin;
     text-align: left;
-    margin: 0 0 3vh 4vw !important;
+    margin: 0 0 3vh 0 !important;
     width: 70vw;
 }
 
@@ -208,7 +208,7 @@
 }
 
 #forgotButtonWrapper {
-    width: 90%;
+    width: 100%;
     height: auto;
     margin: .8vh 0 0 0;
     display: flex;
