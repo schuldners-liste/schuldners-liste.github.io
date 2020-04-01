@@ -769,25 +769,31 @@ window.addEventListener('load', () => {
             dataWrapper.appendChild(content);
         }
 
+        const editEntryIcon = document.createElement('i');
+        editEntryIcon.setAttribute('class', 'fas fa-edit');
 
-function createDetailedEntry(entry) {
-    const newEntry = document.createElement('div');
-    const dataWrapper = document.createElement('div');
-    const iconWrapper = document.createElement('div');
-    const personEntries = [];
+        const deleteEntryIcon = document.createElement('i');
+        deleteEntryIcon.setAttribute('class', 'fas fa-times');
 
-    personEntries.push({prefix: 'Grund:', content: entry.reason, element: 'textarea'});
+        deleteEntryIcon.addEventListener('click', () => {
+            firebase.database().ref(`users/${firebase.auth().currentUser.uid}/deletedEntries/${name}/${entry.entryID}`).set({
 
-    let date = new Date(entry.date);
-    date = `${('0' + date.getDate()).slice(-2)}.${('0' + (date.getMonth() + 1)).slice(-2)}.${date.getFullYear()}`;
+            }).then(() => {
+                firebase.database().ref(`users/${firebase.auth().currentUser.uid}/entries/${name}/${entry.entryID}`).remove();
+            });
+        });
 
-    personEntries.push({prefix: 'Datum:', content: date, element: 'text'});
+        iconWrapper.appendChild(deleteEntryIcon);
+        iconWrapper.appendChild(editEntryIcon);
 
-    if (entry.type === 'object') {
-        personEntries.push({prefix: 'Objekt:', content: entry.object, element: 'text'});
-        personEntries.push({prefix: 'Wert:', content: `${entry.sum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')}€`, element: 'text'});
-    } else {
-        personEntries.push({prefix: 'Betrag:', content: `${entry.sum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')}€`, element: 'text'});
+        dataWrapper.setAttribute('class', 'entryDataWrapper');
+        iconWrapper.setAttribute('class', 'entryIconWrapper');
+
+        newEntry.appendChild(dataWrapper);
+        newEntry.appendChild(iconWrapper);
+
+        newEntry.classList.add('detailedEntry');
+        return newEntry;
     }
 
     personEntries[personEntries.length - 1].content = personEntries[personEntries.length - 1].content.replace('.', ',');
