@@ -208,31 +208,31 @@ window.addEventListener('load', () => {
             firebase.database().ref(`users/${firebase.auth().currentUser.uid}/entries/${name.value}`).update({
                 name: name.value
             });
-            
+
             // check if person already exists
             const persons = document.querySelectorAll('#detailedEntriesWrapper > div');
             let personFound = false;
-            
+
             for (const person of persons) {
-                if (person.id === ('detailed' + name.value.replace(' ', ''))) {                    
+                if (person.id === ('detailed' + name.value.replace(' ', ''))) {
                     personFound = true;
                 }
             }
 
             let createdEntry;
-            
+
             if (!personFound) {
                 // format array with current entry to make sure, that the called method can use the data
                 createdEntry = [[{date: date.value, reason: reason.value, entryID: entryID, sum: sum.value *= 1, type: 'money', restored: false}]];
                 createdEntry[0].name = name.value;
-                
+
                 printEntriesOverview(createdEntry, true);
                 printDetailedEntries(createdEntry);
             } else {
                 // format array with current entry to make sure, that the called method can use the data
                 createdEntry = {date: date.value, reason: reason.value, entryID: entryID, sum: sum.value *= 1, type: 'money', restored: false};
                 createdEntry.name = name.value;
-                document.getElementById('detailed' + name.value.replace(' ', '')).appendChild(createDetailedEntry(createdEntry));
+                document.getElementById('detailed' + name.value.replace(' ', '')).appendChild(createDetailedEntry(createdEntry, name.value));
             }
 
             clearCreateInputs();
@@ -282,7 +282,7 @@ window.addEventListener('load', () => {
             reasonObjectFDB.textContent = '';
             reason.classList.remove('errorInput');
         }
-        
+
         // validate worth
         if (worth.value === '' || worth.value === ' ') {
             isValid = false;
@@ -316,14 +316,14 @@ window.addEventListener('load', () => {
                 for (const wrapper of wrappers) {
                     const person = document.createElement('p');
                     person.textContent = name.value;
-    
+
                     person.addEventListener('click', () => {
                         wrapper.style.opacity = 0;
                         wrapper.style.transform = 'scale(0.4)';
 
                         if (!wrapper.id.includes('Object'))
                         document.getElementById('choosePerson').value = name.value;
-    
+
                         setTimeout(() => {
                             wrapper.classList.add('hide');
                         }, 210);
@@ -353,34 +353,33 @@ window.addEventListener('load', () => {
             // check if person already exists
             const persons = document.querySelectorAll('#detailedEntriesWrapper > div');
             let personFound = false;
-            
+
             for (const person of persons) {
-                if (person.id === ('detailed' + name.value.replace(' ', ''))) {                    
+                if (person.id === ('detailed' + name.value.replace(' ', ''))) {
                     personFound = true;
                 }
             }
 
             let createdEntry;
-            
+
             if (!personFound) {
                 // format array with current entry to make sure, that the called method can use the data
                 createdEntry = [[{date: date.value, reason: reason.value, entryID: entryID, sum: worth.value *= 1, object: object.value, type: 'object', restored: false}]];
                 createdEntry[0].name = name.value;
-                
+
                 printEntriesOverview(createdEntry, true);
                 printDetailedEntries(createdEntry);
             } else {
                 // format array with current entry to make sure, that the called method can use the data
                 createdEntry = {date: date.value, reason: reason.value, entryID: entryID, sum: worth.value *= 1, object: object.value, type: 'object', restored: false};
                 createdEntry.name = name.value;
-                document.getElementById('detailed' + name.value.replace(' ', '')).appendChild(createDetailedEntry(createdEntry));
+                document.getElementById('detailed' + name.value.replace(' ', '')).appendChild(createDetailedEntry(createdEntry, name.value));
             }
-        
+
             clearCreateInputs();
             document.getElementById('entriesFooter').click();
         }
     });
-});
 
 function initDate(id) {
     const time = new Date();
