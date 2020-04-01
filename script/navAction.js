@@ -48,7 +48,6 @@ window.addEventListener('load', () => {
         
         setTimeout(() => {
             firebase.auth().signOut();
-        }, 550);
-
+        }, 600);
     });
 });
