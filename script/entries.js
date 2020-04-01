@@ -381,10 +381,10 @@ window.addEventListener('load', () => {
         }
     });
 
-function initDate(id) {
-    const time = new Date();
-    document.getElementById(id).value = `${time.getFullYear()}-${("0" + (time.getMonth() + 1)).slice(-2)}-${("0" + time.getDate()).slice(-2)}`;
-}
+    function initDate(id) {
+        const time = new Date();
+        document.getElementById(id).value = `${time.getFullYear()}-${('0' + (time.getMonth() + 1)).slice(-2)}-${('0' + time.getDate()).slice(-2)}`;
+    }
 
 function clearCreateInputs() {
     const inputs = [
