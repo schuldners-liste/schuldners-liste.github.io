@@ -386,19 +386,24 @@ window.addEventListener('load', () => {
         document.getElementById(id).value = `${time.getFullYear()}-${('0' + (time.getMonth() + 1)).slice(-2)}-${('0' + time.getDate()).slice(-2)}`;
     }
 
-function clearCreateInputs() {
-    const inputs = [
-        document.getElementById('reasonMoney'),
-        document.getElementById('sumMoney'),
-        document.getElementById('reasonObject'),
-        document.getElementById('object')
-    ];
+    function clearCreateInputs() {
+        const inputs = [
+            document.getElementById('reasonMoney'),
+            document.getElementById('sumMoney'),
+            document.getElementById('reasonObject'),
+            document.getElementById('object')
+        ];
 
-    initDate('dateMoney');
-    initDate('dateObject');
+        initDate('dateMoney');
+        initDate('dateObject');
 
-    for (const input of inputs) {
+        for (const input of inputs) {
         input.value = '';
+        }
+
+        document.getElementById('wothObject').value = 0;
+        document.getElementById('choosePerson').value = 'Person auswählen';
+        document.getElementById('choosePersonObject').value = 'Person auswählen';
     }
 
     document.getElementById('wothObject').value = 0;
