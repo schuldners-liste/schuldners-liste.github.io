@@ -796,78 +796,57 @@ window.addEventListener('load', () => {
         return newEntry;
     }
 
-    personEntries[personEntries.length - 1].content = personEntries[personEntries.length - 1].content.replace('.', ',');
+    function createDeletedDetailedEntry(entry, personName) {
+        const newEntry = document.createElement('div');
+        const dataWrapper = document.createElement('div');
+        const iconWrapper = document.createElement('div');
+        const personEntries = [];
 
-    for (const personEntry of personEntries) {
-        const row = document.createElement('div');
-        const prefix = document.createElement('strong');
-        let content;
-        if (personEntry.element === 'textarea') {
-            content = document.createElement(personEntry.element);
-            content.setAttribute('rows', '1');
+        let sum = entry.sum.toString().replace('.', ',');
+        personEntries.push({prefix: 'Grund:', content: entry.reason});
+
+        let date = new Date(entry.date);
+        date = `${('0' + date.getDate()).slice(-2)}.${('0' + (date.getMonth() + 1)).slice(-2)}.${date.getFullYear()}`;
+
+        personEntries.push({prefix: 'Datum:', content: date});
+
+        if (entry.type === 'object') {
+            personEntries.push({prefix: 'Objekt:', content: entry.object});
+            personEntries.push({prefix: 'Wert:', content: `${sum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')}€`});
         } else {
-            content = document.createElement('input');
-            content.type = personEntry.element;
-            content.innerHTML += '€';
+            personEntries.push({prefix: 'Betrag:', content: `${sum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')}€`});
         }
 
-        prefix.textContent = `${personEntry.prefix} `;
-        content.appendChild(prefix);
-        content.value = personEntry.content;
-        content.readOnly = true;
+        date = new Date(entry.deletedDate);
+        date = `${('0' + date.getDate()).slice(-2)}.${('0' + (date.getMonth() + 1)).slice(-2)}.${date.getFullYear()}, ${('0' + (date.getHours())).slice(-2)}:${('0' + (date.getMinutes())).slice(-2)} Uhr`;
 
-        row.setAttribute('class', 'detailedRow');
+        personEntries.push({prefix: 'gelöscht am:', content: date});
 
-        row.appendChild(prefix);
-        row.appendChild(content);
-        dataWrapper.appendChild(row);
+        for (const personEntry of personEntries) {
+            const prefix = document.createElement('strong');
+            const content = document.createElement('p');
+
+            prefix.textContent = `${personEntry.prefix} `;
+            content.appendChild(prefix);
+            content.innerHTML += personEntry.content;
+
+            dataWrapper.appendChild(content);
+        }
+
+        const restoreEntryIcon = document.createElement('i');
+        restoreEntryIcon.setAttribute('class', 'fas fa-redo-alt');
+
+        iconWrapper.appendChild(restoreEntryIcon);
+
+        dataWrapper.setAttribute('class', 'entryDataWrapper');
+        iconWrapper.setAttribute('class', 'entryIconWrapper');
+
+        newEntry.appendChild(dataWrapper);
+        newEntry.appendChild(iconWrapper);
+
+        newEntry.classList.add('detailedEntry');
+        return newEntry;
     }
-
-    const deleteEntryIcon = document.createElement('i');
-    deleteEntryIcon.setAttribute('class', 'fas fa-times');
-    
-    const editEntryIcon = document.createElement('i');
-    editEntryIcon.setAttribute('class', 'fas fa-edit');
-    
-    const saveEntryIcon = document.createElement('i');
-    saveEntryIcon.setAttribute('class', 'fas fa-check hide');
-
-    editEntryIcon.addEventListener('click', () => {
-        editEntryIcon.classList.add('hide');
-        deleteEntryIcon.classList.add('hide');
-        saveEntryIcon.classList.remove('hide');
-    });
-
-    saveEntryIcon.addEventListener('click', () => {
-        saveEntryIcon.classList.add('hide');
-        editEntryIcon.classList.remove('hide');
-        deleteEntryIcon.classList.remove('hide');
-    });
-
-    iconWrapper.appendChild(deleteEntryIcon);
-    iconWrapper.appendChild(editEntryIcon);
-    iconWrapper.appendChild(saveEntryIcon);
-
-    dataWrapper.setAttribute('class', 'entryDataWrapper');
-    iconWrapper.setAttribute('class', 'entryIconWrapper');
-
-    newEntry.appendChild(dataWrapper);
-    newEntry.appendChild(iconWrapper);
-    
-    newEntry.classList.add('detailedEntry');
-    return newEntry;
-}
-
-function initDisablePersonSelection() {
-    document.getElementById('disableMoneyPersonSelection').addEventListener('click', () => {
-        document.getElementById('moneyPersonSelection').style.opacity = 0;
-        document.getElementById('moneyPersonSelection').style.transform = 'scale(0.4)';
-        document.getElementById('disableMoneyPersonSelection').classList.add('hide');
-
-        setTimeout(() => {
-            document.getElementById('moneyPersonSelection').classList.add('hide');
-        }, 210);
-    });
 
     document.getElementById('disableObjectPersonSelection').addEventListener('click', () => {
         document.getElementById('objectPersonSelection').style.opacity = 0;
