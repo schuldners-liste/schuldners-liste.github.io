@@ -582,45 +582,51 @@ window.addEventListener('load', () => {
         }
     }
 
-        const person = document.createElement('input');
-        person.placeholder = 'Person hinzufügen';
-        if (wrapperID.includes('Money')) person.setAttribute('id', 'createPerson');
-        else person.setAttribute('id', 'createObjectPerson');
-        const feedback = document.createElement('p');
-        feedback.classList.add('feedback')
+    function printDetailedEntries(persons) {
+        for (const entries of persons) {
+            const personBox = document.createElement('div');
 
-        const saveBtn = document.createElement('div');
-        saveBtn.textContent = 'Auswählen';
-        saveBtn.classList.add('button')
-
-        saveBtn.addEventListener('click', () => {
-            let isValid = true;
-
-            if (person.value === '' || person.value === ' ') {
-                isValid = false;
-                feedback.textContent = 'Bitte geben Sie einen Namen ein.';
-                person.classList.add('errorInput');
-            } else {
-                feedback.textContent = ''
-                person.classList.remove('errorInput');
+            for (const entry of entries) {
+                personBox.appendChild(createDetailedEntry(entry, entries.name));
             }
 
-            if (isValid) {
-                wrapper.style.opacity = 0;
-                wrapper.style.transform = 'scale(0.4)';
-                choosePerson.value = person.value;
+            personBox.setAttribute('id', 'detailed' + entries.name.replace(' ', ''));
+            personBox.classList.add('hide');
 
-                sessionStorage.setItem('createdNewUser', true);
+            if (document.getElementById('detailedEntriesWrapper') === null) {
+                const contentWrapper = document.createElement('div');
+                contentWrapper.appendChild(personBox);
+                contentWrapper.setAttribute('id', 'detailedEntriesWrapper');
+                document.getElementById('entriesWindow').appendChild(contentWrapper);
+            } else {
+                document.getElementById('detailedEntriesWrapper').appendChild(personBox);
+            }
 
-                if (wrapperID.includes('Money')) document.getElementById('disableMoneyPersonSelection').classList.add('hide');
-                else document.getElementById('disableObjectPersonSelection').classList.add('hide');
-                
+            const hammer = new Hammer(document.getElementById('detailedEntriesWrapper'));
+
+            hammer.on('swiperight', () => {
+                const divs = document.querySelectorAll('#detailedEntriesWrapper > div');
+
+                document.getElementById('entryWrapper').style.left = 0;
+                document.getElementById('detailedEntriesWrapper').style.left = '100vw';
+
+                // if (document.getElementById('entriesErrorMessage') === null) {
+                //     const text = document.createElement('p');
+                //     text.textContent = 'Keine Einträge verfügbar.';
+                //     text.setAttribute('id', 'entriesErrorMessage');
+                //     contentWrapper.appendChild(text);
+                // }
+
                 setTimeout(() => {
-                    wrapper.classList.add('hide');
-                    person.value = '';
-                    feedback.textContent = ''
-                    person.classList.remove('errorInput');
-                }, 210);
+                    for (const div of divs) {
+                        div.classList.add('hide');
+                    }
+
+                    changeHeadline('Einträge');
+                }, 310);
+            });
+        }
+    }
             }
         });
         
