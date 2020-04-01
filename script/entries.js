@@ -736,44 +736,39 @@ window.addEventListener('load', () => {
         }
     }
 
-function printDetailedEntries(persons) {
-    for (const entries of persons) {
-        const personBox = document.createElement('div');
+    function createDetailedEntry(entry, name) {
+        const newEntry = document.createElement('div');
+        const dataWrapper = document.createElement('div');
+        const iconWrapper = document.createElement('div');
+        const personEntries = [];
 
-        for (const entry of entries) {
-            personBox.appendChild(createDetailedEntry(entry));
-        }
-        
-        personBox.setAttribute('id', 'detailed' + entries.name.replace(' ', ''));
-        personBox.classList.add('hide');
+        personEntries.push({prefix: 'Grund:', content: entry.reason});
 
-        if (document.getElementById('detailedEntriesWrapper') === null) {
-            const contentWrapper = document.createElement('div');
-            contentWrapper.appendChild(personBox);
-            contentWrapper.setAttribute('id', 'detailedEntriesWrapper');
-            document.getElementById('entriesWindow').appendChild(contentWrapper);
+        let date = new Date(entry.date);
+        date = `${('0' + date.getDate()).slice(-2)}.${('0' + (date.getMonth() + 1)).slice(-2)}.${date.getFullYear()}`;
+
+        personEntries.push({prefix: 'Datum:', content: date});
+
+        if (entry.type === 'object') {
+            personEntries.push({prefix: 'Objekt:', content: entry.object});
+            personEntries.push({prefix: 'Wert:', content: `${entry.sum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')}€`});
         } else {
-            document.getElementById('detailedEntriesWrapper').appendChild(personBox);
+            personEntries.push({prefix: 'Betrag:', content: `${entry.sum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')}€`});
         }
 
-        const hammer = new Hammer(document.getElementById('detailedEntriesWrapper'));
+        personEntries[personEntries.length - 1].content = personEntries[personEntries.length - 1].content.replace('.', ',');
 
-        hammer.on('swiperight', () => {
-            const divs = document.querySelectorAll('#detailedEntriesWrapper > div');
+        for (const personEntry of personEntries) {
+            const prefix = document.createElement('strong');
+            const content = document.createElement('p');
 
-            document.getElementById('entryWrapper').style.left = 0;
-            document.getElementById('detailedEntriesWrapper').style.left = '100vw';
+            prefix.textContent = `${personEntry.prefix} `;
+            content.appendChild(prefix);
+            content.innerHTML += personEntry.content;
 
-            setTimeout(() => {
-                for (const div of divs) {
-                    div.classList.add('hide');
-                }
+            dataWrapper.appendChild(content);
+        }
 
-                changeHeadline('Einträge');
-            }, 310);
-        });
-    }
-}
 
 function createDetailedEntry(entry) {
     const newEntry = document.createElement('div');
