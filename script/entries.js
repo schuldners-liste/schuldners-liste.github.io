@@ -512,6 +512,15 @@ window.addEventListener('load', () => {
             contentWrapper.appendChild(wrapper);
         });
     }
+
+    function printEntriesOverview(person, addedLater) {
+        const contentWrapper = document.getElementById('entryWrapper');
+
+        if (!addedLater)
+        while (contentWrapper.firstChild) contentWrapper.removeChild(contentWrapper.firstChild);
+
+        if (document.getElementById('entriesErrorMessage') !== null) {
+            contentWrapper.removeChild(document.getElementById('entriesErrorMessage'));
         }
 
         choosePerson.addEventListener('click', () => {
