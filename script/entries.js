@@ -627,16 +627,75 @@ window.addEventListener('load', () => {
             });
         }
     }
-            }
-        });
-        
-        if (wrapperID.includes('Money')) {
-            personWrapper.setAttribute('id', 'personWrapper');
-            wrapper.setAttribute('id', 'moneyPersonSelection');
-        } else {
-            personWrapper.setAttribute('id', 'personObjectWrapper');
-            wrapper.setAttribute('id', 'objectPersonSelection');
+
+    function printDeletedEntriesOverview(person, addedLater) {
+        const contentWrapper = document.getElementById('deletedEntryWrapper');
+
+        if (!addedLater)
+        while (contentWrapper.firstChild) contentWrapper.removeChild(contentWrapper.firstChild);
+
+        if (document.getElementById('deletedEntriesErrorMessage') !== null) {
+            contentWrapper.removeChild(document.getElementById('deletedEntriesErrorMessage'));
         }
+
+        // check if person array is not null
+        if (person.length > 0) {
+            printDeletedDetailedEntries(person);
+
+            for (let i = 0; i < person.length; i++) {
+                const entries = person[i];
+                const newEntry = document.createElement('div');
+
+                const name = document.createElement('p');
+                const arrowAndMoneyWrapper = document.createElement('div');
+
+                name.textContent = entries.name;
+                const sum = document.createElement('p');
+                const arrowRight = document.createElement('i');
+                arrowRight.setAttribute('class', 'fas fa-chevron-right');
+
+                // calculate total sum
+                let totalSum = 0;
+
+                for (const entry of entries) {
+                    totalSum += entry.sum;
+                }
+
+                // format total sum
+                sum.textContent = `${totalSum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')}€`;
+                sum.textContent = sum.textContent.replace('.', ',');
+
+                newEntry.addEventListener('click', () => {
+                    const detailedBox  = document.getElementById('deletedDetailed' + entries.name.replace(' ', ''));
+
+                    detailedBox.classList.remove('hide');
+
+                    setTimeout(() => {
+                        contentWrapper.style.left = '-100vw';
+                        document.getElementById('deletedDetailedEntriesWrapper').style.left = 0;
+                    }, 5);
+
+                    setTimeout(()  => {
+                        changeHeadline(entries.name);
+                    }, 300);
+                });
+
+                arrowAndMoneyWrapper.appendChild(sum);
+                arrowAndMoneyWrapper.appendChild(arrowRight);
+                arrowAndMoneyWrapper.classList.add('arrowAndMoneyWrapper');
+                newEntry.appendChild(name);
+                newEntry.appendChild(arrowAndMoneyWrapper);
+                newEntry.classList.add('entry');
+                newEntry.setAttribute('id', 'deletedOverview' + entries.name.replace(' ', ''));
+                contentWrapper.appendChild(newEntry);
+            }
+        } else {
+            const text = document.createElement('p');
+            text.textContent = 'Keine Einträge verfügbar.';
+            text.setAttribute('id', 'deletedEntriesErrorMessage');
+            contentWrapper.appendChild(text);
+        }
+    }
 
         wrapper.setAttribute('class', 'selectPersonPopUp hide');
 
