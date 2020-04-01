@@ -60,11 +60,11 @@ window.addEventListener('load', () => {
                 const person = [];
                 let tempEntries;
 
-                // convert given array to array with "normal" indizes
+                // convert given array to array with 'normal' indizes
                 for (const key in snapshot.val()) {
                     person.push(snapshot.val()[key]);
                 }
-                
+
                 // create array which includes all entries
                 for (let i = 0; i < person.length; i++) {
                     const entry = person[i];
@@ -75,12 +75,40 @@ window.addEventListener('load', () => {
                             tempEntries.push(entry[key]);
                         }
                     }
-                    
+
                     person[i] = tempEntries;
                     person[i].name = entry.name;
                 }
-                
-                printEntriesOverview(person);
+
+                printEntriesOverview(person, false);
+            });
+
+            // request deleted entries from database and format array
+            firebase.database().ref(`users/${user.uid}/deletedEntries`).once('value').then((snapshot) => {
+                const person = [];
+                let tempEntries;
+
+                // convert given array to array with 'normal' indizes
+                for (const key in snapshot.val()) {
+                    person.push(snapshot.val()[key]);
+                }
+
+                // create array which includes all entries
+                for (let i = 0; i < person.length; i++) {
+                    const entry = person[i];
+                    tempEntries = [];
+
+                    for (const key in entry) {
+                        if (key !== 'name') {
+                            tempEntries.push(entry[key]);
+                        }
+                    }
+
+                    person[i] = tempEntries;
+                    person[i].name = entry.name;
+                }
+
+                printDeletedEntriesOverview(person, false);
             });
         }
     });
@@ -125,7 +153,7 @@ window.addEventListener('load', () => {
             reasonMoneyFDB.textContent = ''
             reason.classList.remove('errorInput');
         }
-        
+
         // validate sum
         if (sum.value === '' || sum.value === ' ') {
             isValid = false;
@@ -149,18 +177,18 @@ window.addEventListener('load', () => {
                 for (const wrapper of wrappers) {
                     const person = document.createElement('p');
                     person.textContent = name.value;
-    
+
                     person.addEventListener('click', () => {
                         wrapper.style.opacity = 0;
                         wrapper.style.transform = 'scale(0.4)';
                         if (wrapper.id.includes('Object')) document.getElementById('choosePersonObject').value = name.value;
                         else choosePerson.value = name.value;
-    
+
                         setTimeout(() => {
                             wrapper.classList.add('hide');
                         }, 210);
                     });
-                    
+
                     wrapper.appendChild(person);
                     wrapper.appendChild(document.createElement('hr'));
                 }
