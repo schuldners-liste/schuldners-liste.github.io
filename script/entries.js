@@ -406,43 +406,112 @@ window.addEventListener('load', () => {
         document.getElementById('choosePersonObject').value = 'Person auswählen';
     }
 
-    document.getElementById('wothObject').value = 0;
-    document.getElementById('choosePerson').value = 'Person auswählen';
-    document.getElementById('choosePersonObject').value = 'Person auswählen';
-}
+    function createPersonSelection(wrapperID, user) {
+        const contentWrapper = document.getElementById(wrapperID);
 
-function createPersonSelection(wrapperID, user) {
-    const contentWrapper = document.getElementById(wrapperID);
+        firebase.database().ref(`users/${user.uid}/entries`).once('value').then((snapshot) => {
+            const wrapper = document.createElement('div');
+            const personWrapper = document.createElement('div');
+            let choosePerson;
+            if (wrapperID.includes('Money')) choosePerson = document.getElementById('choosePerson');
+            else choosePerson = document.getElementById('choosePersonObject');
 
-    firebase.database().ref(`users/${user.uid}/entries`).once('value').then((snapshot) => {
-        const wrapper = document.createElement('div');
-        const personWrapper = document.createElement('div');
-        let choosePerson;
-        if (wrapperID.includes('Money')) choosePerson = document.getElementById('choosePerson');
-        else choosePerson = document.getElementById('choosePersonObject');
+            if (snapshot.val() !== null) {
+                for (const key in snapshot.val()) {
+                    const person = document.createElement('p');
+                    person.textContent = key;
 
-        if (snapshot.val() !== null) {
-            for (const key in snapshot.val()) { 
-                const person = document.createElement('p');
-                person.textContent = key;
+                    person.addEventListener('click', () => {
+                        wrapper.style.opacity = 0;
+                        wrapper.style.transform = 'scale(0.4)';
+                        choosePerson.value = key;
+                        sessionStorage.setItem('createdNewUser', false);
 
-                person.addEventListener('click', () => {
+                        document.getElementById('disableObjectPersonSelection').classList.add('hide');
+                        document.getElementById('disableMoneyPersonSelection').classList.add('hide');
+
+                        setTimeout(() => {
+                            wrapper.classList.add('hide');
+                        }, 210);
+                    });
+
+                    personWrapper.appendChild(person);
+                    personWrapper.appendChild(document.createElement('hr'));
+                }
+            }
+
+            choosePerson.addEventListener('click', () => {
+                wrapper.classList.remove('hide');
+                wrapper.style.top = ((window.innerHeight - wrapper.clientHeight) / 4) + 'px';
+
+                if (wrapperID.includes('Money')) document.getElementById('disableMoneyPersonSelection').classList.remove('hide');
+                else document.getElementById('disableObjectPersonSelection').classList.remove('hide');
+
+                setTimeout(() => {
+                    wrapper.style.opacity = 1;
+                    wrapper.style.transform = 'scale(1)';
+                }, 10);
+            });
+
+            const person = document.createElement('input');
+            person.placeholder = 'Person hinzufügen';
+            if (wrapperID.includes('Money')) person.setAttribute('id', 'createPerson');
+            else person.setAttribute('id', 'createObjectPerson');
+            const feedback = document.createElement('p');
+            feedback.classList.add('feedback')
+
+            const saveBtn = document.createElement('div');
+            saveBtn.textContent = 'Auswählen';
+            saveBtn.classList.add('button')
+
+            saveBtn.addEventListener('click', () => {
+                let isValid = true;
+
+                if (person.value === '' || person.value === ' ') {
+                    isValid = false;
+                    feedback.textContent = 'Bitte geben Sie einen Namen ein.';
+                    person.classList.add('errorInput');
+                } else {
+                    feedback.textContent = ''
+                    person.classList.remove('errorInput');
+                }
+
+                if (isValid) {
                     wrapper.style.opacity = 0;
                     wrapper.style.transform = 'scale(0.4)';
-                    choosePerson.value = key;
-                    sessionStorage.setItem('createdNewUser', false);
+                    choosePerson.value = person.value;
 
-                    document.getElementById('disableObjectPersonSelection').classList.add('hide');
-                    document.getElementById('disableMoneyPersonSelection').classList.add('hide');
+                    sessionStorage.setItem('createdNewUser', true);
+
+                    if (wrapperID.includes('Money')) document.getElementById('disableMoneyPersonSelection').classList.add('hide');
+                    else document.getElementById('disableObjectPersonSelection').classList.add('hide');
 
                     setTimeout(() => {
                         wrapper.classList.add('hide');
+                        person.value = '';
+                        feedback.textContent = ''
+                        person.classList.remove('errorInput');
                     }, 210);
-                });
+                }
+            });
 
-                personWrapper.appendChild(person);
-                personWrapper.appendChild(document.createElement('hr'));
+            if (wrapperID.includes('Money')) {
+                personWrapper.setAttribute('id', 'personWrapper');
+                wrapper.setAttribute('id', 'moneyPersonSelection');
+            } else {
+                personWrapper.setAttribute('id', 'personObjectWrapper');
+                wrapper.setAttribute('id', 'objectPersonSelection');
             }
+
+            wrapper.setAttribute('class', 'selectPersonPopUp hide');
+
+            wrapper.appendChild(personWrapper);
+            wrapper.appendChild(person);
+            wrapper.appendChild(feedback);
+            wrapper.appendChild(saveBtn);
+            contentWrapper.appendChild(wrapper);
+        });
+    }
         }
 
         choosePerson.addEventListener('click', () => {
