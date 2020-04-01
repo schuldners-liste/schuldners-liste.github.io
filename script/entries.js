@@ -523,18 +523,64 @@ window.addEventListener('load', () => {
             contentWrapper.removeChild(document.getElementById('entriesErrorMessage'));
         }
 
-        choosePerson.addEventListener('click', () => {
-            wrapper.classList.remove('hide');
-            wrapper.style.top = ((window.innerHeight - wrapper.clientHeight) / 4) + 'px';
+        // check if person array is not null
+        if (person.length > 0) {
+            printDetailedEntries(person);
 
-            if (wrapperID.includes('Money')) document.getElementById('disableMoneyPersonSelection').classList.remove('hide');
-            else document.getElementById('disableObjectPersonSelection').classList.remove('hide');
+            for (let i = 0; i < person.length; i++) {
+                const entries = person[i];
+                const newEntry = document.createElement('div');
 
-            setTimeout(() => {
-                wrapper.style.opacity = 1;
-                wrapper.style.transform = 'scale(1)';
-            }, 10);
-        });
+                const name = document.createElement('p');
+                const arrowAndMoneyWrapper = document.createElement('div');
+
+                name.textContent = entries.name;
+                const sum = document.createElement('p');
+                const arrowRight = document.createElement('i');
+                arrowRight.setAttribute('class', 'fas fa-chevron-right');
+
+                // calculate total sum
+                let totalSum = 0;
+
+                for (const entry of entries) {
+                    totalSum += entry.sum;
+                }
+
+                // format total sum
+                sum.textContent = `${totalSum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')}€`;
+                sum.textContent = sum.textContent.replace('.', ',');
+
+                newEntry.addEventListener('click', () => {
+                    const detailedBox  = document.getElementById('detailed' + entries.name.replace(' ', ''));
+
+                    detailedBox.classList.remove('hide');
+
+                    setTimeout(() => {
+                        contentWrapper.style.left = '-100vw';
+                        document.getElementById('detailedEntriesWrapper').style.left = 0;
+                    }, 5);
+
+                    setTimeout(()  => {
+                        changeHeadline(entries.name);
+                    }, 300);
+                });
+
+                arrowAndMoneyWrapper.appendChild(sum);
+                arrowAndMoneyWrapper.appendChild(arrowRight);
+                arrowAndMoneyWrapper.classList.add('arrowAndMoneyWrapper');
+                newEntry.appendChild(name);
+                newEntry.appendChild(arrowAndMoneyWrapper);
+                newEntry.classList.add('entry');
+                newEntry.setAttribute('id', 'overview' + entries.name.replace(' ', ''));
+                contentWrapper.appendChild(newEntry);
+            }
+        } else {
+            const text = document.createElement('p');
+            text.textContent = 'Keine Einträge verfügbar.';
+            text.setAttribute('id', 'entriesErrorMessage');
+            contentWrapper.appendChild(text);
+        }
+    }
 
         const person = document.createElement('input');
         person.placeholder = 'Person hinzufügen';
