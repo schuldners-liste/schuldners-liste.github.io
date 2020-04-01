@@ -697,79 +697,44 @@ window.addEventListener('load', () => {
         }
     }
 
-        wrapper.setAttribute('class', 'selectPersonPopUp hide');
-
-        wrapper.appendChild(personWrapper);
-        wrapper.appendChild(person);
-        wrapper.appendChild(feedback);
-        wrapper.appendChild(saveBtn);
-        contentWrapper.appendChild(wrapper);
-    });
-}
-
-function printEntriesOverview(person, addedLater) {
-    const contentWrapper = document.getElementById('entryWrapper');
-
-    if (!addedLater)
-    while (contentWrapper.firstChild) contentWrapper.removeChild(contentWrapper.firstChild);
- 
-    // check if person array is not null
-    if (person.length > 0) {
-        printDetailedEntries(person);
-
-        for (let i = 0; i < person.length; i++) {
-            const entries = person[i];
-            const newEntry = document.createElement('div');
-            
-            const name = document.createElement('p');
-            const arrowAndMoneyWrapper = document.createElement('div');
-    
-            name.textContent = entries.name;
-            const sum = document.createElement('p');
-            const arrowRight = document.createElement('i');
-            arrowRight.setAttribute('class', 'fas fa-chevron-right');
-            
-            // calculate total sum
-            let totalSum = 0;
+    function printDeletedDetailedEntries(persons) {
+        for (const entries of persons) {
+            const personBox = document.createElement('div');
 
             for (const entry of entries) {
-                totalSum += entry.sum;
-            }        
-    
-            sum.textContent = `${totalSum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')}€`;
-            sum.textContent = sum.textContent.replace('.', ',');
-            
-            newEntry.addEventListener('click', () => {
-                const detailedBox  = document.getElementById('detailed' + entries.name.replace(' ', ''));
+                personBox.appendChild(createDeletedDetailedEntry(entry, entries.name));
+            }
 
-                detailedBox.classList.remove('hide');
+            personBox.setAttribute('id', 'deletedDetailed' + entries.name.replace(' ', ''));
+            personBox.classList.add('hide');
+
+            if (document.getElementById('deletedDetailedEntriesWrapper') === null) {
+                const contentWrapper = document.createElement('div');
+                contentWrapper.appendChild(personBox);
+                contentWrapper.setAttribute('id', 'deletedDetailedEntriesWrapper');
+                document.getElementById('entriesWindow').appendChild(contentWrapper);
+            } else {
+                document.getElementById('deletedDetailedEntriesWrapper').appendChild(personBox);
+            }
+
+            const hammer = new Hammer(document.getElementById('deletedDetailedEntriesWrapper'));
+
+            hammer.on('swiperight', () => {
+                const divs = document.querySelectorAll('#deletedDetailedEntriesWrapper > div');
+
+                document.getElementById('deletedEntryWrapper').style.left = 0;
+                document.getElementById('deletedDetailedEntriesWrapper').style.left = '100vw';
 
                 setTimeout(() => {
-                    contentWrapper.style.left = '-100vw';
-                    document.getElementById('detailedEntriesWrapper').style.left = 0;
-                }, 5);
+                    for (const div of divs) {
+                        div.classList.add('hide');
+                    }
 
-                setTimeout(()  => {
-                    changeHeadline(entries.name);
-                }, 300);
+                    changeHeadline('Gelöscht');
+                }, 310);
             });
-
-            arrowAndMoneyWrapper.appendChild(sum);
-            arrowAndMoneyWrapper.appendChild(arrowRight);
-            arrowAndMoneyWrapper.classList.add('arrowAndMoneyWrapper');
-            newEntry.appendChild(name);
-            newEntry.appendChild(arrowAndMoneyWrapper);
-            newEntry.classList.add('entry');
-            newEntry.setAttribute('id', 'overview' + entries.name.replace(' ', ''));
-            contentWrapper.appendChild(newEntry);
         }
-    } else {
-        const text = document.createElement('p');
-        text.textContent = 'Keine Einträge verfügbar.';
-        text.classList.add('errorMessage');
-        contentWrapper.appendChild(text);
     }
-}
 
 function printDetailedEntries(persons) {
     for (const entries of persons) {
