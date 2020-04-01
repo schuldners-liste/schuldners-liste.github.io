@@ -23,9 +23,7 @@
     <script src="./script/main.js"></script>
     <script src="./script/entries.js"></script>
     <script src="./script/account.js"></script>
-    <script src="./script/less.min.js"></script>
     <script src="./script/navAction.js"></script>
-    <script src="./script/hammer.min.js"></script>
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
     <!-- Libraries -->
@@ -138,6 +136,7 @@
     <div id="mainScreen" class="hide">
       <header id="header">
         <i class="fas fa-bars" id="bars"></i>
+        <!-- <img src="./img/icons/menu_bars.svg" id="bars" alt="cannot display icon"> -->
         <h1 id="title">Einträge</h1>
       </header>
 
@@ -165,6 +164,7 @@
       <main id="mainContent">
         <div id="entriesWindow">
           <div id="entryWrapper"></div>
+          <div id="detailedEntriesWrapper"></div>
         </div>
 
         <div id="createEntryWindow" class="hide">
@@ -246,7 +246,8 @@
         </div>
 
         <div id="deletedEntriesWindow" class="hide">
-          <p>übersicht aller gelöschten einträge</p>
+          <div id="deletedEntryWrapper"></div>
+          <div id="deletedDetailedEntriesWrapper"></div>
         </div>
       </main>
 
