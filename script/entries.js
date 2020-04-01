@@ -870,6 +870,8 @@ window.addEventListener('load', () => {
         });
     }
 
+});
+
 function changeHeadline(text) {
     document.getElementById('title').textContent = text;
 }
