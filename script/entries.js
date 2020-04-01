@@ -1,5 +1,6 @@
 window.addEventListener('load', () => {
     // Global Variables
+    const entriesErrorMessage = document.getElementById('entriesErrorMessage');
 
     // Create Entry
     const moneyType = document.getElementById('moneyType');
@@ -54,7 +55,7 @@ window.addEventListener('load', () => {
             createPersonSelection('createMoneyEntry', user);
             createPersonSelection('createObjectEntry', user);
 
-            // request data from database and format array
+            // request entries from database and format array
             firebase.database().ref(`users/${user.uid}/entries`).once('value').then((snapshot) => {
                 const person = [];
                 let tempEntries;
