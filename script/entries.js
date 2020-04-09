@@ -875,3 +875,28 @@ window.addEventListener('load', () => {
 function changeHeadline(text) {
     document.getElementById('title').textContent = text;
 }
+
+function calculatePersonSum(name) {
+    const screenInfos = [
+        {entriesSum: `detailed${name}`, output: `#overview${name} .arrowAndMoneyWrapper p`},
+        {entriesSum: `deletedDetailed${name}`, output: `#deletedOverview${name} .arrowAndMoneyWrapper p`}
+    ];
+
+    for (const info of screenInfos) {
+        let entriesSum = document.getElementById(info.entriesSum)
+        const output = document.querySelector(info.output);
+
+        if (entriesSum !== null && output !== null) {
+            let sum = 0;
+            entriesSum = entriesSum.getElementsByTagName('p');
+    
+            for (const entry of entriesSum) {
+                if (entry.textContent.includes('€') && typeof parseFloat(entry.textContent.replace(/\D+/g, '')) === "number") {
+                    sum += parseFloat(entry.textContent.replace(/\D+/g, ''));
+                }
+            }
+            
+            output.textContent = `${sum}€`;
+        }
+    }
+}
