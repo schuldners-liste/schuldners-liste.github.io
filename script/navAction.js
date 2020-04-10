@@ -28,13 +28,15 @@ window.addEventListener('load', () => {
             window.window.classList.add('hide');
         }
 
-        // reset entry overview window
-        const divs = document.querySelectorAll('#detailedEntriesWrapper > div');
-
         document.getElementById('entryWrapper').style.left = 0;
+        document.getElementById('deletedEntryWrapper').style.left = 0;
         document.getElementById('detailedEntriesWrapper').style.left = '100vw';
+        document.getElementById('deletedDetailedEntriesWrapper').style.left = '100vw';
 
         setTimeout(() => {
+            // reset entry overview window
+            const divs = document.querySelectorAll('#detailedEntriesWrapper > div');
+            
             for (const div of divs) {
                 div.classList.add('hide');
             }
