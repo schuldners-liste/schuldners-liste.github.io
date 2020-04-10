@@ -892,7 +892,7 @@ function calculatePersonSum(name) {
     
             for (const entry of entriesSum) {
                 if (entry.textContent.includes('€') && typeof parseFloat(entry.textContent.replace(/[^0-9,.]/ig, '')) === "number") {
-                    sum += parseFloat(entry.textContent.replace(/[^0-9,.]/ig, ''));
+                    sum += parseFloat(entry.textContent.replace(',', '.').replace(/[^0-9,.]/ig, ''));
                 }
             }
             
