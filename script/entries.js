@@ -145,7 +145,7 @@ window.addEventListener('load', () => {
         }
 
         // validate reason
-        if (reason.value === '' || reason.value === ' ') {
+        if (reason.value.trim() === '') {
             isValid = false;
             reasonMoneyFDB.textContent = 'Bitte geben Sie eine Begründung ein.';
             reason.classList.add('errorInput');
@@ -155,7 +155,7 @@ window.addEventListener('load', () => {
         }
 
         // validate sum
-        if (sum.value === '' || sum.value === ' ') {
+        if (sum.value.trim() === '') {
             isValid = false;
             sumMoneyFDB.textContent = 'Bitte geben Sie einen Betrag ein.';
             sum.classList.add('errorInput');
@@ -277,7 +277,7 @@ window.addEventListener('load', () => {
         }
 
         // validate reason
-        if (reason.value === '' || reason.value === ' ') {
+        if (reason.value.trim() === '') {
             isValid = false;
             reasonObjectFDB.textContent = 'Bitte geben Sie eine Begründung ein.';
             reason.classList.add('errorInput');
@@ -287,7 +287,7 @@ window.addEventListener('load', () => {
         }
 
         // validate worth
-        if (worth.value === '' || worth.value === ' ') {
+        if (worth.value.trim() === '') {
             isValid = false;
             worthObjectFDB.textContent = 'Bitte geben Sie einen Betrag ein.';
             worth.classList.add('errorInput');
@@ -297,7 +297,7 @@ window.addEventListener('load', () => {
         }
 
         // validate object
-        if (object.value === '' || object.value === ' ') {
+        if (object.value.trim() === '') {
             isValid = false;
             objectFDB.textContent = 'Bitte geben Sie einen Betrag ein.';
             object.classList.add('errorInput');
