@@ -405,7 +405,7 @@ window.addEventListener('load', () => {
         initDate('dateObject');
 
         for (const input of inputs) {
-        input.value = '';
+            input.value = '';
         }
 
         document.getElementById('wothObject').value = 0;
@@ -420,6 +420,7 @@ window.addEventListener('load', () => {
             const wrapper = document.createElement('div');
             const personWrapper = document.createElement('div');
             let choosePerson;
+
             if (wrapperID.includes('Money')) choosePerson = document.getElementById('choosePerson');
             else choosePerson = document.getElementById('choosePersonObject');
 
@@ -462,8 +463,10 @@ window.addEventListener('load', () => {
 
             const person = document.createElement('input');
             person.placeholder = 'Person hinzufügen';
+
             if (wrapperID.includes('Money')) person.setAttribute('id', 'createPerson');
             else person.setAttribute('id', 'createObjectPerson');
+
             const feedback = document.createElement('p');
             feedback.classList.add('feedback')
 
