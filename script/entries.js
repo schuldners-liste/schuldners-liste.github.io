@@ -165,7 +165,7 @@ window.addEventListener('load', () => {
         }
 
         if (isValid) {
-            const entryID = new Date().getTime();
+            const entryID = Date.now();
             const wrappers = [
                 document.getElementById('personWrapper'),
                 document.getElementById('personObjectWrapper')
@@ -179,13 +179,16 @@ window.addEventListener('load', () => {
                     person.textContent = name.value;
 
                     person.addEventListener('click', () => {
-                        wrapper.style.opacity = 0;
-                        wrapper.style.transform = 'scale(0.4)';
-                        if (wrapper.id.includes('Object')) document.getElementById('choosePersonObject').value = name.value;
-                        else choosePerson.value = name.value;
+                        wrapper.parentElement.style.opacity = 0;
+                        wrapper.parentElement.style.transform = 'scale(0.4)';
+                        if (wrapper.id.includes('Object')) document.getElementById('choosePersonObject').value = person.textContent;
+                        else choosePerson.value = person.textContent;
+
+                        document.getElementById('disableObjectPersonSelection').classList.add('hide');
+                        document.getElementById('disableMoneyPersonSelection').classList.add('hide');
 
                         setTimeout(() => {
-                            wrapper.classList.add('hide');
+                            wrapper.parentElement.classList.add('hide');
                         }, 210);
                     });
 
@@ -304,7 +307,7 @@ window.addEventListener('load', () => {
         }
 
         if (isValid) {
-            const entryID = new Date().getTime();
+            const entryID = Date.now();
             const wrappers = [
                 document.getElementById('personWrapper'),
                 document.getElementById('personObjectWrapper')
@@ -318,14 +321,16 @@ window.addEventListener('load', () => {
                     person.textContent = name.value;
 
                     person.addEventListener('click', () => {
-                        wrapper.style.opacity = 0;
-                        wrapper.style.transform = 'scale(0.4)';
+                        wrapper.parentElement.style.opacity = 0;
+                        wrapper.parentElement.style.transform = 'scale(0.4)';
+                        if (wrapper.id.includes('Object')) document.getElementById('choosePersonObject').value = person.textContent;
+                        else choosePerson.value = person.textContent;
 
-                        if (!wrapper.id.includes('Object'))
-                        document.getElementById('choosePerson').value = name.value;
+                        document.getElementById('disableObjectPersonSelection').classList.add('hide');
+                        document.getElementById('disableMoneyPersonSelection').classList.add('hide');
 
                         setTimeout(() => {
-                            wrapper.classList.add('hide');
+                            wrapper.parentElement.classList.add('hide');
                         }, 210);
                     });
 
