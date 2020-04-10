@@ -1004,6 +1004,12 @@ window.addEventListener('load', () => {
 
             setTimeout(() => {
                 document.getElementById('moneyPersonSelection').classList.add('hide');
+                document.getElementById('createPerson').classList.remove('errorInput');
+                document.getElementById('createPerson').value = '';
+
+                for (const fdb of document.getElementsByClassName('feedback')) {
+                    fdb.textContent = '';
+                }
             }, 210);
         });
 
@@ -1014,10 +1020,15 @@ window.addEventListener('load', () => {
 
             setTimeout(() => {
                 document.getElementById('objectPersonSelection').classList.add('hide');
+                document.getElementById('createObjectPerson').classList.remove('errorInput');
+                document.getElementById('createObjectPerson').value = '';
+
+                for (const fdb of document.getElementsByClassName('feedback')) {
+                    fdb.textContent = '';
+                }
             }, 210);
         });
     }
-
 });
 
 function changeHeadline(text) {
