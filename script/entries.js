@@ -239,6 +239,7 @@ window.addEventListener('load', () => {
                 document.getElementById('detailed' + name.value.replace(' ', '')).appendChild(createDetailedEntry(createdEntry, name.value));
             }
 
+            calculatePersonSum(name.value.replace(' ', ''));
             clearCreateInputs();
             document.getElementById('entriesFooter').click();
         }
@@ -382,6 +383,7 @@ window.addEventListener('load', () => {
                 document.getElementById('detailed' + name.value.replace(' ', '')).appendChild(createDetailedEntry(createdEntry, name.value));
             }
 
+            calculatePersonSum(name.value.replace(' ', ''));
             clearCreateInputs();
             document.getElementById('entriesFooter').click();
         }
