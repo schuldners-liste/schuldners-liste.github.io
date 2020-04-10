@@ -801,7 +801,7 @@ window.addEventListener('load', () => {
         return newEntry;
     }
 
-    function createDeletedDetailedEntry(entry, personName) {
+    function createDeletedDetailedEntry(entry, name) {
         const newEntry = document.createElement('div');
         const dataWrapper = document.createElement('div');
         const iconWrapper = document.createElement('div');
@@ -840,6 +840,78 @@ window.addEventListener('load', () => {
 
         const restoreEntryIcon = document.createElement('i');
         restoreEntryIcon.setAttribute('class', 'fas fa-redo-alt');
+
+        restoreEntryIcon.addEventListener('click', () => {
+            const dataToRestore = {
+                date: entry.date,
+                restoredDate: Date.now(),
+                entryID: entry.entryID,
+                reason: entry.reason,
+                restored: true,
+                sum: entry.sum,
+                type: entry.type
+            };
+
+            if (entry.type === 'object') {
+                dataToRestore.object = entry.object;
+            }
+
+            firebase.database().ref(`users/${firebase.auth().currentUser.uid}/entries/${name}/${entry.entryID}`).set(dataToRestore).then(() => {
+                firebase.database().ref(`users/${firebase.auth().currentUser.uid}/deletedEntries/${name}/${entry.entryID}`).remove();
+                firebase.database().ref(`users/${firebase.auth().currentUser.uid}/entries/${name}`).update({
+                    name: name
+                });
+
+                let parent = newEntry.parentElement;
+
+                if (parent.children.length - 1 === 0) {
+                    const entryWrapper = document.getElementById('deletedEntryWrapper');
+                    const overview = document.getElementById(`deletedOverview${name.replace(' ', '')}`);
+
+                    entryWrapper.removeChild(overview);
+
+                    if (entryWrapper.children.length === 0) {
+                        const text = document.createElement('p');
+                        text.textContent = 'Keine Einträge verfügbar.';
+                        text.setAttribute('id', 'deletedEntriesErrorMessage');
+                        entryWrapper.appendChild(text);
+                    }
+
+                    firebase.database().ref(`users/${firebase.auth().currentUser.uid}/deletedEntries/${name}`).remove();
+                    const divs = document.querySelectorAll('#deletedDetailedEntriesWrapper > div');
+
+                    entryWrapper.style.left = 0;
+                    document.getElementById('deletedDetailedEntriesWrapper').style.left = '100vw';
+
+                    setTimeout(() => {
+                        for (const div of divs) {
+                            div.classList.add('hide');
+                        }
+
+                        changeHeadline('Gelöscht');
+
+                        parent.removeChild(newEntry);
+                        calculatePersonSum(name.replace(' ', ''));
+                    }, 310);
+                } else {
+                    parent.removeChild(newEntry);
+                    calculatePersonSum(name.replace(' ', ''));
+                }
+
+                const overview = document.getElementById(`overview${name.replace(' ', '')}`);
+                const detailed = document.getElementById(`detailed${name.replace(' ', '')}`);
+
+                if (overview) {
+                    detailed.appendChild(createDetailedEntry(dataToRestore));
+                } else {
+                    const data = [[]];
+                    data[0][0] = dataToRestore;
+                    data[0].name = name;
+    
+                    printEntriesOverview(data, true);
+                }
+            }).catch(console.error);
+        });
 
         iconWrapper.appendChild(restoreEntryIcon);
 
