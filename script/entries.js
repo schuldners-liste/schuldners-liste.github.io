@@ -52,12 +52,15 @@ window.addEventListener('load', () => {
 
             // request entries from database and format array
             firebase.database().ref(`users/${user.uid}/entries`).once('value').then((snapshot) => {
+                const data = snapshot.val();
                 const person = [];
                 let tempEntries;
 
                 // convert given array to array with 'normal' indizes
-                for (const key in snapshot.val()) {
-                    person.push(snapshot.val()[key]);
+                for (const key in data) {
+                    const temp = data[key];
+                    temp.name = data[key].name;
+                    person.push(temp);
                 }
 
                 // create array which includes all entries
@@ -80,12 +83,15 @@ window.addEventListener('load', () => {
 
             // request deleted entries from database and format array
             firebase.database().ref(`users/${user.uid}/deletedEntries`).once('value').then((snapshot) => {
+                const data = snapshot.val();
                 const person = [];
                 let tempEntries;
 
                 // convert given array to array with 'normal' indizes
-                for (const key in snapshot.val()) {
-                    person.push(snapshot.val()[key]);
+                for (const key in data) {
+                    const temp = data[key];
+                    temp.name = data[key].name;
+                    person.push(temp);                    
                 }
 
                 // create array which includes all entries
@@ -97,7 +103,7 @@ window.addEventListener('load', () => {
                         if (key !== 'name') {
                             tempEntries.push(entry[key]);
                         }
-                    }
+                    }                    
 
                     person[i] = tempEntries;
                     person[i].name = entry.name;
