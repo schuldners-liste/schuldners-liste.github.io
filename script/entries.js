@@ -556,7 +556,7 @@ window.addEventListener('load', () => {
                 sum.textContent = sum.textContent.replace('.', ',');
 
                 newEntry.addEventListener('click', () => {
-                    const detailedBox  = document.getElementById('detailed' + entries.name.replace(' ', ''));
+                    const detailedBox = document.getElementById('detailed' + entries.name.replace(' ', ''));
 
                     detailedBox.classList.remove('hide');
 
@@ -573,10 +573,12 @@ window.addEventListener('load', () => {
                 arrowAndMoneyWrapper.appendChild(sum);
                 arrowAndMoneyWrapper.appendChild(arrowRight);
                 arrowAndMoneyWrapper.classList.add('arrowAndMoneyWrapper');
+
                 newEntry.appendChild(name);
                 newEntry.appendChild(arrowAndMoneyWrapper);
                 newEntry.classList.add('entry');
                 newEntry.setAttribute('id', 'overview' + entries.name.replace(' ', ''));
+
                 contentWrapper.appendChild(newEntry);
             }
         } else {
