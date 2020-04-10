@@ -1,14 +1,9 @@
 window.addEventListener('load', () => {
-    // Global Variables
-    const entriesErrorMessage = document.getElementById('entriesErrorMessage');
-
-    // Create Entry
     const moneyType = document.getElementById('moneyType');
     const objectType = document.getElementById('objectType');
     const currentType = document.getElementById('currentType');
     const createMoneyEntry = document.getElementById('createMoneyEntry');
     const createObjectEntry = document.getElementById('createObjectEntry');
-    const choosePerson = document.getElementById('choosePerson');
     const createEntryMoney = document.getElementById('createEntryMoney');
     const createEntryObject = document.getElementById('createEntryObject');
 
