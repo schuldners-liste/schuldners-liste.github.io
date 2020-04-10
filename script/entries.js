@@ -702,8 +702,8 @@ window.addEventListener('load', () => {
         }
     }
 
-    function printDeletedDetailedEntries(persons) {
-        for (const entries of persons) {
+    function printDeletedDetailedEntries(person) {
+        for (const entries of person) {
             const personBox = document.createElement('div');
 
             for (const entry of entries) {
