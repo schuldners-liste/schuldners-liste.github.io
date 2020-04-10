@@ -896,7 +896,7 @@ function calculatePersonSum(name) {
                 }
             }
             
-            output.textContent = `${sum}€`;
+            output.textContent = `${sum}€`.replace('.', ',');
         }
     }
 }
