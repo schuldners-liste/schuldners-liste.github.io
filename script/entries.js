@@ -589,14 +589,19 @@ window.addEventListener('load', () => {
 
     function printDetailedEntries(persons) {
         for (const entries of persons) {
-            const personBox = document.createElement('div');
+            let personBox
+
+            if (document.getElementById('detailed' + entries.name.replace(' ', '')) === null) {
+                personBox = document.createElement('div');
+                personBox.setAttribute('id', 'detailed' + entries.name.replace(' ', ''));
+                personBox.classList.add('hide');
+            } else {
+                personBox = document.getElementById('detailed' + entries.name.replace(' ', ''));
+            }
 
             for (const entry of entries) {
                 personBox.appendChild(createDetailedEntry(entry, entries.name));
             }
-
-            personBox.setAttribute('id', 'detailed' + entries.name.replace(' ', ''));
-            personBox.classList.add('hide');
 
             if (document.getElementById('detailedEntriesWrapper') === null) {
                 const contentWrapper = document.createElement('div');
@@ -614,13 +619,6 @@ window.addEventListener('load', () => {
 
                 document.getElementById('entryWrapper').style.left = 0;
                 document.getElementById('detailedEntriesWrapper').style.left = '100vw';
-
-                // if (document.getElementById('entriesErrorMessage') === null) {
-                //     const text = document.createElement('p');
-                //     text.textContent = 'Keine Einträge verfügbar.';
-                //     text.setAttribute('id', 'entriesErrorMessage');
-                //     contentWrapper.appendChild(text);
-                // }
 
                 setTimeout(() => {
                     for (const div of divs) {
