@@ -763,6 +763,13 @@ window.addEventListener('load', () => {
 
         personEntries[personEntries.length - 1].content = personEntries[personEntries.length - 1].content.replace('.', ',');
 
+        if (entry.restored) {
+            date = new Date(entry.restoredDate);
+            date = `${('0' + date.getDate()).slice(-2)}.${('0' + (date.getMonth() + 1)).slice(-2)}.${date.getFullYear()}`;
+    
+            personEntries.push({prefix: 'wiederhergestellt am:', content: date});
+        }
+
         for (const personEntry of personEntries) {
             const prefix = document.createElement('strong');
             const content = document.createElement('p');
@@ -780,12 +787,76 @@ window.addEventListener('load', () => {
         const deleteEntryIcon = document.createElement('i');
         deleteEntryIcon.setAttribute('class', 'fas fa-times');
 
-        deleteEntryIcon.addEventListener('click', () => {
-            firebase.database().ref(`users/${firebase.auth().currentUser.uid}/deletedEntries/${name}/${entry.entryID}`).set({
+        deleteEntryIcon.addEventListener('click', () => {        
+            const dataToDelete = {
+                date: entry.date,
+                deletedDate: Date.now(),
+                entryID: entry.entryID,
+                reason: entry.reason,
+                restored: entry.restored,
+                sum: entry.sum,
+                type: entry.type
+            };
 
-            }).then(() => {
+            if (entry.type === 'object') {
+                dataToDelete.object = entry.object;
+            }
+            
+            firebase.database().ref(`users/${firebase.auth().currentUser.uid}/deletedEntries/${name}/${entry.entryID}`).set(dataToDelete).then(() => {
                 firebase.database().ref(`users/${firebase.auth().currentUser.uid}/entries/${name}/${entry.entryID}`).remove();
-            });
+                firebase.database().ref(`users/${firebase.auth().currentUser.uid}/deletedEntries/${name}`).update({
+                    name: name
+                });
+
+                let parent = newEntry.parentElement;
+
+                if (parent.children.length - 1 === 0) {
+                    const entryWrapper = document.getElementById('entryWrapper');
+                    const overview = document.getElementById(`overview${name.replace(' ', '')}`);
+
+                    entryWrapper.removeChild(overview);
+
+                    if (entryWrapper.children.length === 0) {
+                        const text = document.createElement('p');
+                        text.textContent = 'Keine Einträge verfügbar.';
+                        text.setAttribute('id', 'entriesErrorMessage');
+                        entryWrapper.appendChild(text);
+                    }
+
+                    firebase.database().ref(`users/${firebase.auth().currentUser.uid}/entries/${name}`).remove();
+                    const divs = document.querySelectorAll('#detailedEntriesWrapper > div');
+
+                    entryWrapper.style.left = 0;
+                    document.getElementById('detailedEntriesWrapper').style.left = '100vw';
+
+                    setTimeout(() => {
+                        for (const div of divs) {
+                            div.classList.add('hide');
+                        }
+
+                        changeHeadline('Einträge');
+
+                        parent.removeChild(newEntry);
+                        calculatePersonSum(name.replace(' ', ''));
+                    }, 310);
+                } else {
+                    parent.removeChild(newEntry);
+                    calculatePersonSum(name.replace(' ', ''));
+                }
+
+                const deletedOverview = document.getElementById(`deletedOverview${name.replace(' ', '')}`);
+                const deletedDetailed = document.getElementById(`deletedDetailed${name.replace(' ', '')}`);
+
+                if (deletedOverview) {
+                    deletedDetailed.appendChild(createDeletedDetailedEntry(dataToDelete));
+                } else {
+                    const data = [[]];
+                    data[0][0] = dataToDelete;
+                    data[0].name = name;
+    
+                    printDeletedEntriesOverview(data, true);
+                }
+            }).catch(console.error);
         });
 
         iconWrapper.appendChild(deleteEntryIcon);
