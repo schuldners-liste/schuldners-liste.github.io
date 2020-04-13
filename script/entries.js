@@ -783,11 +783,14 @@ window.addEventListener('load', () => {
 
         personEntries[personEntries.length - 1].content = personEntries[personEntries.length - 1].content.replace('.', ',');
 
-        if (entry.restored) {
-            date = new Date(entry.restoredDate);
-            date = `${('0' + date.getDate()).slice(-2)}.${('0' + (date.getMonth() + 1)).slice(-2)}.${date.getFullYear()}`;
-    
-            personEntries.push({prefix: 'wiederhergestellt am:', content: date});
+        if (entry.restored && entry.edited) {
+            personEntries.push({prefix: '', content: '(wiederhergestellt & bearbeitet)'});
+        } else if (entry.edited) {
+            personEntries.push({prefix: '', content: '(bearbeitet)'});
+        } else if (entry.restored) {
+            personEntries.push({prefix: '', content: '(wiederhergestellt)'});
+        } else {
+            personEntries.push({prefix: '', content: ''});
         }
 
         for (const personEntry of personEntries) {
