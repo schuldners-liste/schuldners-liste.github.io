@@ -1123,7 +1123,8 @@ window.addEventListener('load', () => {
                 const detailed = document.getElementById(`detailed${name.replace(' ', '')}`);
 
                 if (overview) {
-                    detailed.appendChild(createDetailedEntry(dataToRestore));
+                    sessionStorage.setItem('name', name);
+                    detailed.appendChild(createDetailedEntry(dataToRestore), name);
                 } else {
                     const data = [[]];
                     data[0][0] = dataToRestore;
