@@ -73,6 +73,10 @@
     margin: 1vh 0;
 }
 
+#detailedEntriesWrapper .detailedEntry p:nth-last-child(1) {
+    font-size: 3vmin;
+}
+
 #detailedEntriesWrapper .entryDataWrapper, #deletedDetailedEntriesWrapper .entryDataWrapper {
     width: 100%;
     height: 100%;
