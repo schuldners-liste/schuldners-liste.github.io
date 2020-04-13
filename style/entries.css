@@ -43,7 +43,7 @@
     transition: left 300ms ease-in-out;
 }
 
-#detailedEntriesWrapper, #deletedDetailedEntriesWrapper, #deletedDetailedEntriesWrapper {
+#detailedEntriesWrapper, #deletedDetailedEntriesWrapper {
     width: 100vw;
     height: 81vh;
     display: flex;
