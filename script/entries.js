@@ -14,12 +14,16 @@ window.addEventListener('load', () => {
     // Library to switch types with swipe gestures
     const createMoneyHammer = new Hammer(createMoneyEntry);
     createMoneyHammer.on('swipeleft', () => {
-        objectType.click();
+        if (sessionStorage.getItem('isNavTriggered') === 'false') {
+            objectType.click();
+        }
     });
 
     const createObjectHammer = new Hammer(createObjectEntry);
     createObjectHammer.on('swiperight', () => {
-        moneyType.click();
+        if (sessionStorage.getItem('isNavTriggered') === 'false') {
+            moneyType.click();
+        }
     });
 
     // switch types when clicked
@@ -623,31 +627,35 @@ window.addEventListener('load', () => {
             const hammer = new Hammer(document.getElementById('detailedEntriesWrapper'));
 
             hammer.on('swiperight', () => {
-                const divs = document.querySelectorAll('#detailedEntriesWrapper > div');
-
-                document.getElementById('entryWrapper').style.left = 0;
-                document.getElementById('detailedEntriesWrapper').style.left = '100vw';
-                document.getElementById('editEntryWrapper').style.left = '200vw';
-
-                setTimeout(() => {
-                    for (const div of divs) {
-                        div.classList.add('hide');
-                    }
-
-                    changeHeadline('Einträge');
-                }, 310);
+                if (sessionStorage.getItem('isNavTriggered') === 'false') {
+                    const divs = document.querySelectorAll('#detailedEntriesWrapper > div');
+    
+                    document.getElementById('entryWrapper').style.left = 0;
+                    document.getElementById('detailedEntriesWrapper').style.left = '100vw';
+                    document.getElementById('editEntryWrapper').style.left = '200vw';
+    
+                    setTimeout(() => {
+                        for (const div of divs) {
+                            div.classList.add('hide');
+                        }
+    
+                        changeHeadline('Einträge');
+                    }, 310);
+                }
             });
 
             const hammer2 = new Hammer(document.getElementById('editEntryWrapper'));
 
             hammer2.on('swiperight', () => {
-                document.getElementById('entryWrapper').style.left = '-100vw';
-                document.getElementById('detailedEntriesWrapper').style.left = 0;
-                document.getElementById('editEntryWrapper').style.left = '100vw';
-
-                setTimeout(() => {
-                    changeHeadline(document.getElementById('title').textContent.replace(' bearbeiten', ''));
-                }, 310);
+                if (sessionStorage.getItem('isNavTriggered') === 'false') {
+                    document.getElementById('entryWrapper').style.left = '-100vw';
+                    document.getElementById('detailedEntriesWrapper').style.left = 0;
+                    document.getElementById('editEntryWrapper').style.left = '100vw';
+    
+                    setTimeout(() => {
+                        changeHeadline(document.getElementById('title').textContent.replace(' bearbeiten', ''));
+                    }, 310);
+                }
             });
         }
     }
@@ -744,18 +752,20 @@ window.addEventListener('load', () => {
             const hammer = new Hammer(document.getElementById('deletedDetailedEntriesWrapper'));
 
             hammer.on('swiperight', () => {
-                const divs = document.querySelectorAll('#deletedDetailedEntriesWrapper > div');
-
-                document.getElementById('deletedEntryWrapper').style.left = 0;
-                document.getElementById('deletedDetailedEntriesWrapper').style.left = '100vw';
-
-                setTimeout(() => {
-                    for (const div of divs) {
-                        div.classList.add('hide');
-                    }
-
-                    changeHeadline('Gelöscht');
-                }, 310);
+                if (sessionStorage.getItem('isNavTriggered') === 'false') {
+                    const divs = document.querySelectorAll('#deletedDetailedEntriesWrapper > div');
+    
+                    document.getElementById('deletedEntryWrapper').style.left = 0;
+                    document.getElementById('deletedDetailedEntriesWrapper').style.left = '100vw';
+    
+                    setTimeout(() => {
+                        for (const div of divs) {
+                            div.classList.add('hide');
+                        }
+    
+                        changeHeadline('Gelöscht');
+                    }, 310);
+                }
             });
         }
     }

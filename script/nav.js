@@ -5,6 +5,7 @@ window.addEventListener('load', () => {
   let touchendFunction;
   let touchmoveFunction;
   let touchmoveAllowed = false;
+  sessionStorage.setItem('isNavTriggered', false);
 
   document.getElementById('nav').style.right =
     (window.innerWidth / 100) * 110 + 'px';
@@ -25,6 +26,8 @@ window.addEventListener('load', () => {
           let xCoord = parseInt(touchobj.clientX);
           let diff = xCoord - previousX;
           previousX = xCoord;
+          
+          sessionStorage.setItem('isNavTriggered', true);
 
           let nav = document.getElementById('nav');
           let currentPosition = nav.style.right;
@@ -54,6 +57,7 @@ window.addEventListener('load', () => {
 
           setTimeout(() => {
             nav.style.transition = 'none';
+            sessionStorage.setItem('isNavTriggered', false);
           }, 510);
         }
       };
@@ -71,6 +75,7 @@ window.addEventListener('load', () => {
       nav.style.transition = 'right 500ms ease-out';
 
       touchmoveAllowed = true;
+      sessionStorage.setItem('isNavTriggered', true);
 
       if (nav.style.right === (window.innerWidth / 100) * 20 + 'px') {
         nav.style.right = (window.innerWidth / 100) * 110 + 'px';
@@ -90,6 +95,8 @@ window.addEventListener('load', () => {
 
   disableNav.addEventListener('click', () => {
     nav.style.transition = 'right 500ms ease-in-out';
+
+    sessionStorage.setItem('isNavTriggered', false);
 
     if (
       Math.round(
