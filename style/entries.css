@@ -96,3 +96,49 @@
     width: 5.5vw;
     margin: .7vh 0;
 }
+
+#editEntryWrapper {
+    width: 100vw;
+    height: 81vh;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+    position: fixed;
+    left: 200vw;
+    font-size: 4.5vmin;
+    overflow-y: scroll;
+    transition: left 300ms ease-in-out;
+}
+
+#editEntryWrapper .getDataBox {
+    margin: 1vh 0;
+}
+
+#editEntryWrapper .getDataBox:nth-child(1) input {
+    color: black;
+}
+
+#editButtonBar {
+    width: 80%;
+    margin-top: 2vh;
+}
+
+#editEntryWrapper #editButtonBar .button {
+    width: 98%;
+    margin: 1.8vh 0;
+    padding: 1.3vh 1vw;
+    color: #fff;
+    text-align: center;
+    font-size: 4vmin;
+    border-radius: 3px;
+    box-shadow: 1px 1px 9px 0px #dbdbdb;
+}
+
+#editEntryWrapper #editButtonBar .button:nth-child(1) {
+    background: #03a87c;
+}
+
+#editEntryWrapper #editButtonBar .button:nth-child(2) {
+    background: #ee5a5a;
+}
