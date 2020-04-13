@@ -861,7 +861,132 @@ window.addEventListener('load', () => {
     
                     printDeletedEntriesOverview(data, true);
                 }
+
+                calculatePersonSum(name.replace(' ', ''));
             }).catch(console.error);
+        });
+
+        editEntryIcon.addEventListener('click', () => {
+            const editEntryWrapper = document.getElementById('editEntryWrapper');
+
+            for (const child of editEntryWrapper.children) {
+                if (child.dataset['entryType'].includes(entry.type)) {
+                    child.classList.remove('hide');
+                } else {
+                    child.classList.add('hide');
+                }
+            }
+
+            // init values
+            editName.value = name;
+            editDate.value = entry.date;
+            editReason.value = entry.reason;
+            editObject.value = entry.object;
+            editSum.value = entry.sum;
+            editWorth.value = entry.sum;
+            
+            document.getElementById('entryWrapper').style.left = '-200vw';
+            document.getElementById('detailedEntriesWrapper').style.left = '-100vw';
+            editEntryWrapper.style.left = 0;
+
+            setTimeout(() => {
+                changeHeadline(`${name} bearbeiten`);
+            }, 310);
+
+            const editSaveBtn = document.getElementById('editSaveBtn');
+            const editCancelBtn = document.getElementById('editCancelBtn');
+
+            editSaveBtn.addEventListener('click', () => {
+                let isValid = true;
+
+                const elements = [
+                    {value: editDate.value, errorMessage: 'Bitte geben Sie ein Datum ein.', errorID: 'editDateFDB'},
+                    {value: editReason.value, errorMessage: 'Bitte geben Sie eine Begründung ein.', errorID: 'editReasonFDB'},
+                    {value: editObject.value, errorMessage: 'Bitte geben Sie ein Objekt ein.', errorID: 'editObjectFDB'},
+                    {value: editSum.value, errorMessage: 'Bitte geben Sie einen Betrag ein.', errorID: 'editSumFDB'},
+                    {value: editWorth.value, errorMessage: 'Bitte geben Sie einen Wert ein.', errorID: 'editWorthFDB'},
+                ];
+
+                for (const elmt of elements) {
+                    if (elmt.value.trim() === '') {
+                        document.getElementById(elmt.errorID.replace('FDB', '')).classList.add('errorInput');
+                        document.getElementById(elmt.errorID).textContent = elmt.errorMessage;
+                        isValid = false;
+                    } else {
+                        document.getElementById(elmt.errorID.replace('FDB', '')).classList.remove('errorInput');
+                        document.getElementById(elmt.errorID).textContent = '';
+                    }
+                }
+
+                if (isValid) {
+                    const data = {
+                        date: editDate.value,
+                        reason: editReason.value,
+                        object: editObject.value || null,
+                        sum: parseFloat(editSum.value),
+                        edited: true
+                    };
+    
+                    entry.type === 'object' ? data.sum = parseFloat(editWorth.value) : ''; 
+    
+                    firebase.database().ref(`users/${firebase.auth().currentUser.uid}/entries/${name}/${entry.entryID}`).update(data).then(() => {
+                        while (dataWrapper.firstChild) dataWrapper.removeChild(dataWrapper.firstChild);
+                        
+                        personEntries = [];
+                        personEntries.push({prefix: 'Grund:', content: data.reason});
+
+                        let date = new Date(data.date);
+                        date = `${('0' + date.getDate()).slice(-2)}.${('0' + (date.getMonth() + 1)).slice(-2)}.${date.getFullYear()}`;
+                
+                        personEntries.push({prefix: 'Datum:', content: date});
+                
+                        if (entry.type === 'object') {
+                            personEntries.push({prefix: 'Objekt:', content: data.object});
+                            personEntries.push({prefix: 'Wert:', content: `${data.sum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')}€`});
+                        } else {
+                            personEntries.push({prefix: 'Betrag:', content: `${data.sum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')}€`});
+                        }
+                
+                        personEntries[personEntries.length - 1].content = personEntries[personEntries.length - 1].content.replace('.', ',');
+                
+                        if (entry.restored) {
+                            personEntries.push({prefix: '', content: '(wiederhergestellt & bearbeitet)'});
+                        } else {
+                            personEntries.push({prefix: '', content: '(bearbeitet)'});
+                        }
+                
+                        for (const personEntry of personEntries) {
+                            const prefix = document.createElement('strong');
+                            const content = document.createElement('p');
+                
+                            prefix.textContent = `${personEntry.prefix} `;
+                            content.appendChild(prefix);
+                            content.innerHTML += personEntry.content;
+                
+                            dataWrapper.appendChild(content);
+                        }
+
+                        entry.date = data.date;
+                        entry.reason = data.reason;
+                        entry.object = data.object;
+                        entry.sum = data.sum;
+                        entry.edited = true;
+
+                        calculatePersonSum(name);
+                        editCancelBtn.click();
+                    });
+                }
+            });
+
+            editCancelBtn.addEventListener('click', () => {
+                document.getElementById('entryWrapper').style.left = '-100vw';
+                document.getElementById('detailedEntriesWrapper').style.left = 0;
+                document.getElementById('editEntryWrapper').style.left = '100vw';
+
+                setTimeout(() => {
+                    changeHeadline(document.getElementById('title').textContent.replace(' bearbeiten', ''));
+                }, 310);
+            });
         });
 
         iconWrapper.appendChild(deleteEntryIcon);
@@ -986,6 +1111,8 @@ window.addEventListener('load', () => {
     
                     printEntriesOverview(data, true);
                 }
+
+                calculatePersonSum(name.replace(' ', ''));
             }).catch(console.error);
         });
 
