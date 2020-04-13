@@ -84,17 +84,6 @@
     flex-direction: row;
 }
 
-.entryDataWrapper input, .entryDataWrapper textarea {
-    border: none;
-    outline: none;
-    font-size: 4.5vmin;
-    background: transparent;
-    resize: none;
-    font-family: 'Lato', sans-serif;
-    margin: 0 0 0 1vw;
-    padding: 0;
-}
-
 #detailedEntriesWrapper .entryIconWrapper, #deletedDetailedEntriesWrapper .entryIconWrapper {
     width: 3vw;
     height: 100%;
