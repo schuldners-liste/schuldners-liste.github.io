@@ -1060,7 +1060,7 @@ function calculatePersonSum(name) {
                 }
             }
             
-            output.textContent = `${sum}€`.replace('.', ',');
+            output.textContent = `${sum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')}€`.replace('.', ',');
         }
     }
 }
