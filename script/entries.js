@@ -568,6 +568,7 @@ window.addEventListener('load', () => {
                     setTimeout(() => {
                         contentWrapper.style.left = '-100vw';
                         document.getElementById('detailedEntriesWrapper').style.left = 0;
+                        document.getElementById('editEntryWrapper').style.left = '100vw';
                     }, 5);
 
                     setTimeout(()  => {
@@ -626,6 +627,7 @@ window.addEventListener('load', () => {
 
                 document.getElementById('entryWrapper').style.left = 0;
                 document.getElementById('detailedEntriesWrapper').style.left = '100vw';
+                document.getElementById('editEntryWrapper').style.left = '200vw';
 
                 setTimeout(() => {
                     for (const div of divs) {
