@@ -635,6 +635,18 @@ window.addEventListener('load', () => {
                     changeHeadline('Einträge');
                 }, 310);
             });
+
+            const hammer2 = new Hammer(document.getElementById('editEntryWrapper'));
+
+            hammer2.on('swiperight', () => {
+                document.getElementById('entryWrapper').style.left = '-100vw';
+                document.getElementById('detailedEntriesWrapper').style.left = 0;
+                document.getElementById('editEntryWrapper').style.left = '100vw';
+
+                setTimeout(() => {
+                    changeHeadline(document.getElementById('title').textContent.replace(' bearbeiten', ''));
+                }, 310);
+            });
         }
     }
 
