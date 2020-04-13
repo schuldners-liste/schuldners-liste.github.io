@@ -800,13 +800,14 @@ window.addEventListener('load', () => {
                 reason: entry.reason,
                 restored: entry.restored,
                 sum: entry.sum,
-                type: entry.type
+                type: entry.type,
+                edited: entry.edited || false
             };
 
             if (entry.type === 'object') {
                 dataToDelete.object = entry.object;
             }
-            
+
             firebase.database().ref(`users/${firebase.auth().currentUser.uid}/deletedEntries/${name}/${entry.entryID}`).set(dataToDelete).then(() => {
                 firebase.database().ref(`users/${firebase.auth().currentUser.uid}/entries/${name}/${entry.entryID}`).remove();
                 firebase.database().ref(`users/${firebase.auth().currentUser.uid}/deletedEntries/${name}`).update({
@@ -1050,7 +1051,8 @@ window.addEventListener('load', () => {
                 reason: entry.reason,
                 restored: true,
                 sum: entry.sum,
-                type: entry.type
+                type: entry.type,
+                edited: entry.edited || false
             };
 
             if (entry.type === 'object') {
