@@ -177,7 +177,7 @@
     width: 75vw;
     height: auto;
     padding: 0 5vw 2vh;
-    box-shadow: 0 3px 10px 2px rgba(143,143,143,.5);
+    box-shadow: 1px 1px 9px 0px #dbdbdb;
     border-radius: 5px;
     background: white;
     font-size: 4vmin;
