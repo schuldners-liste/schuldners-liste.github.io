@@ -30,6 +30,7 @@ window.addEventListener('load', () => {
 
         document.getElementById('entryWrapper').style.left = 0;
         document.getElementById('deletedEntryWrapper').style.left = 0;
+        document.getElementById('editEntryWrapper').style.left = '200vw';
         document.getElementById('detailedEntriesWrapper').style.left = '100vw';
         document.getElementById('deletedDetailedEntriesWrapper').style.left = '100vw';
 
