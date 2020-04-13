@@ -750,7 +750,7 @@ window.addEventListener('load', () => {
         const newEntry = document.createElement('div');
         const dataWrapper = document.createElement('div');
         const iconWrapper = document.createElement('div');
-        const personEntries = [];
+        let personEntries = [];
 
         personEntries.push({prefix: 'Grund:', content: entry.reason});
 
