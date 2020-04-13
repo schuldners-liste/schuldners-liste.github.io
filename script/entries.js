@@ -752,6 +752,7 @@ window.addEventListener('load', () => {
         const iconWrapper = document.createElement('div');
         let personEntries = [];
 
+        name = name || sessionStorage.getItem('name') || '';
         personEntries.push({prefix: 'Grund:', content: entry.reason});
 
         let date = new Date(entry.date);
