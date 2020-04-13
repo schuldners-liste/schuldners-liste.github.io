@@ -165,6 +165,47 @@
         <div id="entriesWindow">
           <div id="entryWrapper"></div>
           <div id="detailedEntriesWrapper"></div>
+          <div id="editEntryWrapper">
+            <div class="getDataBox" data-entry-type="money, object">
+              <p>Name des Schuldners</p>
+              <input id="editName" disabled>
+            </div>
+
+            <div class="getDataBox" data-entry-type="money, object">
+              <p>Datum</p>
+              <input type="date" id="editDate">
+              <p class="feedback" id="editDateFDB"></p>
+            </div>
+
+            <div class="getDataBox" data-entry-type="money, object">
+              <p>Begründung</p>
+              <input type="text" id="editReason">
+              <p class="feedback" id="editReasonFDB"></p>
+            </div>
+
+            <div class="getDataBox" data-entry-type="object">
+              <p>Objekt</p>
+              <input type="text" id="editObject">
+              <p class="feedback" id="editObjectFDB"></p>
+            </div>
+
+            <div class="getDataBox" data-entry-type="money">
+              <p>Betrag</p>
+              <input type="number" id="editSum">
+              <p class="feedback" id="editSumFDB"></p>
+            </div>
+
+            <div class="getDataBox" data-entry-type="object">
+              <p>Wert in Euro</p>
+              <input type="number" id="editWorth">
+              <p class="feedback" id="editWorthFDB"></p>
+            </div>
+            
+            <div id="editButtonBar" data-entry-type="money, object">
+              <div class="button" id="editSaveBtn">Speichern</div>
+              <div class="button" id="editCancelBtn">Abbrechen</div>
+            </div>
+          </div>
         </div>
 
         <div id="createEntryWindow" class="hide">
@@ -211,37 +252,37 @@
                 <p>Name des Schuldners</p>
                 <input id="choosePersonObject" value="Person auswählen" readonly>
                 <p class="feedback" id="nameObjectFDB"></p>
-              </div>
-  
-              <div class="getDataBox">
-                <p>Datum</p>
-                <input type="date" id="dateObject">
-                <p class="feedback" id="dateObjectFDB"></p>
-              </div>
-  
-              <div class="getDataBox">
-                <p>Begründung</p>
-                <input type="text" id="reasonObject">
-                <p class="feedback" id="reasonObjectFDB"></p>
-              </div>
-  
-              <div class="getDataBox">
-                <p>Objekt</p>
-                <input type="text" id="object">
-                <p class="feedback" id="objectFDB"></p>
-              </div>
+            </div>
 
-              <div class="getDataBox">
-                <p>Wert in Euro</p>
-                <input type="number" id="wothObject" value="0">
-                <p class="feedback" id="worthObjectFDB"></p>
-              </div>
-  
-              <div class="button" id="createEntryObject">
-                <span>Erstellen</span>
-              </div>
+            <div class="getDataBox">
+              <p>Datum</p>
+              <input type="date" id="dateObject">
+              <p class="feedback" id="dateObjectFDB"></p>
+            </div>
 
-              <div id="disableObjectPersonSelection" class="hide"></div>
+            <div class="getDataBox">
+              <p>Begründung</p>
+              <input type="text" id="reasonObject">
+              <p class="feedback" id="reasonObjectFDB"></p>
+            </div>
+
+            <div class="getDataBox">
+              <p>Objekt</p>
+              <input type="text" id="object">
+              <p class="feedback" id="objectFDB"></p>
+            </div>
+
+            <div class="getDataBox">
+              <p>Wert in Euro</p>
+              <input type="number" id="wothObject" value="0">
+              <p class="feedback" id="worthObjectFDB"></p>
+            </div>
+
+            <div class="button" id="createEntryObject">
+              <span>Erstellen</span>
+            </div>
+
+            <div id="disableObjectPersonSelection" class="hide"></div>
           </div>
         </div>
 
