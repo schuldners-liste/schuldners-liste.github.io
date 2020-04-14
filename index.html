@@ -174,13 +174,14 @@
             <div class="button" id="saveNewUsername">Speichern</div>
           </div>
 
-          <div class="changeInformationBox">
+          <div class="changeInformationBox hideable">
             <h3>E-Mail Adresse ändern</h3>
             <input type="text" placeholder="neue E-Mail Adresse" id="newEmail">
+            <p id="newEmailFDB"> &nbsp; </p>
             <div class="button" id="saveNewEmail">Speichern</div>
           </div>
 
-          <div class="changeInformationBox">
+          <div class="changeInformationBox hideable">
             <h3>Passwort ändern</h3>
             <input type="text" placeholder="neues Passwort" id="newPassword">
             <div class="button" id="saveNewPassword">Speichern</div>
@@ -198,7 +199,18 @@
             <p><i class="fas fa-info-circle"></i> Dieser Schritt kann nicht rückgängig gemacht werden!</p>
           </div>
 
-          <p id="successMessage" class="">Benutzername erfolgreich geändert</p>
+          <div id="authorizeWrapper" class="hide">
+            <h2>Bestätige dein Passwort um fortzufahren</h2>
+
+            <div class="pwWrapper">
+              <input type="password" id="authorizePW" placeholder="Passwort">
+              <i class="fas fa-eye"></i>
+            </div>
+
+            <div class="button" id="confirmAuthorize">Bestätigen</div>
+          </div>
+
+          <p id="successMessage" class="hide"></p>
         </div>
 
         <div id="entriesWindow">
