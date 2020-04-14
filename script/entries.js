@@ -117,6 +117,8 @@ window.addEventListener('load', () => {
 
                 printDeletedEntriesOverview(person, false);
             });
+        } else {
+            deactiveLoading();
         }
     });
 
