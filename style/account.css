@@ -8,7 +8,7 @@
     margin-bottom: .5vh;
 }
 
-.changeInformationBox input {
+.changeInformationBox input, #authorizeWrapper input {
     border: none;
     border-bottom: 2px solid lightgray;
     width: 100%;
@@ -20,11 +20,11 @@
     transition: 200ms ease-in-out border-color;
 }
 
-.changeInformationBox input:focus {
+.changeInformationBox input:focus, #authorizeWrapper input:focus {
     border-color: #486491;
 }
 
-.changeInformationBox .button {
+.changeInformationBox .button, #authorizeWrapper .button {
     width: 50%;
     border-radius: 3px;
     padding: 1.25vh 0;
@@ -44,12 +44,13 @@
     margin: 1.5vh 0;
 }
 
-#newUsernameFDB {
+#newUsernameFDB, #newEmailFDB {
     color: red;
     margin: 0;
 }
 
 #successMessage {
+    max-width: 90vw;
     position: fixed;
     bottom: 15vh;
     background: #1b3647;
@@ -60,4 +61,14 @@
     opacity: 0;
     transform: scale(.6);
     transition: opacity 200ms ease-in-out, transform 200ms ease-in-out;
+}
+
+#authorizeWrapper {
+    width: 80vw;
+    height: 50vh;
+    padding: 25vh 10vw;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background: #fff;
 }
