@@ -45,90 +45,85 @@
           <div class="startButton" id="continueWithSignIn">
             <span>Anmelden</span>
           </div>
+
           <div class="startButton" id="continueWithSignUp">
             <span>Registrieren</span>
           </div>
+
+          <span>oder</span>
+
+          <div id="continueWithGoogle">
+            <img src="./img/google_logo.svg" alt="cannot display image"> <p>mit Google fortfahren</p>
+          </div>
         </div>
       </div>
 
-      <div id="signInWrapper">
-        <h1>Anmelden</h1>
-          
-        <div class="continueWithEmail">
-          <input type="text" placeholder="E-Mail Adresse" id="emailIn">
-          <p id="emInFeedback"></p>
-          <input type="password" placeholder="Passwort" id="passwordIn">
-          <p id="pwInFeedback"></p>
-        </div>
+      <div id="emailWrapper" class="hide">
+        <div id="signInWrapper">
+          <h1>Anmelden</h1>
+            
+          <div class="continueWithEmail">
+            <input type="text" placeholder="E-Mail Adresse" id="emailIn" autocomplete="email">
+            <p id="emInFeedback"></p>
+            <input type="password" placeholder="Passwort" id="passwordIn" autocomplete="current-password">
+            <p id="pwInFeedback"></p>
 
-        <div class="btnWrapper">
-          <div class="button" id="signInBtn">
-            <span id="signInBtnText">Anmelden</span>
-          
-            <div id="signInloader" class="hide">
-              <div class="lds-ellipsis">
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
+            <div class="btnWrapper">
+              <div class="button" id="signInBtn">
+                <span id="signInBtnText">Anmelden</span>
               </div>
             </div>
           </div>
+
+          <div></div>
+  
+          <div>
+            <p id="passwordForgot">Passwort vergessen?</p>
+            <p id="goToSignUp">kein Account? Registrieren!</p>
+          </div>
         </div>
+  
+        <div id="signUpWrapper">
+          <h1>Registrieren</h1>
+  
+          <div class="continueWithEmail">
+            <input type="text" placeholder="E-Mail Adresse" id="emailUp" autocomplete="email">
+            <p id="emUpFeedback"></p>
+            <input type="text" placeholder="Benutzername" id="usernameUp" autocomplete="name">
+            <p id="unUpFeedback"></p>
+            <input type="password" placeholder="Passwort" id="passwordUp" autocomplete="new-password">
+            <p id="pwUpFeedback"></p>
 
-        <p id="passwordForgot">Passwort vergessen?</p>
-        <p id="goToSignUp">kein Account? Registrieren!</p>
-      </div>
-
-      <div id="signUpWrapper">
-        <h1>Registrieren</h1>
-
-        <div class="continueWithEmail">
-          <input type="text" placeholder="E-Mail Adresse" id="emailUp">
-          <p id="emUpFeedback"></p>
-          <input type="text" placeholder="Benutzername" id="usernameUp">
-          <p id="unUpFeedback"></p>
-          <input type="password" placeholder="Passwort" id="passwordUp">
-          <p id="pwUpFeedback"></p>
-        </div>
-        
-        <div class="btnWrapper">
-          <div class="button" id="signUpBtn">
-            <span id="signUpBtnText">Registrieren</span>
-
-            <div id="signUploader" class="hide">
-              <div class="lds-ellipsis">
-                <div></div>
-                <div></div>
-                <div></div>
-                <div></div>
+            <div class="btnWrapper">
+              <div class="button" id="signUpBtn">
+                <span id="signUpBtnText">Registrieren</span>
               </div>
             </div>
           </div>
+          
+          <p id="goToSignIn">bereits registriert? Anmelden!</p>
         </div>
-        
-        <p id="goToSignIn">bereits registriert? Anmelden!</p>
-      </div>
 
-      <div id="passwordForgotWrapper" class="hide">
-        <h2>Passwort zurücksetzen</h2>
+        <div class="startButton" id="backButton">
+          <span>zurück</span>
+        </div>
 
-        <input type="email" id="forgotPWEmail" placeholder="E-Mail Adresse">
-        <p id="fgtEMFeedback"> &nbsp; </p>
-        
-        <div id="forgotButtonWrapper">
-          <div class="button" id="sendForgotEmail">
-            Senden
+        <div id="passwordForgotWrapper" class="hide">
+          <h2>Passwort zurücksetzen</h2>
+  
+          <input type="email" id="forgotPWEmail" placeholder="E-Mail Adresse" autocomplete="email">
+          <p id="fgtEMFeedback"> &nbsp; </p>
+          
+          <div id="forgotButtonWrapper">
+            <div class="button" id="sendForgotEmail">
+              Senden
+            </div>
           </div>
+  
+          <p class="infoText"><i class="fas fa-info-circle"></i> Geben Sie die E-Mail Adresse Ihre Accounts ein, um einen Link zum Zurücksetzen des Passwortes zu erhalten.</p>
         </div>
-
-        <p class="infoText"><i class="fas fa-info-circle"></i> Geben Sie die E-Mail Adresse Ihre Accounts ein, um einen Link zum Zurücksetzen das Passwortes zu erhalten.</p>
-      </div>
-
-      <div id="disablePasswordForgotWrapper" class="hide"></div>
-
-      <div id="continueWithGoogle">
-        <img src="./img/google_logo.svg" alt="cannot display image"> <p>mit Google fortfahren</p>
+  
+        <div id="disablePasswordForgotWrapper" class="hide"></div>
       </div>
     </div>
 
