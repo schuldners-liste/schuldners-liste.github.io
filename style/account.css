@@ -6,10 +6,11 @@
     justify-content: flex-start;
     align-items: flex-start;
     flex-direction: row;
-    font-size: 4.5vmin;
+    font-size: 4vmin;
     position: fixed;
     top: 0;
     left: 0;
+    transition: opacity 200ms ease-in-out;
 }
 
 #startScreen  {
@@ -21,8 +22,6 @@
     justify-content: flex-start;
     align-items: center;
     flex-direction: column;
-    z-index: 99;
-    transition: transform 300ms ease-in-out, opacity 300ms ease-in-out;
 }
 
 #startScreen img {
@@ -31,50 +30,35 @@
 }
 
 #startScreen #buttonWrapper {
-    width: 100%;
+    width: 75vw;
     display: flex;
     justify-content: space-evenly;
     align-items: center;
-    flex-direction: row;
+    flex-direction: column;
     margin: 10vh 0;
 }
 
 .startButton {
-    background: #6593DD;
+    width: 100%;
+    border-radius: 3px;
+    padding: 3vw;
+    margin: 2vh 0 2vh 0;
+    text-align: center;
+    background: #486491;
     color: white;
-    box-shadow: 0px 3px 6px 0px rgba(0,0,0,0.4);
-    padding: 1.5vh 2vw;
-    border-radius: 5px;
+    box-shadow: 1px 1px 9px 0px #dbdbdb;
+    letter-spacing: .35px;
+    user-select: none;
+    outline: none;
 }
 
-.fadeOut {
-    transform: scale(1.6) !important;
-    opacity: 0 !important;
-}
-
-.fadeIn {
-    transform: scale(1) !important;
-    opacity: 1 !important;
-}
-
-#signInWrapper, #signUpWrapper {
-    width: 100vw;
-    height: 65vh;
-    position: absolute;
-    top: 0;
-    left: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    transition: left 300ms ease-in-out, transform 300ms ease-in-out, opacity 300ms ease-in-out, filter 200ms ease-in-out;
-    transform: scale(.4);
-    opacity: 0;
+#buttonWrapper > span {
+    font-size: 3vmin;
 }
 
 #continueWithGoogle {
     background: #fff;
-    width: 60vw;
+    width: 100%;
     color: #4285F4;
     display: flex;
     justify-content: flex-start;
@@ -82,20 +66,39 @@
     flex-direction: row;
     font-family: 'Roboto', 'sans serif';
     border-radius: 3px;
-    padding: 1vmin;
-    box-shadow: 0px 3px 6px 1px rgba(191,191,191,1);
-    position: absolute;
-    bottom: 20vh;
-    left: 20vw;
+    padding: 2vw 3vw;
+    margin: 2vh 0 2vh 0;
+    box-shadow: 1px 1px 9px 0px #dbdbdb;
     user-select: none;
-    transition: transform 300ms ease-in-out, opacity 300ms ease-in-out, filter 200ms ease-in-out;
-    transform: scale(.4);
-    opacity: 0;
 }
 
 #continueWithGoogle img {
     width: 12vw;
     margin: 0 2vw 0 0;
+}
+
+#emailWrapper {
+    min-width: 200vw;
+    height: 100vh;
+    position: relative;
+    left: 0;
+    overflow-x: scroll;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-direction: row;
+    transition: left 200ms ease-in-out;
+}
+
+#signInWrapper, #signUpWrapper {
+    min-width: 100vw;
+    height: 65vh;
+    margin-top: 9vh;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+    transition: opacity 200ms ease-in-out;
 }
 
 #passwordForgot, #goToSignUp, #goToSignIn {
@@ -108,13 +111,14 @@
 
 .continueWithEmail {
     width: 70vw;
+    margin-top: 10vh;
 }
 
 #logInScreen input {
     border: none;
     border-bottom: 2px solid lightgray;
     width: 100%;
-    font-size: 5vmin;
+    font-size: 4vmin;
     margin: 1.5vh 0;
     padding: .1rem;
     outline: none;
@@ -122,7 +126,7 @@
 }
 
 #logInScreen input:focus {
-    border-color: #03a87c;
+    border-color: #486491;
 }
 
 .btnWrapper {
@@ -132,10 +136,9 @@
 }
 
 #logInScreen .button {
-    border-radius: 5px;
+    border-radius: 3px;
     outline: none;
     padding: 3vmin;
-    font-weight: bold;
     background: #03a87c;
     color: white;
     border: #03a87c;
@@ -143,6 +146,14 @@
     letter-spacing: .35px;
     user-select: none;
     margin-bottom: 5vh;
+}
+
+#backButton {
+    width: 30%;
+    position: fixed;
+    left: 32vw;
+    bottom: 5vh;
+    transition: opacity 200ms ease-in-out;
 }
 
 #logInScreen p {
@@ -197,7 +208,7 @@
 #disablePasswordForgotWrapper {
     width: 100vw;
     height: 100vh;
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     z-index: 101;
