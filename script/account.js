@@ -1,17 +1,19 @@
 window.addEventListener('load', () => {
+    const startScreen = document.getElementById('startScreen');
+    const emailWrapper = document.getElementById('emailWrapper');
     const continueWithGoogle = document.getElementById('continueWithGoogle');
     const goToSignIn = document.getElementById('goToSignIn');
     const goToSignUp = document.getElementById('goToSignUp');
-    const signUpWrapper = document.getElementById('signUpWrapper');
-    const signInWrapper = document.getElementById('signInWrapper');
     const continueWithSignIn = document.getElementById('continueWithSignIn');
     const continueWithSignUp = document.getElementById('continueWithSignUp');
+    const signInWrapper = document.getElementById('signInWrapper');
     const signInButton = document.getElementById('signInBtn');
     const signUpButton = document.getElementById('signUpBtn');
     const passwordForgot = document.getElementById('passwordForgot');
     const passwordForgotWrapper = document.getElementById('passwordForgotWrapper');
     const disablePasswordForgotWrapper = document.getElementById('disablePasswordForgotWrapper');
     const sendForgotEmail = document.getElementById('sendForgotEmail');
+    const backButton = document.getElementById('backButton');
 
     continueWithGoogle.addEventListener('click', () => {
         sessionStorage.setItem('choseGoogle', true);
@@ -21,77 +23,64 @@ window.addEventListener('load', () => {
     });
 
     continueWithSignIn.addEventListener('click', () => {
-        document.getElementById('startScreen').classList.add('fadeOut');
-        signInWrapper.classList.add('fadeIn');
-        signInWrapper.style.zIndex = 100;
-        signUpWrapper.style.zIndex = 0;
-        continueWithGoogle.classList.add('fadeIn');
-        continueWithGoogle.style.zIndex = 100;
+        emailWrapper.style.left = 0;
+        startScreen.classList.add('hide');
+        emailWrapper.classList.remove('hide');
     });
 
     continueWithSignUp.addEventListener('click', () => {
-        document.getElementById('startScreen').classList.add('fadeOut');
-        signUpWrapper.classList.add('fadeIn');
-        signUpWrapper.style.zIndex = 100;
-        signInWrapper.style.zIndex = 0;
-        continueWithGoogle.classList.add('fadeIn');
-        continueWithGoogle.style.zIndex = 100;
+        emailWrapper.style.left = '-100vw';
+        startScreen.classList.add('hide');
+        emailWrapper.classList.remove('hide');
+    });
+
+    backButton.addEventListener('click', () => {
+        emailWrapper.style.left = 0;
+        emailWrapper.classList.add('hide');
+        startScreen.classList.remove('hide');
+        clearInputs();
     });
 
     goToSignUp.addEventListener('click', () => {
-        signInWrapper.classList.remove('fadeIn');
-        signInWrapper.classList.add('fadeOut');
-        signUpWrapper.classList.add('fadeIn');
-
-        signUpWrapper.style.zIndex = 100;
-        signInWrapper.style.zIndex = 0;
-
+        emailWrapper.style.left = '-100vw';
         setTimeout(() => {
-            clearSignIn();
-        }, 310);
+            clearInputs();
+        }, 200);
     });
 
     goToSignIn.addEventListener('click', () => {
-        signUpWrapper.classList.remove('fadeIn');
-        signUpWrapper.classList.add('fadeOut');
-        signInWrapper.classList.add('fadeIn');
-        signInWrapper.style.zIndex = 100;
-        signUpWrapper.style.zIndex = 0;
-
+        emailWrapper.style.left = 0;
         setTimeout(() => {
-            clearSignUp();
-        }, 310);
+            clearInputs();
+        }, 200);
     });
 
     passwordForgot.addEventListener('click', () => {
         passwordForgotWrapper.classList.remove('hide');
-
-        signInWrapper.style.filter = 'blur(2px)';
-        continueWithGoogle.style.filter = 'blur(2px)';
+        disablePasswordForgotWrapper.classList.remove('hide');
+        signInWrapper.style.opacity = .3;
+        backButton.style.opacity = .3;
 
         setTimeout(() => {
             passwordForgotWrapper.style.opacity = 1;
             passwordForgotWrapper.style.transform = 'scale(1)';
-        }, 10);
+        }, 5);
 
-        disablePasswordForgotWrapper.classList.remove('hide');
+        setTimeout(() => {
+            clearInputs();
+        }, 200);
     });
 
     disablePasswordForgotWrapper.addEventListener('click', () => {
-        const email = document.getElementById('forgotPWEmail');
-        const fdb = document.getElementById('fgtEMFeedback');
-        disablePasswordForgotWrapper.classList.add('hide');
         passwordForgotWrapper.style.opacity = 0;
         passwordForgotWrapper.style.transform = 'scale(.6)';
-        signInWrapper.style.filter = 'blur(0)';
-        continueWithGoogle.style.filter = 'blur(0)';
+        disablePasswordForgotWrapper.classList.add('hide');
+        signInWrapper.style.opacity = 1;
+        backButton.style.opacity = 1;
         
         setTimeout(() => {
             passwordForgotWrapper.classList.add('hide');
-
-            email.classList.remove('errorInput');
-            email.value = '';
-            fdb.innerHTML = '&nbsp;';
+            clearInputs();
         }, 210);
     });
 
@@ -134,15 +123,15 @@ window.addEventListener('load', () => {
         const pwInFeedback = document.getElementById('pwInFeedback');
         let isValid = true;
 
-        startLoadingAnimation();
+        activateLoading(.3);
 
         // Email validation
-        if (email.value === '' || email.value === ' ') {
+        if (email.value.trim() === '') {
             // email value is empty
             emInFeedback.textContent = 'Bitte geben Sie eine E-Mail Adresse ein.';
             isValid = false;
             email.classList.add('errorInput');
-        } else if (validateEmail(email)) {
+        } else if (validateEmail(email.value)) {
             // email is valid
             emInFeedback.textContent = '';
             email.classList.remove('errorInput');
@@ -154,15 +143,20 @@ window.addEventListener('load', () => {
             isValid = false;
         }
 
-        if (password.value === '' || password.value === ' ') {
+        if (password.value.trim() === '') {
             // password value is empty
             pwInFeedback.textContent = 'Bitte geben Sie ein Passwort ein.';
             isValid = false;
             password.classList.add('errorInput');
-        } else {
+        } else if (validatePassword(password.value)) {
             // password is valid
             pwInFeedback.textContent = '';
             password.classList.remove('errorInput');
+        } else {
+            // password is invalid ()
+            pwInFeedback.textContent = 'Ungültiges Passwort.';
+            isValid = false;
+            password.classList.add('errorInput');
         }
 
         if (isValid) {
@@ -180,42 +174,24 @@ window.addEventListener('load', () => {
                 for (const msg of messages) {
                     if (msg.message === errorMsg) {
                         if (msg.affected === 'em') {
-                            emUpFeedback.textContent = msg.feedback;
+                            emInFeedback.textContent = msg.feedback;
                             email.classList.add('errorInput');
                         } else if (msg.affected === 'pw') {
-                            pwUpFeedback.textContent = msg.feedback;
+                            pwInFeedback.textContent = msg.feedback;
                             password.classList.add('errorInput');
                         }
                     }
                 }
+
+                deactiveLoading();
             });
 
             promise.then(() => {
-                stopLoadingAnimation();
-                sessionStorage.setItem('choseGoogle', true);
+                deactiveLoading();
+                sessionStorage.setItem('choseGoogle', false);
             });
         } else {
-            stopLoadingAnimation();
-        }
-
-        function startLoadingAnimation() {
-            const signInBtnText = document.getElementById('signInBtnText');
-            const signInloader = document.getElementById('signInloader');
-
-            signInBtnText.style.opacity = 0;
-            signInloader.style.width = (signInButton.clientWidth - 64) + 'px';
-            signInloader.style.height = (signInButton.clientHeight - 64) + 'px';
-            signInBtnText.style.position = 'absolute';
-            signInloader.classList.remove('hide');
-        }
-        
-        function stopLoadingAnimation() {
-            const signInBtnText = document.getElementById('signInBtnText');
-            const signInloader = document.getElementById('signInloader');
-            
-            signInloader.classList.add('hide');
-            signInBtnText.style.position = 'relative';
-            signInBtnText.style.opacity = 1;
+            deactiveLoading();
         }
     });
 
@@ -228,15 +204,15 @@ window.addEventListener('load', () => {
         const pwUpFeedback = document.getElementById('pwUpFeedback');
         let isValid = true;
 
-        startLoadingAnimation();
+        activateLoading(.3);
 
         // Email validation
-        if (email.value === '' || email.value === ' ') {
+        if (email.value.trim() === '') {
             // email value is empty
             emUpFeedback.textContent = 'Bitte geben Sie eine E-Mail Adresse ein.';
             isValid = false;
             email.classList.add('errorInput');
-        } else if (validateEmail(email)) {
+        } else if (validateEmail(email.value)) {
             // email is valid
             emUpFeedback.textContent = '';
             email.classList.remove('errorInput');
@@ -249,7 +225,7 @@ window.addEventListener('load', () => {
         }
 
         // Username validation
-        if (username.value === '' || username.value === ' ') {
+        if (username.value.trim() === '') {
             // username value is empty
             unUpFeedback.textContent = 'Bitte geben Sie einen Benutzernamen ein.';
             isValid = false;
@@ -258,14 +234,15 @@ window.addEventListener('load', () => {
             // username is valid
             unUpFeedback.textContent = '';
             username.classList.remove('errorInput');
+            username.value = username.value.substring(0, 24);
         }
 
-        if (password.value === '' || password.value === ' ') {
+        if (password.value === '') {
             // password value is empty
             pwUpFeedback.textContent = 'Bitte geben Sie ein Passwort ein.';
             isValid = false;
             password.classList.add('errorInput');
-        } else if (validatePassword(password)) {
+        } else if (validatePassword(password.value)) {
             // password is valid
             pwUpFeedback.textContent = '';
             password.classList.remove('errorInput');
@@ -279,12 +256,12 @@ window.addEventListener('load', () => {
             } else if (!/[0-9]/.test(password.value)) {
                 // no numbers
                 pwUpFeedback.textContent = 'Bitte geben Sie auch Ziffern ein.';
-            } else if (password.value.length <= 5) {
+            } else if (password.value.length < 5) {
                 // to short
                 pwUpFeedback.textContent = 'Das Passwort ist zu kurz.';
             } else {
                 // unknown error
-                pwUpFeedback.textContent = 'Es ist ein unbekannter Fehler aufgetreten, versuchen Sie es später erneut.';
+                pwUpFeedback.textContent = 'Es ist ein unbekannter Fehler aufgetreten, bitte versuchen Sie es später erneut.';
             }
 
             password.classList.add('errorInput');
@@ -314,102 +291,55 @@ window.addEventListener('load', () => {
                         }
                     }
                 }
+
+                deactiveLoading();
             });
 
             promise.then(() => {
-                stopLoadingAnimation();
+                deactiveLoading();
                 
                 sessionStorage.setItem('choseGoogle', false);
                 
                 firebase.database().ref(`users/${firebase.auth().currentUser.uid}/userdata`).set({
                     username: username.value,
                     email: email.value,
-                    signupdate: new Date().getTime()
+                    signupdate: Date.now()
                 });
             });
         } else {            
-            stopLoadingAnimation();
-        }
-
-        function startLoadingAnimation() {
-            const signUpBtnText = document.getElementById('signUpBtnText');
-            const signUploader = document.getElementById('signUploader');
-
-            signUpBtnText.style.opacity = 0;
-            signUploader.style.width = (signUpButton.clientWidth - 64) + 'px';
-            signUploader.style.height = (signUpButton.clientHeight - 64) + 'px';
-            signUpBtnText.style.position = 'absolute';
-            signUploader.classList.remove('hide');
-        }
-        
-        function stopLoadingAnimation() {
-            const signUpBtnText = document.getElementById('signUpBtnText');
-            const signUploader = document.getElementById('signUploader');
-            
-            signUploader.classList.add('hide');
-            signUpBtnText.style.position = 'relative';
-            signUpBtnText.style.opacity = 1;
+            deactiveLoading();
         }
     });
-
-    function clearSignUp() {
-        const inputs = [
-            document.getElementById('emailUp'),
-            document.getElementById('usernameUp'),
-            document.getElementById('passwordUp')
-        ];
-
-        const feedbacks = [
-            document.getElementById('emUpFeedback'),
-            document.getElementById('unUpFeedback'),
-            document.getElementById('pwUpFeedback')
-        ];
-
-        for (const input of inputs) {
-            input.value = '';
-            input.classList.remove('errorInput');
-        }
-
-
-        for (const feedback of feedbacks) {
-            feedback.textContent = '';
-        }
-    }
-
-    function clearSignIn() {
-        const inputs = [
-            document.getElementById('emailIn'),
-            document.getElementById('passwordIn')
-        ];
-
-        const feedbacks = [
-            document.getElementById('emInFeedback'),
-            document.getElementById('pwInFeedback')
-        ];
-
-        for (const input of inputs) {
-            input.value = '';
-
-            input.classList.remove('errorInput');
-        }
-
-        for (const feedback of feedbacks) {
-            feedback.textContent = '';
-        }
-    }
 });
 
-// @param input Element
+// @param string
 function validatePassword(password) {
-    return /[a-z]/.test(password.value) && /[A-Z]/.test(password.value) && /[0-9]/.test(password.value) && password.value.length > 5;
+    return /[a-z]/.test(password) && /[A-Z]/.test(password) && /[0-9]/.test(password) && password.length > 5;
 }
 
-// @param input Element
+// @param string
 function validateEmail(email) {
-    if (email.value.includes('@')) {
-        const splitEmail = email.value.split('@');
-        return splitEmail.length === 2 && splitEmail[1].split('.').length === 2 && splitEmail[1].split('.')[1].length >= 2 && splitEmail[1].split('.')[0].length >= 3;
-    } else {
-        return false;
+    return /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(email);
+}
+
+function clearInputs() {
+    const inputs = [
+        document.getElementById('emailIn'),
+        document.getElementById('passwordIn'),
+        document.getElementById('forgotPWEmail'),
+        document.getElementById('emInFeedback'),
+        document.getElementById('pwInFeedback'),
+        document.getElementById('emailUp'),
+        document.getElementById('usernameUp'),
+        document.getElementById('passwordUp'),
+        document.getElementById('emUpFeedback'),
+        document.getElementById('unUpFeedback'),
+        document.getElementById('pwUpFeedback')
+    ];
+
+    for (const input of inputs) {
+        input.value = '';
+        input.textContent = '';
+        input.classList.remove('errorInput');
     }
 }
