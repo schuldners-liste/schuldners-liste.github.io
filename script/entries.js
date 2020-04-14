@@ -54,6 +54,8 @@ window.addEventListener('load', () => {
             initDate('dateObject');
             createPersonSelection('createMoneyEntry', user);
             createPersonSelection('createObjectEntry', user);
+            clearInputs();
+            document.getElementById('backButton').click();
 
             // request entries from database and format array
             firebase.database().ref(`users/${user.uid}/entries`).once('value').then((snapshot) => {
