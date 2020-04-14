@@ -15,6 +15,8 @@ window.addEventListener('load', () => {
     const sendForgotEmail = document.getElementById('sendForgotEmail');
     const backButton = document.getElementById('backButton');
 
+    initEyes();
+
     continueWithGoogle.addEventListener('click', () => {
         sessionStorage.setItem('choseGoogle', true);
         const provider = new firebase.auth.GoogleAuthProvider();
@@ -310,6 +312,27 @@ window.addEventListener('load', () => {
             deactiveLoading();
         }
     });
+
+    function initEyes() {
+        const pwWrapper = document.getElementsByClassName('pwWrapper');
+
+        for (let i = 0; i < pwWrapper.length; i++) {
+            for (let j = 1; j < pwWrapper[i].children.length; j++) {        
+                const icon = pwWrapper[i].children[j];
+                const input = pwWrapper[i].children[j-1];
+                
+                icon.addEventListener('click', () => {
+                    if (icon.className.includes('-slash')) {
+                        icon.className = icon.className.replace('-slash', '');
+                        input.type = 'password';
+                    } else {
+                        icon.className += '-slash';
+                        input.type = 'text';
+                    }
+                });
+            }
+        }
+    }
 });
 
 // @param string

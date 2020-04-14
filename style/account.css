@@ -160,6 +160,16 @@
     margin: .5vh 0;
 }
 
+.pwWrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.pwWrapper input {
+    width: 88% !important; 
+}
+
 #unUpFeedback, #emUpFeedback, #emInFeedback {
     color: red;
     font-size: 3.5vmin;
