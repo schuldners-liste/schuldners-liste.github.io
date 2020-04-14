@@ -57,6 +57,16 @@ window.addEventListener('load', () => {
             clearInputs();
             document.getElementById('backButton').click();
 
+            if (user.providerData[0].providerId === 'google.com') {
+                for (const box of document.getElementsByClassName('hideable')) {
+                    box.classList.add('hide');
+                }
+            } else {
+                for (const box of document.getElementsByClassName('hideable')) {
+                    box.classList.remove('hide');
+                }
+            }
+
             // request entries from database and format array
             firebase.database().ref(`users/${user.uid}/entries`).once('value').then((snapshot) => {
                 const data = snapshot.val();
