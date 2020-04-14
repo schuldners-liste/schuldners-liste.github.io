@@ -13,8 +13,6 @@ window.addEventListener('load', () => {
     const disablePasswordForgotWrapper = document.getElementById('disablePasswordForgotWrapper');
     const sendForgotEmail = document.getElementById('sendForgotEmail');
 
-    AOS.init();
-
     continueWithGoogle.addEventListener('click', () => {
         sessionStorage.setItem('choseGoogle', true);
         const provider = new firebase.auth.GoogleAuthProvider();
