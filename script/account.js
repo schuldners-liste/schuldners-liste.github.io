@@ -7,6 +7,7 @@ window.addEventListener('load', () => {
 
     const saveNewUsername = document.getElementById('saveNewUsername');
     const saveNewEmail = document.getElementById('saveNewEmail');
+    const saveNewPassword = document.getElementById('saveNewPassword');
 
     saveNewUsername.addEventListener('click', () => {
         const user = firebase.auth().currentUser;
@@ -88,6 +89,73 @@ window.addEventListener('load', () => {
         } else {
             newEmail.classList.add('errorInput');
             newEmailFDB.textContent = 'Ungültige E-Mail Adresse.';
+            deactiveLoading();
+        }
+    });
+
+    saveNewPassword.addEventListener('click', () => {
+        const newPassword = document.getElementById('newPassword');
+        const newPasswordFDB = document.getElementById('newPasswordFDB');
+
+        activateLoading(.3);
+
+        if (newPassword.value.trim() === '') {
+            newPassword.classList.add('errorInput');
+            newPasswordFDB.textContent = 'Feld darf nicht leer sein.';
+            deactiveLoading();
+        } else if (validatePassword(newPassword.value)) {
+            newPassword.classList.remove('errorInput');
+            newPasswordFDB.innerHTML = '&nbsp;';
+
+            deactiveLoading();
+
+            let interval;
+
+            if (authorized) {
+                firebase.auth().currentUser.updatePassword(newPassword.value).then(() => {
+                    deactiveLoading();
+                    showSuccessMessage('Passwort erfolgreich geändert.', 3);
+                }).catch(() => {
+                    deactiveLoading();
+                    showSuccessMessage('Unbekanntes Problem, versuche es später erneut.', 4)
+                });
+            } else {
+                authorize();
+
+                interval = setInterval(() => {
+                   if (authorized) {
+                        clearInterval(interval);
+                        activateLoading(.3);
+
+                        firebase.auth().currentUser.updatePassword(newPassword.value).then(() => {
+                            deactiveLoading();
+                            showSuccessMessage('Passwort erfolgreich geändert.', 3);
+                        }).catch(() => {
+                            deactiveLoading();
+                            showSuccessMessage('Unbekanntes Problem, versuche es später erneut.', 4)
+                        });
+                    }
+                }, 250);
+            }
+        } else {
+            if (!/[a-z]/.test(newPassword.value)) {
+                // no lower case letters
+                newPasswordFDB.textContent = 'Bitte geben Sie auch kleine Buchstaben ein.';
+            } else if (!/[A-Z]/.test(newPassword.value)) {
+                // no higer case letters 
+                newPasswordFDB.textContent = 'Bitte geben Sie auch große Buchstaben ein.';
+            } else if (!/[0-9]/.test(newPassword.value)) {
+                // no numbers
+                newPasswordFDB.textContent = 'Bitte geben Sie auch Ziffern ein.';
+            } else if (newPassword.value.length < 5) {
+                // to short
+                newPasswordFDB.textContent = 'Das Passwort ist zu kurz.';
+            } else {
+                // unknown error
+                newPasswordFDB.textContent = 'Es ist ein unbekannter Fehler aufgetreten, bitte versuchen Sie es später erneut.';
+            }
+
+            newPassword.classList.add('errorInput');
             deactiveLoading();
         }
     });
