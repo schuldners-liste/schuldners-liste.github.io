@@ -1,10 +1,6 @@
 let authorized = false;
 
 window.addEventListener('load', () => {
-    setTimeout(() => {
-        document.getElementById('accountNav').click();
-    }, 500);
-
     const saveNewUsername = document.getElementById('saveNewUsername');
     const saveNewEmail = document.getElementById('saveNewEmail');
     const saveNewPassword = document.getElementById('saveNewPassword');
