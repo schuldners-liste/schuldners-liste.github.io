@@ -164,6 +164,41 @@
       <div id="disableNav" style="display: none;"></div>
 
       <main id="mainContent">
+        <div id="accountWindow" class="hide">
+          <div class="changeInformationBox">
+            <h3>Benutzername ändern</h3>
+            <input type="text" placeholder="neuer Benutzername" maxlength="25" id="newUsername">
+            <p id="newUsernameFDB"> &nbsp; </p>
+            <div class="button" id="saveNewUsername">Speichern</div>
+          </div>
+
+          <div class="changeInformationBox">
+            <h3>E-Mail Adresse ändern</h3>
+            <input type="text" placeholder="neue E-Mail Adresse" id="newEmail">
+            <div class="button" id="saveNewEmail">Speichern</div>
+          </div>
+
+          <div class="changeInformationBox">
+            <h3>Passwort ändern</h3>
+            <input type="text" placeholder="neues Passwort" id="newPassword">
+            <div class="button" id="saveNewPassword">Speichern</div>
+          </div>
+
+          <div class="changeInformationBox">
+            <h3>Account löschen</h3>
+            <div class="button danger" id="deleteAccount">Account löschen</div>
+            <p><i class="fas fa-info-circle"></i> Dieser Schritt kann nicht rückgängig gemacht werden!</p>
+          </div>
+
+          <div class="changeInformationBox">
+            <h3>Alle Einträge löschen</h3>
+            <div class="button danger" id="deleteAllEntries">Einträge löschen</div>
+            <p><i class="fas fa-info-circle"></i> Dieser Schritt kann nicht rückgängig gemacht werden!</p>
+          </div>
+
+          <p id="successMessage" class="">Benutzername erfolgreich geändert</p>
+        </div>
+
         <div id="entriesWindow">
           <div id="entryWrapper"></div>
           <div id="detailedEntriesWrapper"></div>
