@@ -119,6 +119,10 @@ window.addEventListener('load', () => {
 
                 printDeletedEntriesOverview(person, false);
             });
+
+            firebase.database().ref(`users/${user.uid}/userdata/username`).once('value').then(snapshot => {
+                document.getElementById('usernameField').textContent = snapshot.val();
+            });
         } else {
             deactiveLoading();
         }
