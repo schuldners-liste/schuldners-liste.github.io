@@ -52,3 +52,40 @@ function showSuccessMessage(text, duration) {
         }, duration * 1000);
     }, 5);
 }
+
+function authorize() {
+    const authorizeWrapper = document.getElementById('authorizeWrapper');
+    const confirmAuthorize = document.getElementById('confirmAuthorize');
+    const footer = document.getElementById('footer');
+    const user = firebase.auth().currentUser;
+
+    if (user.providerData[0].providerId === 'google.com') {
+        const provider = new firebase.auth.GoogleAuthProvider();
+
+        user.reauthenticateWithPopup(provider).then((result) => {
+            authorized = true;
+        }, (error) => {
+            console.error(error);
+        });
+    } else if (user.providerData[0].providerId === 'password') {
+        authorizeWrapper.classList.remove('hide');
+        footer.style.zIndex = 0;
+    
+        confirmAuthorize.addEventListener('click', () => {
+            user.reauthenticateAndRetrieveDataWithCredential(firebase.auth.EmailAuthProvider.credential(user.email, document.getElementById('authorizePW').value)).then(() => {
+                authorizeWrapper.classList.add('hide');
+                footer.style.zIndex = 2
+                document.getElementById('authorizePW').value = '';
+                authorized = true;
+
+                setTimeout(() => {
+                    authorized = false;
+                }, 5 * 60000);
+            }, (error) => {
+                console.error(error);
+            });
+        });
+    } else {
+        showSuccessMessage('Unbekanntes Problem, versuche es später erneut.', 4);
+    }
+}
