@@ -10,6 +10,7 @@ window.addEventListener('load', () => {
     // execute when loaded
     sessionStorage.setItem('createdNewUser', false);
     initDisablePersonSelection();
+    activateLoading(.3);
 
     // Library to switch types with swipe gestures
     const createMoneyHammer = new Hammer(createMoneyEntry);
@@ -83,6 +84,7 @@ window.addEventListener('load', () => {
                 }
 
                 printEntriesOverview(person, false);
+                deactiveLoading();
             });
 
             // request deleted entries from database and format array
@@ -926,6 +928,8 @@ window.addEventListener('load', () => {
             const editCancelBtn = document.getElementById('editCancelBtn');
 
             editSaveBtn.addEventListener('click', () => {
+                activateLoading(.3);
+                let now = Date.now();
                 let isValid = true;
 
                 const elements = [
@@ -1001,15 +1005,25 @@ window.addEventListener('load', () => {
                         entry.sum = data.sum;
                         entry.edited = true;
 
+                        let duration = 5;
+
+                        if (now - Date.now() <= 250) {
+                            duration = 150;
+                        }
+
                         calculatePersonSum(name);
-                        
-                        document.getElementById('entryWrapper').style.left = '-100vw';
-                        document.getElementById('detailedEntriesWrapper').style.left = 0;
-                        document.getElementById('editEntryWrapper').style.left = '100vw';
 
                         setTimeout(() => {
-                            changeHeadline(document.getElementById('title').textContent.replace(' bearbeiten', ''));
-                        }, 310);
+                            deactiveLoading();
+
+                            document.getElementById('entryWrapper').style.left = '-100vw';
+                            document.getElementById('detailedEntriesWrapper').style.left = 0;
+                            document.getElementById('editEntryWrapper').style.left = '100vw';
+
+                            setTimeout(() => {
+                                changeHeadline(document.getElementById('title').textContent.replace(' bearbeiten', ''));
+                            }, 310);
+                        }, duration);
                     });
                 }
             });
