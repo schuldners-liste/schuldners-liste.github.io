@@ -48,8 +48,6 @@ window.addEventListener('load', () => {
         } else if (validateEmail(newEmail.value)) {
             newEmail.classList.remove('errorInput');
             newEmailFDB.innerHTML = '&nbsp;';
-                        
-            deactiveLoading();
 
             let interval;
 
@@ -74,12 +72,14 @@ window.addEventListener('load', () => {
                             firebase.database().ref(`users/${firebase.auth().currentUser.uid}/userdata`).update({
                                 email: newEmail.value
                             }).then(() => {
+                                deactiveLoading();
                                 showSuccessMessage('E-Mail Adresse erfolgreich geändert.', 3);
                             });
                         }).catch(() => {
+                            deactiveLoading();
                             showSuccessMessage('Unbekanntes Problem, versuche es später erneut.', 4)
                         });
-                   }
+                    }
                 }, 250);
             }
         } else {
