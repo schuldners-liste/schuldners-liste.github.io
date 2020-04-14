@@ -8,6 +8,7 @@ window.addEventListener('load', () => {
         {navElement: document.getElementById('addEntryFooter'), name: 'Eintrag erstellen', window: document.getElementById('createEntryWindow')},
         {navElement: document.getElementById('deletedNav'), name: 'Gelöscht', window: document.getElementById('deletedEntriesWindow')},
         {navElement: document.getElementById('entriesNav'), name: 'Einträge', window: document.getElementById('entriesWindow')},
+        {navElement: document.getElementById('accountNav'), name: 'Konto', window: document.getElementById('accountWindow')},
     ];
 
     
