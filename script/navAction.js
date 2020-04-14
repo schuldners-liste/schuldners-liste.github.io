@@ -27,6 +27,11 @@ window.addEventListener('load', () => {
     function hideAllWindows() {
         for (const window of windows) {
             window.window.classList.add('hide');
+            
+            window.window.scrollTo({
+                top: 0,
+                left: 0
+            });
         }
 
         document.getElementById('entryWrapper').style.left = 0;
