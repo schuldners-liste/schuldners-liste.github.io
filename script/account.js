@@ -1,9 +1,12 @@
+let authorized = false;
+
 window.addEventListener('load', () => {
     setTimeout(() => {
         document.getElementById('accountNav').click();
     }, 500);
 
     const saveNewUsername = document.getElementById('saveNewUsername');
+    const saveNewEmail = document.getElementById('saveNewEmail');
 
     saveNewUsername.addEventListener('click', () => {
         const user = firebase.auth().currentUser;
@@ -29,6 +32,60 @@ window.addEventListener('load', () => {
                 showSuccessMessage('Benutzername erfolgreich geändert', 3);
                 newUsername.value = '';
             }).catch(console.error);
+        }
+    });
+
+    saveNewEmail.addEventListener('click', () => {
+        const newEmail = document.getElementById('newEmail');
+        const newEmailFDB = document.getElementById('newEmailFDB');
+
+        activateLoading(.3);
+
+        if (newEmail.value.trim() === '') {
+            newEmail.classList.add('errorInput');
+            newEmailFDB.textContent = 'Feld darf nicht leer sein.';
+            deactiveLoading();
+        } else if (validateEmail(newEmail.value)) {
+            newEmail.classList.remove('errorInput');
+            newEmailFDB.innerHTML = '&nbsp;';
+                        
+            deactiveLoading();
+
+            let interval;
+
+            if (authorized) {
+                firebase.auth().currentUser.updateEmail(newEmail.value).then(() => {
+                    firebase.database().ref(`users/${firebase.auth().currentUser.uid}/userdata`).update({
+                        email: newEmail.value
+                    }).then(() => {
+                        showSuccessMessage('E-Mail Adresse erfolgreich geändert.', 3);
+                    });
+                }).catch(() => {
+                    showSuccessMessage('Unbekanntes Problem, versuche es später erneut.', 4)
+                });
+            } else {
+                authorize();
+
+                interval = setInterval(() => {
+                   if (authorized) {
+                        clearInterval(interval);
+
+                        firebase.auth().currentUser.updateEmail(newEmail.value).then(() => {
+                            firebase.database().ref(`users/${firebase.auth().currentUser.uid}/userdata`).update({
+                                email: newEmail.value
+                            }).then(() => {
+                                showSuccessMessage('E-Mail Adresse erfolgreich geändert.', 3);
+                            });
+                        }).catch(() => {
+                            showSuccessMessage('Unbekanntes Problem, versuche es später erneut.', 4)
+                        });
+                   }
+                }, 250);
+            }
+        } else {
+            newEmail.classList.add('errorInput');
+            newEmailFDB.textContent = 'Ungültige E-Mail Adresse.';
+            deactiveLoading();
         }
     });
 });
