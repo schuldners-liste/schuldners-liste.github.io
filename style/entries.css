@@ -129,6 +129,9 @@
 }
 
 #editEntryWrapper #editButtonBar .button {
+#editButtonBar, #editEntryWrapper .getDataBox {
+    transition: opacity 300ms ease-in-out;
+}
     width: 98%;
     margin: 1.8vh 0;
     padding: 1.3vh 1vw;
