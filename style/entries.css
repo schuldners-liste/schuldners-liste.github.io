@@ -150,3 +150,34 @@
 #editEntryWrapper #editButtonBar .button:nth-child(2), #editConfirmedCancel {
     background: #ee5a5a;
 }
+
+#editWarningWrapper {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    transform: scale(.6);
+    transition: opacity 300ms ease-in-out, transform 300ms ease-in-out;
+}
+
+#editWarningWrapper > div {
+    width: 70vw;
+    height: 45vh;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    padding: 0 4vw;
+    background: #fff;
+    box-shadow: 1px 1px 9px 0px #dbdbdb;
+    border-radius: 3px;
+    margin-bottom: 8vh;
+}
+
+#editWarningWrapper h2 {
+    text-align: center;
+}
