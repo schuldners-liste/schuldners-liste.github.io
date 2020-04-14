@@ -9,6 +9,7 @@ window.addEventListener('load', () => {
     const saveNewEmail = document.getElementById('saveNewEmail');
     const saveNewPassword = document.getElementById('saveNewPassword');
     const deleteAccount = document.getElementById('deleteAccount');
+    const deleteAllEntries = document.getElementById('deleteAllEntries');
 
     saveNewUsername.addEventListener('click', () => {
         const user = firebase.auth().currentUser;
@@ -171,6 +172,48 @@ window.addEventListener('load', () => {
                 clearInterval(interval);
                 firebase.database().ref(`users/${firebase.auth().currentUser.uid}`).remove().then(() => {
                     firebase.auth().currentUser.delete();
+                });
+            }
+        }, 250);
+    });
+
+    deleteAllEntries.addEventListener('click', () => {
+        authorized = false;
+
+        authorize();
+
+        let interval = setInterval(() => {
+            if (authorized) {
+                clearInterval(interval);
+
+                firebase.database().ref(`users/${firebase.auth().currentUser.uid}/entries`).remove().then(() => {
+                    showSuccessMessage('Alle Einträge wurden gelöscht', 3);
+                    let contentWrapper = document.getElementById('entryWrapper');
+
+                    while (contentWrapper.firstChild) contentWrapper.removeChild(contentWrapper.firstChild);
+
+                    const text = document.createElement('p');
+                    text.textContent = 'Keine Einträge verfügbar.';
+                    text.setAttribute('id', 'entriesErrorMessage');
+                    contentWrapper.appendChild(text);
+
+                    setTimeout(() => {
+                        firebase.database().ref(`users/${firebase.auth().currentUser.uid}/deletedEntries`).remove().then(() => {
+                            showSuccessMessage('Alle Gelöschten-Einträge wurden gelöscht', 3);
+                            contentWrapper = document.getElementById('deletedEntryWrapper');
+
+                            while (contentWrapper.firstChild) contentWrapper.removeChild(contentWrapper.firstChild);
+
+                            const text = document.createElement('p');
+                            text.textContent = 'Keine Einträge verfügbar.';
+                            text.setAttribute('id', 'entriesErrorMessage');
+                            contentWrapper.appendChild(text);
+                        }).catch(() => {
+                            showSuccessMessage('Unbekanntes Problem, versuche es später erneut.', 4);
+                        });
+                    }, 3500);
+                }).catch(() => {
+                    showSuccessMessage('Unbekanntes Problem, versuche es später erneut.', 4);
                 });
             }
         }, 250);
