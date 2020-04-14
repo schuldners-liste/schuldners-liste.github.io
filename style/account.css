@@ -44,7 +44,7 @@
     margin: 1.5vh 0;
 }
 
-#newUsernameFDB, #newEmailFDB, #newPasswordFDB {
+#newUsernameFDB, #newEmailFDB, #newPasswordFDB, #authorizePWFDB {
     color: red;
     margin: 0;
 }
@@ -71,4 +71,8 @@
     top: 0;
     left: 0;
     background: #fff;
+}
+
+#authorizeWrapper p {
+    font-size: 4vmin;
 }

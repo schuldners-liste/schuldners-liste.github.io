@@ -246,6 +246,10 @@ function authorize() {
     const footer = document.getElementById('footer');
     const user = firebase.auth().currentUser;
 
+    document.getElementById('authorizePW').value = '';
+    document.getElementById('authorizePW').classList.remove('errorInput');
+    document.getElementById('authorizePWFDB').innerHTML = '&nbsp;';
+
     if (user.providerData[0].providerId === 'google.com') {
         const provider = new firebase.auth.GoogleAuthProvider();
 
@@ -269,7 +273,21 @@ function authorize() {
                     authorized = false;
                 }, 5 * 60000);
             }, (error) => {
-                console.error(error);
+                const errorMsg = error.message;
+                const messages = [
+                    {message: 'The password is invalid or the user does not have a password.', feedback: 'Das eingegebene Passwort ist ungültig.', affected: 'pw'},
+                    {message: 'Too many unsuccessful login attempts.  Please include reCaptcha verification or try again later', feedback: 'Der Bestätigungs Vorgang ist zu oft fehlgeschlagen, versuchen Sie es später erneut.', affected: ''},
+                    {message: 'A network error (such as timeout, interrupted connection or unreachable host) has occurred.', feedback: 'Zeitüberschreitung beim Anmelden. Versuche Sie es später erneut.', affected: ''}
+                ];
+
+                for (const msg of messages) {
+                    if (msg.message === errorMsg) {
+                        document.getElementById('authorizePWFDB').textContent = msg.feedback;
+                        document.getElementById('authorizePW').classList.add('errorInput');
+                    }
+                }
+
+                deactiveLoading();
             });
         });
     } else {
