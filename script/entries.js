@@ -1060,8 +1060,10 @@ window.addEventListener('load', () => {
                     const editConfirmedCancel = document.getElementById('editConfirmedCancel');
                     const editCanceldCancel = document.getElementById('editCanceldCancel');
                     const boxesToLowlight = document.querySelectorAll('#editEntryWrapper .getDataBox, #editButtonBar');
+                    const footer = document.getElementById('footer');
 
                     editWarningWrapper.classList.remove('hide');
+                    footer.style.zIndex = 0;
 
                     for (const box of boxesToLowlight) {
                         box.style.opacity = .15;
@@ -1075,6 +1077,7 @@ window.addEventListener('load', () => {
                     editConfirmedCancel.addEventListener('click', () => {
                         editWarningWrapper.style.opacity = 0;
                         editWarningWrapper.style.transform = 'scale(.6)';
+                        footer.style.zIndex = 2;
 
                         for (const box of boxesToLowlight) {
                             box.style.opacity = 1;
@@ -1093,6 +1096,7 @@ window.addEventListener('load', () => {
                     editCanceldCancel.addEventListener('click', () => {
                         editWarningWrapper.style.opacity = 0;
                         editWarningWrapper.style.transform = 'scale(.6)';
+                        footer.style.zIndex = 2;
 
                         for (const box of boxesToLowlight) {
                             box.style.opacity = 1;
