@@ -44,7 +44,7 @@
     margin: 1.5vh 0;
 }
 
-#newUsernameFDB, #newEmailFDB {
+#newUsernameFDB, #newEmailFDB, #newPasswordFDB {
     color: red;
     margin: 0;
 }
