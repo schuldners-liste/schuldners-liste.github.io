@@ -1,15 +1,27 @@
 function activateLoading(opacity) {
-    const mainScreen = document.getElementById('mainScreen');
     const loader = document.getElementById('loader');
+    const wrappers = [
+        document.getElementById('mainScreen'),
+        document.getElementById('logInScreen')
+    ];
 
-    mainScreen.style.opacity = opacity;
+    for (const wrapper of wrappers) {
+        wrapper.style.opacity = opacity;
+    }
+
     loader.classList.remove('hide');
 }
 
 function deactiveLoading() {
-    const mainScreen = document.getElementById('mainScreen');
     const loader = document.getElementById('loader');
-
-    mainScreen.style.opacity = 1;
+    const wrappers = [
+        document.getElementById('mainScreen'),
+        document.getElementById('logInScreen')
+    ];
+    
+    for (const wrapper of wrappers) {
+        wrapper.style.opacity = 1;
+    }
+    
     loader.classList.add('hide');
 }
