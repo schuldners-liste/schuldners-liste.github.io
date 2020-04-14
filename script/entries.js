@@ -1002,19 +1002,91 @@ window.addEventListener('load', () => {
                         entry.edited = true;
 
                         calculatePersonSum(name);
-                        editCancelBtn.click();
+                        
+                        document.getElementById('entryWrapper').style.left = '-100vw';
+                        document.getElementById('detailedEntriesWrapper').style.left = 0;
+                        document.getElementById('editEntryWrapper').style.left = '100vw';
+
+                        setTimeout(() => {
+                            changeHeadline(document.getElementById('title').textContent.replace(' bearbeiten', ''));
+                        }, 310);
                     });
                 }
             });
 
             editCancelBtn.addEventListener('click', () => {
-                document.getElementById('entryWrapper').style.left = '-100vw';
-                document.getElementById('detailedEntriesWrapper').style.left = 0;
-                document.getElementById('editEntryWrapper').style.left = '100vw';
+                let isChanged = false;
 
-                setTimeout(() => {
-                    changeHeadline(document.getElementById('title').textContent.replace(' bearbeiten', ''));
-                }, 310);
+                const data = [
+                    {oldValue: entry.date, newValue: editDate.value},
+                    {oldValue: entry.reason, newValue: editReason.value},
+                    {oldValue: entry.object, newValue: editObject.value},
+                    {oldValue: entry.sum, newValue: parseFloat(editSum.value)},
+                    {oldValue: entry.sum, newValue: parseFloat(editWorth.value)},
+                ];
+
+                for (const elm of data) {
+                    if (elm.oldValue !== elm.newValue) {
+                        isChanged = true;
+                    }
+                }
+
+                if (!isChanged)  {                    
+                    document.getElementById('entryWrapper').style.left = '-100vw';
+                    document.getElementById('detailedEntriesWrapper').style.left = 0;
+                    document.getElementById('editEntryWrapper').style.left = '100vw';
+
+                    setTimeout(() => {
+                        changeHeadline(document.getElementById('title').textContent.replace(' bearbeiten', ''));
+                    }, 310);
+                } else {
+                    const editWarningWrapper = document.getElementById('editWarningWrapper');
+                    const editConfirmedCancel = document.getElementById('editConfirmedCancel');
+                    const editCanceldCancel = document.getElementById('editCanceldCancel');
+                    const boxesToLowlight = document.querySelectorAll('#editEntryWrapper .getDataBox, #editButtonBar');
+
+                    editWarningWrapper.classList.remove('hide');
+
+                    for (const box of boxesToLowlight) {
+                        box.style.opacity = .15;
+                    }
+
+                    setTimeout(() => {
+                        editWarningWrapper.style.opacity = 1;
+                        editWarningWrapper.style.transform = 'scale(1)';
+                    }, 5);
+
+                    editConfirmedCancel.addEventListener('click', () => {
+                        editWarningWrapper.style.opacity = 0;
+                        editWarningWrapper.style.transform = 'scale(.6)';
+
+                        for (const box of boxesToLowlight) {
+                            box.style.opacity = 1;
+                        }
+
+                        document.getElementById('entryWrapper').style.left = '-100vw';
+                        document.getElementById('detailedEntriesWrapper').style.left = 0;
+                        document.getElementById('editEntryWrapper').style.left = '100vw';
+
+                        setTimeout(() => {
+                            editWarningWrapper.classList.add('hide');
+                            changeHeadline(document.getElementById('title').textContent.replace(' bearbeiten', ''));
+                        }, 310);
+                    });
+
+                    editCanceldCancel.addEventListener('click', () => {
+                        editWarningWrapper.style.opacity = 0;
+                        editWarningWrapper.style.transform = 'scale(.6)';
+
+                        for (const box of boxesToLowlight) {
+                            box.style.opacity = 1;
+                        }
+
+                        setTimeout(() => {
+                            editWarningWrapper.classList.add('hide');
+                        }, 310);
+                    });
+                }
             });
         });
 
