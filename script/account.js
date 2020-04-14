@@ -8,6 +8,7 @@ window.addEventListener('load', () => {
     const saveNewUsername = document.getElementById('saveNewUsername');
     const saveNewEmail = document.getElementById('saveNewEmail');
     const saveNewPassword = document.getElementById('saveNewPassword');
+    const deleteAccount = document.getElementById('deleteAccount');
 
     saveNewUsername.addEventListener('click', () => {
         const user = firebase.auth().currentUser;
@@ -158,6 +159,21 @@ window.addEventListener('load', () => {
             newPassword.classList.add('errorInput');
             deactiveLoading();
         }
+    });
+
+    deleteAccount.addEventListener('click', () => {
+        authorized = false;
+
+        authorize();
+
+        let interval = setInterval(() => {
+            if (authorized) {
+                clearInterval(interval);
+                firebase.database().ref(`users/${firebase.auth().currentUser.uid}`).remove().then(() => {
+                    firebase.auth().currentUser.delete();
+                });
+            }
+        }, 250);
     });
 });
 
