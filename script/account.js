@@ -49,6 +49,8 @@ window.addEventListener('load', () => {
             newEmail.classList.remove('errorInput');
             newEmailFDB.innerHTML = '&nbsp;';
 
+            deactiveLoading();
+
             let interval;
 
             if (authorized) {
@@ -67,6 +69,7 @@ window.addEventListener('load', () => {
                 interval = setInterval(() => {
                    if (authorized) {
                         clearInterval(interval);
+                        activateLoading(.3);
 
                         firebase.auth().currentUser.updateEmail(newEmail.value).then(() => {
                             firebase.database().ref(`users/${firebase.auth().currentUser.uid}/userdata`).update({
