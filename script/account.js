@@ -15,7 +15,7 @@ window.addEventListener('load', () => {
 
         if (newUsername.value.trim() === '') {
             newUsername.classList.add('errorInput');
-            newUsernameFDB.textContent = 'Benutzername darf nicht leer sein.';
+            newUsernameFDB.textContent = 'Feld darf nicht leer sein.';
             deactiveLoading();
         } else {
             newUsername.classList.remove('errorInput');
