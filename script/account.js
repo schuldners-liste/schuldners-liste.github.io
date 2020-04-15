@@ -168,6 +168,9 @@ window.addEventListener('load', () => {
                 clearInterval(interval);
                 firebase.database().ref(`users/${firebase.auth().currentUser.uid}`).remove().then(() => {
                     firebase.auth().currentUser.delete();
+                    sessionStorage.setItem('deleteUser', true);
+                    localStorage.setItem('theme', JSON.stringify({hex: '#486491', hex2: '#687fa4', color: '#fff'}));
+                    useTheme('#486491', '#687fa4', '#fff');
                 });
             }
         }, 250);
