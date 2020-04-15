@@ -1300,6 +1300,14 @@ window.addEventListener('load', () => {
             }, 210);
         });
     }
+
+    function changeTheme() {
+        const theme = JSON.parse(localStorage.getItem('theme'));
+
+        if (theme !== null) {
+            useTheme(theme.hex, theme.hex2, theme.color);
+        }
+    }
 });
 
 function changeHeadline(text) {
