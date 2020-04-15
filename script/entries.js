@@ -13,6 +13,11 @@ window.addEventListener('load', () => {
     initDisablePersonSelection();
     activateLoading(.3);
 
+    if (JSON.parse(localStorage.getItem('theme')) !== null) {
+        document.getElementById('footer').style.background = JSON.parse(localStorage.getItem('theme')).hex;
+        document.getElementById('footer').style.color = JSON.parse(localStorage.getItem('theme')).color;
+    }
+
     // Library to switch types with swipe gestures
     const createMoneyHammer = new Hammer(createMoneyEntry);
     createMoneyHammer.on('swipeleft', () => {
