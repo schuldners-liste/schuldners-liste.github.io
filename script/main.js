@@ -12,7 +12,6 @@ window.addEventListener('load', () => {
     };
 
     firebase.initializeApp(firebaseConfig);
-    firebase.auth().useDeviceLanguage();
 
     firebase.auth().onAuthStateChanged((user) => {
         if (user) {
@@ -24,6 +23,12 @@ window.addEventListener('load', () => {
                             email: user.email,
                             username: user.displayName,
                             signupdate: new Date().getTime()
+                        });
+
+                        firebase.database().ref(`users/${firebase.auth().currentUser.uid}/theme`).set({
+                            hex: '#486491',
+                            hex2: '#687fa4',
+                            color: '#fff'
                         });
                     }
                 });
