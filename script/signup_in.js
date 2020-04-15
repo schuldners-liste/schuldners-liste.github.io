@@ -222,7 +222,6 @@ window.addEventListener('load', () => {
             // email is invalid
             emUpFeedback.textContent = 'Ungültige E-Mail Adresse.';
             email.classList.add('errorInput');
-            
             isValid = false;
         }
 
@@ -306,6 +305,12 @@ window.addEventListener('load', () => {
                     username: username.value,
                     email: email.value,
                     signupdate: Date.now()
+                });
+
+                firebase.database().ref(`users/${firebase.auth().currentUser.uid}/theme`).set({
+                    hex: '#486491',
+                    hex2: '#687fa4',
+                    color: '#fff'
                 });
             });
         } else {            
