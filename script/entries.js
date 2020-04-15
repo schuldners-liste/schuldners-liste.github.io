@@ -9,6 +9,7 @@ window.addEventListener('load', () => {
 
     // execute when loaded
     sessionStorage.setItem('createdNewUser', false);
+    sessionStorage.setItem('deleteUser', false);
     initDisablePersonSelection();
     activateLoading(.3);
 
@@ -56,6 +57,7 @@ window.addEventListener('load', () => {
             createPersonSelection('createObjectEntry', user);
             clearInputs();
             document.getElementById('backButton').click();
+            sessionStorage.setItem('deleteUser', false);
 
             if (user.providerData[0].providerId === 'google.com') {
                 for (const box of document.getElementsByClassName('hideable')) {
