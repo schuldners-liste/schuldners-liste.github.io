@@ -1,0 +1,51 @@
+.theme {
+    width: 74vw;
+    height: 8vh;
+    padding: 0 3vw;
+    margin: 1vh 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid #486491;
+    border-radius: 3px;
+}
+
+.bannerWrapper {
+    width: 23vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.theme svg {
+    width: 100%;
+}
+
+.colorWrapper {
+    width: 16vw;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+}
+
+.colorWrapper div {
+    width: 43%;
+    height: 5vh;
+    border-radius: 3px;
+    box-shadow: 1px 1px 9px 0px #dbdbdb;
+}
+
+.colorWrapper div:nth-child(2) {
+    opacity: .6;
+}
+
+.iconWrapper i {
+    color: #fff;
+    margin-left: 3vw;
+    transition: color 250ms ease-in-out;
+}
+
+.iconWrapper .active{
+    color: #17c932;
+}
