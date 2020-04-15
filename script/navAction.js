@@ -43,7 +43,7 @@ window.addEventListener('load', () => {
 
         setTimeout(() => {
             // reset entry overview window
-            const divs = document.querySelectorAll('#detailedEntriesWrapper > div');
+            const divs = document.querySelectorAll('#detailedEntriesWrapper > div, #deletedDetailedEntriesWrapper > div');
             
             for (const div of divs) {
                 div.classList.add('hide');
