@@ -24,7 +24,7 @@
     flex-direction: column;
 }
 
-#startScreen img {
+#startScreen svg {
     width: 55vw;
     margin: 10vh 0 3vh 0;
 }
