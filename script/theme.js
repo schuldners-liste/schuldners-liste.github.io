@@ -40,3 +40,74 @@ function printThemes(themes) {
         i++;
     }
 }
+
+function useTheme(hex, hex2, color) {
+    const inputs = document.getElementsByTagName('input');
+    const borders = document.querySelectorAll('.entry, .theme, .detailedEntry, hr');
+    const circles = document.getElementsByClassName('fa-check-circle');
+    const backgrounds = [
+        document.getElementById('footer'),
+        document.getElementById('currentType'),
+        document.querySelectorAll('.selectPersonPopUp .button')[0],
+        document.querySelectorAll('.selectPersonPopUp .button')[1],
+        document.getElementById('backButton'),
+        document.getElementById('continueWithSignIn'),
+        document.getElementById('continueWithSignUp'),
+    ];
+    
+    const colors = [
+        document.querySelectorAll('.selectPersonPopUp .button')[0],
+        document.querySelectorAll('.selectPersonPopUp .button')[1],
+        document.getElementById('footer'),
+        document.getElementById('backButton'),
+        document.getElementById('continueWithSignIn'),
+        document.getElementById('continueWithSignUp'),
+    ];
+
+    for (const input of inputs) {
+        input.addEventListener('focus', () => {
+            input.style.borderColor = hex;
+        });
+
+        input.addEventListener('blur', () => {
+            input.style.borderColor = 'lightgray';
+        });
+    }
+
+    for (const background of backgrounds) {
+        if (background !== undefined)
+        background.style.background = hex;
+    }
+
+    for (const border of borders) {
+        if (border !== undefined)
+        border.style.borderColor = hex;
+    }
+
+    for (const circle of circles) {
+        if (circle !== undefined)
+        circle.classList.remove('active');
+    }
+
+    for (const clr of colors) {
+        if (clr !== undefined)
+        clr.style.color = color;
+    }
+
+    if (document.getElementById(`icon${hex}`) !== null)
+    document.getElementById(`icon${hex}`).classList.add('active');
+    document.getElementById('banner').getElementsByTagName('path')[0].style.fill = hex;
+    document.getElementById('banner').getElementsByTagName('path')[1].style.fill = hex2;
+    document.getElementById('startBanner').getElementsByTagName('path')[0].style.fill = hex;
+    document.getElementById('startBanner').getElementsByTagName('path')[1].style.fill = hex2;
+    
+    if (firebase.auth().currentUser !== null && sessionStorage.getItem('deleteUser') !== 'true') {
+        firebase.database().ref(`users/${firebase.auth().currentUser.uid}/theme`).set({
+            hex: hex,
+            hex2: hex2,
+            color: color
+        });
+    }
+
+    localStorage.setItem('theme', JSON.stringify({hex: hex, hex2: hex2, color: color}));
+}
