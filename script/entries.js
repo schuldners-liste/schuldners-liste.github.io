@@ -74,6 +74,20 @@ window.addEventListener('load', () => {
                 }
             }
 
+            firebase.database().ref('public/themes').once('value').then(snapshot => {
+                printThemes(snapshot.val());
+
+                const theme = JSON.parse(localStorage.getItem('theme'));
+
+                if (theme !== null) {
+                    useTheme(theme.hex, theme.hex2, theme.color);
+                }
+            }).then(() => {
+                firebase.database().ref(`users/${user.uid}/theme`).once('value').then(snapshot => {
+                    useTheme(snapshot.val().hex, snapshot.val().hex2, snapshot.val().color);
+                });
+            });
+
             // request entries from database and format array
             firebase.database().ref(`users/${user.uid}/entries`).once('value').then((snapshot) => {
                 const data = snapshot.val();
