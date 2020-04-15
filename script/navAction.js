@@ -9,6 +9,7 @@ window.addEventListener('load', () => {
         {navElement: document.getElementById('deletedNav'), name: 'Gelöscht', window: document.getElementById('deletedEntriesWindow')},
         {navElement: document.getElementById('entriesNav'), name: 'Einträge', window: document.getElementById('entriesWindow')},
         {navElement: document.getElementById('accountNav'), name: 'Konto', window: document.getElementById('accountWindow')},
+        {navElement: document.getElementById('themeNav'), name: 'Theme', window: document.getElementById('themeWindow')},
     ];
 
     
@@ -27,7 +28,7 @@ window.addEventListener('load', () => {
     function hideAllWindows() {
         for (const window of windows) {
             window.window.classList.add('hide');
-            
+
             window.window.scrollTo({
                 top: 0,
                 left: 0
