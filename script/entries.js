@@ -130,7 +130,7 @@ window.addEventListener('load', () => {
                 for (const key in data) {
                     const temp = data[key];
                     temp.name = data[key].name;
-                    person.push(temp);                    
+                    person.push(temp);
                 }
 
                 // create array which includes all entries
@@ -142,7 +142,7 @@ window.addEventListener('load', () => {
                         if (key !== 'name') {
                             tempEntries.push(entry[key]);
                         }
-                    }                    
+                    }
 
                     person[i] = tempEntries;
                     person[i].name = entry.name;
@@ -674,16 +674,16 @@ window.addEventListener('load', () => {
             hammer.on('swiperight', () => {
                 if (sessionStorage.getItem('isNavTriggered') === 'false') {
                     const divs = document.querySelectorAll('#detailedEntriesWrapper > div');
-    
+
                     document.getElementById('entryWrapper').style.left = 0;
                     document.getElementById('detailedEntriesWrapper').style.left = '100vw';
                     document.getElementById('editEntryWrapper').style.left = '200vw';
-    
+
                     setTimeout(() => {
                         for (const div of divs) {
                             div.classList.add('hide');
                         }
-    
+
                         changeHeadline('Einträge');
                     }, 310);
                 }
@@ -696,7 +696,7 @@ window.addEventListener('load', () => {
                     document.getElementById('entryWrapper').style.left = '-100vw';
                     document.getElementById('detailedEntriesWrapper').style.left = 0;
                     document.getElementById('editEntryWrapper').style.left = '100vw';
-    
+
                     setTimeout(() => {
                         changeHeadline(document.getElementById('title').textContent.replace(' bearbeiten', ''));
                     }, 310);
@@ -803,15 +803,15 @@ window.addEventListener('load', () => {
             hammer.on('swiperight', () => {
                 if (sessionStorage.getItem('isNavTriggered') === 'false') {
                     const divs = document.querySelectorAll('#deletedDetailedEntriesWrapper > div');
-    
+
                     document.getElementById('deletedEntryWrapper').style.left = 0;
                     document.getElementById('deletedDetailedEntriesWrapper').style.left = '100vw';
-    
+
                     setTimeout(() => {
                         for (const div of divs) {
                             div.classList.add('hide');
                         }
-    
+
                         changeHeadline('Gelöscht');
                     }, 310);
                 }
@@ -871,7 +871,7 @@ window.addEventListener('load', () => {
         const deleteEntryIcon = document.createElement('i');
         deleteEntryIcon.setAttribute('class', 'fas fa-times');
 
-        deleteEntryIcon.addEventListener('click', () => {        
+        deleteEntryIcon.addEventListener('click', () => {
             const dataToDelete = {
                 date: entry.date,
                 deletedDate: Date.now(),
@@ -938,7 +938,8 @@ window.addEventListener('load', () => {
                     const data = [[]];
                     data[0][0] = dataToDelete;
                     data[0].name = name;
-    
+
+
                     printDeletedEntriesOverview(data, true);
                 }
 
@@ -965,7 +966,7 @@ window.addEventListener('load', () => {
             editObject.value = entry.object;
             editSum.value = entry.sum;
             editWorth.value = entry.sum;
-            
+
             document.getElementById('entryWrapper').style.left = '-200vw';
             document.getElementById('detailedEntriesWrapper').style.left = '-100vw';
             editEntryWrapper.style.left = 0;
@@ -1009,43 +1010,43 @@ window.addEventListener('load', () => {
                         sum: parseFloat(editSum.value),
                         edited: true
                     };
-    
-                    entry.type === 'object' ? data.sum = parseFloat(editWorth.value) : ''; 
-    
+
+                    entry.type === 'object' ? data.sum = parseFloat(editWorth.value) : '';
+
                     firebase.database().ref(`users/${firebase.auth().currentUser.uid}/entries/${name}/${entry.entryID}`).update(data).then(() => {
                         while (dataWrapper.firstChild) dataWrapper.removeChild(dataWrapper.firstChild);
-                        
+
                         personEntries = [];
                         personEntries.push({prefix: 'Grund:', content: data.reason});
 
                         let date = new Date(data.date);
                         date = `${('0' + date.getDate()).slice(-2)}.${('0' + (date.getMonth() + 1)).slice(-2)}.${date.getFullYear()}`;
-                
+
                         personEntries.push({prefix: 'Datum:', content: date});
-                
+
                         if (entry.type === 'object') {
                             personEntries.push({prefix: 'Objekt:', content: data.object});
                             personEntries.push({prefix: 'Wert:', content: `${data.sum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')}€`});
                         } else {
                             personEntries.push({prefix: 'Betrag:', content: `${data.sum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')}€`});
                         }
-                
+
                         personEntries[personEntries.length - 1].content = personEntries[personEntries.length - 1].content.replace('.', ',');
-                
+
                         if (entry.restored) {
                             personEntries.push({prefix: '', content: '(wiederhergestellt & bearbeitet)'});
                         } else {
                             personEntries.push({prefix: '', content: '(bearbeitet)'});
                         }
-                
+
                         for (const personEntry of personEntries) {
                             const prefix = document.createElement('strong');
                             const content = document.createElement('p');
-                
+
                             prefix.textContent = `${personEntry.prefix} `;
                             content.appendChild(prefix);
                             content.innerHTML += personEntry.content;
-                
+
                             dataWrapper.appendChild(content);
                         }
 
@@ -1095,7 +1096,7 @@ window.addEventListener('load', () => {
                     }
                 }
 
-                if (!isChanged)  {                    
+                if (!isChanged)  {
                     document.getElementById('entryWrapper').style.left = '-100vw';
                     document.getElementById('detailedEntriesWrapper').style.left = 0;
                     document.getElementById('editEntryWrapper').style.left = '100vw';
@@ -1279,7 +1280,7 @@ window.addEventListener('load', () => {
                     const data = [[]];
                     data[0][0] = dataToRestore;
                     data[0].name = name;
-    
+
                     printEntriesOverview(data, true);
                 }
 
@@ -1360,13 +1361,13 @@ function calculatePersonSum(name) {
         if (entriesSum !== null && output !== null) {
             let sum = 0;
             entriesSum = entriesSum.getElementsByTagName('p');
-    
+
             for (const entry of entriesSum) {
                 if (entry.textContent.includes('€') && typeof parseFloat(entry.textContent.replace(/[^0-9,.]/ig, '')) === "number") {
                     sum += parseFloat(entry.textContent.replace(',', '.').replace(/[^0-9,.]/ig, ''));
                 }
             }
-            
+
             output.textContent = `${sum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ')}€`.replace('.', ',');
         }
     }
