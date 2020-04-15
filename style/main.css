@@ -26,3 +26,8 @@ body {
 ::-webkit-scrollbar {
     display: none;
 }
+
+hr {
+    border: 1px solid #486491;
+    opacity: .4;
+}
