@@ -285,6 +285,7 @@ window.addEventListener('load', () => {
 
             calculatePersonSum(name.value.replace(' ', ''));
             clearCreateInputs();
+            changeTheme();
             document.getElementById('entriesFooter').click();
         }
     });
@@ -429,6 +430,7 @@ window.addEventListener('load', () => {
 
             calculatePersonSum(name.value.replace(' ', ''));
             clearCreateInputs();
+            changeTheme();
             document.getElementById('entriesFooter').click();
         }
     });
@@ -632,6 +634,8 @@ window.addEventListener('load', () => {
 
                 contentWrapper.appendChild(newEntry);
             }
+
+            changeTheme();
         } else {
             const text = document.createElement('p');
             text.textContent = 'Keine Einträge verfügbar.';
@@ -699,6 +703,8 @@ window.addEventListener('load', () => {
                 }
             });
         }
+
+        changeTheme();
     }
 
     function printDeletedEntriesOverview(person, addedLater) {
@@ -762,6 +768,8 @@ window.addEventListener('load', () => {
                 newEntry.setAttribute('id', 'deletedOverview' + entries.name.replace(' ', ''));
                 contentWrapper.appendChild(newEntry);
             }
+
+            changeTheme();
         } else {
             const text = document.createElement('p');
             text.textContent = 'Keine Einträge verfügbar.';
@@ -809,6 +817,8 @@ window.addEventListener('load', () => {
                 }
             });
         }
+
+        changeTheme();
     }
 
     function createDetailedEntry(entry, name) {
@@ -933,6 +943,7 @@ window.addEventListener('load', () => {
                 }
 
                 calculatePersonSum(name.replace(' ', ''));
+                changeTheme();
             }).catch(console.error);
         });
 
@@ -1273,6 +1284,7 @@ window.addEventListener('load', () => {
                 }
 
                 calculatePersonSum(name.replace(' ', ''));
+                changeTheme();
             }).catch(console.error);
         });
 
