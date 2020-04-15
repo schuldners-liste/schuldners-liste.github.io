@@ -1239,8 +1239,10 @@ window.addEventListener('load', () => {
                 if (parent.children.length - 1 === 0) {
                     const entryWrapper = document.getElementById('deletedEntryWrapper');
                     const overview = document.getElementById(`deletedOverview${name.replace(' ', '')}`);
+                    const detailed = document.getElementById('deletedDetailedEntriesWrapper');
 
                     entryWrapper.removeChild(overview);
+                    detailed.removeChild(document.getElementById(`deletedDetailed${name.replace(' ', '')}`));
 
                     if (entryWrapper.children.length === 0) {
                         const text = document.createElement('p');
