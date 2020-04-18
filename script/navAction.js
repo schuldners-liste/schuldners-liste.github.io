@@ -10,6 +10,9 @@ window.addEventListener('load', () => {
         {navElement: document.getElementById('entriesNav'), name: 'Einträge', window: document.getElementById('entriesWindow')},
         {navElement: document.getElementById('accountNav'), name: 'Konto', window: document.getElementById('accountWindow')},
         {navElement: document.getElementById('themeNav'), name: 'Theme', window: document.getElementById('themeWindow')},
+        {navElement: document.getElementById('infoNav'), name: 'Informationen', window: document.getElementById('informationsWindow')},
+        {navElement: document.getElementById('securityNav'), name: 'Datenschutz', window: document.getElementById('securityWindow')},
+        {navElement: document.getElementById('supportNav'), name: 'Feedback & Support', window: document.getElementById('feedbackWindow')},
     ];
 
     
