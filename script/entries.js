@@ -75,17 +75,28 @@ window.addEventListener('load', () => {
             }
 
             firebase.database().ref('public/themes').once('value').then(snapshot => {
-                printThemes(snapshot.val());
+                firebase.database().ref(`users/${user.uid}/customThemes`).once('value').then(snapshot2 => {
+                    const themes = snapshot.val();
 
-                const theme = JSON.parse(localStorage.getItem('theme'));
+                    if (snapshot2.val() !== null) {
+
+                        for (const key in snapshot2.val()) {
+                            themes.push(snapshot2.val()[key]);
+                        }
+                    }
+
+                    printThemes(themes, true);
+
+                    const theme = JSON.parse(localStorage.getItem('theme'));
 
                 if (theme !== null) {
                     useTheme(theme.hex, theme.hex2, theme.color);
                 }
-            }).then(() => {
-                firebase.database().ref(`users/${user.uid}/theme`).once('value').then(snapshot => {
-                    useTheme(snapshot.val().hex, snapshot.val().hex2, snapshot.val().color);
-                });
+
+                    firebase.database().ref(`users/${user.uid}/theme`).once('value').then(snapshot => {
+                        useTheme(snapshot.val().hex, snapshot.val().hex2, snapshot.val().color);
+                    });
+                });  
             });
 
             // request entries from database and format array
