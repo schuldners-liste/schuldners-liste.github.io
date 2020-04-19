@@ -110,6 +110,61 @@ function useTheme(hex, hex2, color) {
     }
 
     localStorage.setItem('theme', JSON.stringify({hex: hex, hex2: hex2, color: color}));
+
+function createCustomTheme() {
+    const primaryColorPicker = document.getElementById('primaryColorPicker');
+    const secondaryColorPicker = document.getElementById('secondaryColorPicker');
+    const textColorPicker = document.getElementById('textColorPicker');
+    const svg = document.getElementById('customThemeSvg');
+    const customThemeSaveBtn = document.getElementById('customThemeSaveBtn');
+    const customThemeCancelBtn = document.getElementById('customThemeCancelBtn');
+
+    primaryColorPicker.addEventListener('input', () => {
+        svg.getElementsByTagName('path')[0].style.fill = primaryColorPicker.value;
+    });
+
+    secondaryColorPicker.addEventListener('input', () => {
+        svg.getElementsByTagName('path')[1].style.fill = secondaryColorPicker.value;
+    });
+
+    customThemeSaveBtn.addEventListener('click', () => {
+        activateLoading();
+        const theme = {
+            hex: primaryColorPicker.value,
+            hex2: secondaryColorPicker.value,
+            color: textColorPicker.value
+        };
+
+        const id = theme.hex.replace('#', '') + theme.hex2.replace('#', '') + theme.color.replace('#', '');
+
+        firebase.database().ref(`users/${firebase.auth().currentUser.uid}/customThemes/${id}`).set(theme).then(() => {
+            deactiveLoading();
+
+            if (document.getElementById(id) === null) {
+                printThemes([theme], false);
+            }
+
+            const customThemeWrapper = document.getElementById('customThemeWrapper');
+            document.getElementById('themeOverview').style.left = '0';
+            customThemeWrapper.style.left = '100vw';
+
+            changeHeadline('Theme');
+
+            setTimeout(() => {
+                clearThemeInputs();
+            }, 210);
+        });
+    });
+
+    customThemeCancelBtn.addEventListener('click', () => {
+        const customThemeWrapper = document.getElementById('customThemeWrapper');
+        document.getElementById('themeOverview').style.left = '0';
+        customThemeWrapper.style.left = '100vw';
+
+        changeHeadline('Theme');
+    });
+}
+
 function clearThemeInputs() {
     document.getElementById('primaryColorPicker').value = 'lightgray';
     document.getElementById('secondaryColorPicker').value = '#353535';
