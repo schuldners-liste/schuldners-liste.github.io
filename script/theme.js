@@ -110,4 +110,8 @@ function useTheme(hex, hex2, color) {
     }
 
     localStorage.setItem('theme', JSON.stringify({hex: hex, hex2: hex2, color: color}));
+function clearThemeInputs() {
+    document.getElementById('primaryColorPicker').value = 'lightgray';
+    document.getElementById('secondaryColorPicker').value = '#353535';
+    document.getElementById('textColorPicker').value = '#ffffff';
 }
