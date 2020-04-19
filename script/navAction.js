@@ -8,10 +8,10 @@ window.addEventListener('load', () => {
         {navElement: document.getElementById('addEntryFooter'), name: 'Eintrag erstellen', window: document.getElementById('createEntryWindow')},
         {navElement: document.getElementById('deletedNav'), name: 'Gelöscht', window: document.getElementById('deletedEntriesWindow')},
         {navElement: document.getElementById('entriesNav'), name: 'Einträge', window: document.getElementById('entriesWindow')},
-        {navElement: document.getElementById('accountNav'), name: 'Konto', window: document.getElementById('accountWindow')},
+        {navElement: document.getElementById('accountNav'), name: 'Account', window: document.getElementById('accountWindow')},
         {navElement: document.getElementById('themeNav'), name: 'Theme', window: document.getElementById('themeWindow')},
         {navElement: document.getElementById('infoNav'), name: 'Informationen', window: document.getElementById('informationsWindow')},
-        {navElement: document.getElementById('securityNav'), name: 'Datenschutz', window: document.getElementById('securityWindow')},
+        {navElement: document.getElementById('securityNav'), name: 'Datenschutzerklärung', window: document.getElementById('securityWindow')},
         {navElement: document.getElementById('supportNav'), name: 'Feedback & Support', window: document.getElementById('feedbackWindow')},
     ];
 
@@ -37,12 +37,17 @@ window.addEventListener('load', () => {
                 left: 0
             });
         }
-
+        
         document.getElementById('entryWrapper').style.left = 0;
+        document.getElementById('themeOverview').style.left = 0;
         document.getElementById('deletedEntryWrapper').style.left = 0;
         document.getElementById('editEntryWrapper').style.left = '200vw';
+        document.getElementById('customThemeWrapper').style.left = '100vw';
         document.getElementById('detailedEntriesWrapper').style.left = '100vw';
         document.getElementById('deletedDetailedEntriesWrapper').style.left = '100vw';
+
+        clearThemeInputs();
+        clearCreateInputs();
 
         setTimeout(() => {
             // reset entry overview window
