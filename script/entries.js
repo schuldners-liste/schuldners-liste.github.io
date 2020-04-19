@@ -446,31 +446,6 @@ window.addEventListener('load', () => {
         }
     });
 
-    function initDate(id) {
-        const time = new Date();
-        document.getElementById(id).value = `${time.getFullYear()}-${('0' + (time.getMonth() + 1)).slice(-2)}-${('0' + time.getDate()).slice(-2)}`;
-    }
-
-    function clearCreateInputs() {
-        const inputs = [
-            document.getElementById('reasonMoney'),
-            document.getElementById('sumMoney'),
-            document.getElementById('reasonObject'),
-            document.getElementById('object')
-        ];
-
-        initDate('dateMoney');
-        initDate('dateObject');
-
-        for (const input of inputs) {
-            input.value = '';
-        }
-
-        document.getElementById('wothObject').value = 0;
-        document.getElementById('choosePerson').value = 'Person auswählen';
-        document.getElementById('choosePersonObject').value = 'Person auswählen';
-    }
-
     function createPersonSelection(wrapperID, user) {
         const contentWrapper = document.getElementById(wrapperID);
 
@@ -629,9 +604,7 @@ window.addEventListener('load', () => {
                         document.getElementById('editEntryWrapper').style.left = '100vw';
                     }, 5);
 
-                    setTimeout(()  => {
-                        changeHeadline(entries.name);
-                    }, 300);
+                    changeHeadline(entries.name);
                 });
 
                 arrowAndMoneyWrapper.appendChild(sum);
@@ -690,12 +663,12 @@ window.addEventListener('load', () => {
                     document.getElementById('detailedEntriesWrapper').style.left = '100vw';
                     document.getElementById('editEntryWrapper').style.left = '200vw';
 
+                    changeHeadline('Einträge');
+
                     setTimeout(() => {
                         for (const div of divs) {
                             div.classList.add('hide');
                         }
-
-                        changeHeadline('Einträge');
                     }, 310);
                 }
             });
@@ -704,13 +677,7 @@ window.addEventListener('load', () => {
 
             hammer2.on('swiperight', () => {
                 if (sessionStorage.getItem('isNavTriggered') === 'false') {
-                    document.getElementById('entryWrapper').style.left = '-100vw';
-                    document.getElementById('detailedEntriesWrapper').style.left = 0;
-                    document.getElementById('editEntryWrapper').style.left = '100vw';
-
-                    setTimeout(() => {
-                        changeHeadline(document.getElementById('title').textContent.replace(' bearbeiten', ''));
-                    }, 310);
+                    document.getElementById('editCancelBtn').click();
                 }
             });
         }
@@ -765,9 +732,7 @@ window.addEventListener('load', () => {
                         document.getElementById('deletedDetailedEntriesWrapper').style.left = 0;
                     }, 5);
 
-                    setTimeout(()  => {
-                        changeHeadline(entries.name);
-                    }, 300);
+                    changeHeadline(entries.name);
                 });
 
                 arrowAndMoneyWrapper.appendChild(sum);
@@ -818,12 +783,12 @@ window.addEventListener('load', () => {
                     document.getElementById('deletedEntryWrapper').style.left = 0;
                     document.getElementById('deletedDetailedEntriesWrapper').style.left = '100vw';
 
+                    changeHeadline('Gelöscht');
+
                     setTimeout(() => {
                         for (const div of divs) {
                             div.classList.add('hide');
                         }
-
-                        changeHeadline('Gelöscht');
                     }, 310);
                 }
             });
@@ -925,12 +890,12 @@ window.addEventListener('load', () => {
                     entryWrapper.style.left = 0;
                     document.getElementById('detailedEntriesWrapper').style.left = '100vw';
 
+                    changeHeadline('Einträge');
+
                     setTimeout(() => {
                         for (const div of divs) {
                             div.classList.add('hide');
                         }
-
-                        changeHeadline('Einträge');
 
                         parent.removeChild(newEntry);
                         calculatePersonSum(name.replace(' ', ''));
@@ -982,9 +947,7 @@ window.addEventListener('load', () => {
             document.getElementById('detailedEntriesWrapper').style.left = '-100vw';
             editEntryWrapper.style.left = 0;
 
-            setTimeout(() => {
-                changeHeadline(`${name} bearbeiten`);
-            }, 310);
+            changeHeadline(`${name} bearbeiten`);
 
             const editSaveBtn = document.getElementById('editSaveBtn');
             const editCancelBtn = document.getElementById('editCancelBtn');
@@ -1082,9 +1045,7 @@ window.addEventListener('load', () => {
                             document.getElementById('detailedEntriesWrapper').style.left = 0;
                             document.getElementById('editEntryWrapper').style.left = '100vw';
 
-                            setTimeout(() => {
-                                changeHeadline(document.getElementById('title').textContent.replace(' bearbeiten', ''));
-                            }, 310);
+                            changeHeadline(document.getElementById('title').textContent.replace(' bearbeiten', ''));
                         }, duration);
                     });
                 }
@@ -1112,9 +1073,7 @@ window.addEventListener('load', () => {
                     document.getElementById('detailedEntriesWrapper').style.left = 0;
                     document.getElementById('editEntryWrapper').style.left = '100vw';
 
-                    setTimeout(() => {
-                        changeHeadline(document.getElementById('title').textContent.replace(' bearbeiten', ''));
-                    }, 310);
+                    changeHeadline(document.getElementById('title').textContent.replace(' bearbeiten', ''));
                 } else {
                     const editWarningWrapper = document.getElementById('editWarningWrapper');
                     const editConfirmedCancel = document.getElementById('editConfirmedCancel');
@@ -1147,9 +1106,10 @@ window.addEventListener('load', () => {
                         document.getElementById('detailedEntriesWrapper').style.left = 0;
                         document.getElementById('editEntryWrapper').style.left = '100vw';
 
+                        changeHeadline(document.getElementById('title').textContent.replace(' bearbeiten', ''));
+
                         setTimeout(() => {
                             editWarningWrapper.classList.add('hide');
-                            changeHeadline(document.getElementById('title').textContent.replace(' bearbeiten', ''));
                         }, 310);
                     });
 
@@ -1268,12 +1228,12 @@ window.addEventListener('load', () => {
                     entryWrapper.style.left = 0;
                     document.getElementById('deletedDetailedEntriesWrapper').style.left = '100vw';
 
+                    changeHeadline('Gelöscht');
+
                     setTimeout(() => {
                         for (const div of divs) {
                             div.classList.add('hide');
                         }
-
-                        changeHeadline('Gelöscht');
 
                         parent.removeChild(newEntry);
                         calculatePersonSum(name.replace(' ', ''));
