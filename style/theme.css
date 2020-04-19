@@ -1,3 +1,22 @@
+#themeOverview, #customThemeWrapper {
+    width: 80vw;
+    padding: 0 10vw;
+    max-height: 81vh;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+    position: fixed;
+    left: 0;
+    top: 9vh;
+    overflow-y: scroll;
+    transition: left 300ms ease-in-out;
+}
+
+#customThemeWrapper {
+    left: 100vw;
+}
+
 .theme {
     width: 74vw;
     height: 8vh;
@@ -36,6 +55,23 @@
     box-shadow: 1px 1px 9px 0px #dbdbdb;
 }
 
+.colorWrapper div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 5vmin;
+    margin: 1vh 0;
+}
+
+.colorWrapper div:nth-child(1) i {
+    color: lightgray;
+}
+
+.colorWrapper div:nth-child(2) i {
+    color: #353535;
+    opacity: .6;
+}
+
 .colorWrapper div:nth-child(2) {
     opacity: .6;
 }
@@ -48,4 +84,69 @@
 
 .iconWrapper .active{
     color: #17c932;
+}
+
+#customTheme .iconWrapper i {
+    color: #353535;
+}
+
+#customThemeWrapper {
+    height: 81vh;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: column;
+    overflow-y: scroll;
+}
+
+#customThemeWrapper h3 {
+    margin-bottom: .5vh;
+}
+
+#customThemeWrapper input {
+    border: none;
+    outline: none;
+    border-radius: 50%;
+    width: 80vw;
+    height: 5vh;
+    padding: 0;
+    background: transparent;
+    margin: 0 0 3vh 0;
+}
+
+#customThemeWrapper input::-webkit-color-swatch {
+    border-radius: 7px;
+    border: none;
+    box-shadow: 1px 1px 9px 0px #dbdbdb;
+}
+
+#customThemeWrapper svg {
+    width: 60%;
+}
+
+#customThemeWrapper svg path {
+    transition: fill 200ms ease-in-out;
+}
+
+#customThemeButtonBar {
+    width: 100%;
+}
+
+#customThemeButtonBar .button, #customThemeWarningWrapper .button {
+    width: 98%;
+    margin: 1.8vh 0;
+    padding: 1.3vh 1vw;
+    color: #fff;
+    text-align: center;
+    font-size: 4vmin;
+    border-radius: 3px;
+    box-shadow: 1px 1px 9px 0px #dbdbdb;
+}
+
+#customThemeButtonBar .button:nth-child(1), #customThemeCanceldCancel {
+    background: #03a87c;
+}
+
+#customThemeButtonBar .button:nth-child(2), #customThemeConfirmedCancel {
+    background: #ee5a5a;
 }
