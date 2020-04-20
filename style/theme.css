@@ -132,7 +132,7 @@
     width: 100%;
 }
 
-#customThemeButtonBar .button, #customThemeWarningWrapper .button {
+#customThemeButtonBar .button {
     width: 98%;
     margin: 1.8vh 0;
     padding: 1.3vh 1vw;
@@ -143,10 +143,10 @@
     box-shadow: 1px 1px 9px 0px #dbdbdb;
 }
 
-#customThemeButtonBar .button:nth-child(1), #customThemeCanceldCancel {
+#customThemeButtonBar .button:nth-child(1) {
     background: #03a87c;
 }
 
-#customThemeButtonBar .button:nth-child(2), #customThemeConfirmedCancel {
+#customThemeButtonBar .button:nth-child(2) {
     background: #ee5a5a;
 }
