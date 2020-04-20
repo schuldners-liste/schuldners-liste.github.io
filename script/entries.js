@@ -468,6 +468,7 @@ window.addEventListener('load', () => {
                 for (const key in snapshot.val()) {
                     const person = document.createElement('p');
                     person.textContent = key;
+                    person.setAttribute('id', `person${key.replace(' ', '')}`);
 
                     person.addEventListener('click', () => {
                         wrapper.style.opacity = 0;
@@ -483,8 +484,11 @@ window.addEventListener('load', () => {
                         }, 210);
                     });
 
+                    const hr = document.createElement('hr');
+                    hr.setAttribute('id', `hr${key.replace(' ', '')}`);
+
                     personWrapper.appendChild(person);
-                    personWrapper.appendChild(document.createElement('hr'));
+                    personWrapper.appendChild(hr);
                 }
             }
 
@@ -901,6 +905,7 @@ window.addEventListener('load', () => {
 
                     firebase.database().ref(`users/${firebase.auth().currentUser.uid}/entries/${name}`).remove();
                     const divs = document.querySelectorAll('#detailedEntriesWrapper > div');
+                    const personSelectionElmsToDel = document.querySelectorAll(`#person${name.replace(' ', '')}, #hr${name.replace(' ', '')}`);
 
                     entryWrapper.style.left = 0;
                     document.getElementById('detailedEntriesWrapper').style.left = '100vw';
@@ -910,6 +915,10 @@ window.addEventListener('load', () => {
                     setTimeout(() => {
                         for (const div of divs) {
                             div.classList.add('hide');
+                        }
+
+                        for (const elm of personSelectionElmsToDel) {
+                           elm.parentElement.removeChild(elm);
                         }
 
                         parent.removeChild(newEntry);
@@ -1212,12 +1221,7 @@ window.addEventListener('load', () => {
 
             if (entry.type === 'object') {
                 dataToRestore.object = entry.object;
-            }
-
-            console.log(name);
-
-            console.table(dataToRestore);
-            
+            }            
 
             firebase.database().ref(`users/${firebase.auth().currentUser.uid}/entries/${name}/${entry.entryID}`).set(dataToRestore).then(() => {
                 firebase.database().ref(`users/${firebase.auth().currentUser.uid}/deletedEntries/${name}/${entry.entryID}`).remove();
