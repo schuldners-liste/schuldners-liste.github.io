@@ -196,7 +196,7 @@ function createCustomTheme() {
     });
 
     customThemeSaveBtn.addEventListener('click', () => {
-        activateLoading();
+        activateLoading(.3);
         const theme = {
             hex: primaryColorPicker.value,
             hex2: secondaryColorPicker.value,
@@ -237,4 +237,8 @@ function clearThemeInputs() {
     document.getElementById('primaryColorPicker').value = 'lightgray';
     document.getElementById('secondaryColorPicker').value = '#353535';
     document.getElementById('textColorPicker').value = '#ffffff';
+
+    const svg = document.getElementById('customThemeSvg');
+    svg.getElementsByTagName('path')[0].style.fill = document.getElementById('primaryColorPicker').value;
+    svg.getElementsByTagName('path')[1].style.fill = document.getElementById('secondaryColorPicker').value;
 }
