@@ -232,6 +232,10 @@ window.addEventListener('load', () => {
                 sum.value = parseFloat(sum.value) * (-1);
             }
 
+            if (sum.value.toString().includes('.')) {
+                sum.value = sum.value.split('.')[0] + '.' + sum.value.split('.')[1].substring(0, 2);
+            }
+
             // check if a new person is created
             // when a new person is created, the person has to be added to the person selection pop up
             if (sessionStorage.getItem('createdNewUser') === 'true') {
