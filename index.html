@@ -24,6 +24,7 @@
     <link rel="stylesheet" href="./style/content.css">
     <link rel="stylesheet" href="./style/entries.css">
     <link rel="stylesheet" href="./style/account.css">
+    <link rel="stylesheet" href="./style/feedback.css">
     <link rel="stylesheet" href="./style/signup_in.css">
     <link rel="stylesheet" href="./style/createEntry.css">
     <link rel="stylesheet" href="./style/loadingAnimation.css">
@@ -33,6 +34,7 @@
     <script src="./script/theme.js"></script>
     <script src="./script/entries.js"></script>
     <script src="./script/account.js"></script>
+    <script src="./script/feedback.js"></script>
     <script src="./script/navAction.js"></script>
     <script src="./script/signup_in.js"></script>
     <script src="./script/globalLoading.js"></script>
@@ -419,7 +421,21 @@
           <p>Diese Anwendung verwendet <a href="https://fontawesome.com/license">Font Awesome</a> und <a href="https://firebase.google.com/">Firebase</a>.</p>
         </div>
 
-        <div id="feedbackWindow" class="hide"></div>
+        <div id="feedbackWindow" class="hide">
+          <div id="feedbackContent">
+            <p>Wenn Sie Probleme mit Schuldners-Liste oder Fragen haben können Sie jederzeit eine Nachricht schreiben:</p>
+
+            <input type='text' placeholder='Betreff' id='subject' autocomplete='off' maxlength='80'>
+            <p id="subjectFDB"></p>
+
+            <textarea id='message' placeholder='Nachricht' rows='10' autocomplete='off' maxlength='5000'></textarea>
+            <p id="messageFDB"></p>
+
+            <p id="feedbackFDB"></p>
+            
+            <div class="button" id="sendEmailButton">Senden</div>
+          </div>
+        </div>
       </main>
 
       <footer id="footer">
