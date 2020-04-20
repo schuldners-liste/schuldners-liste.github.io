@@ -160,6 +160,19 @@
     margin: .5vh 0;
 }
 
+#buttonWrapper > p {
+    width: 80vw;
+    position: fixed;
+    bottom: 5vh;
+    font-size: 3vmin;
+    text-align: left;
+}
+
+#buttonWrapper a {
+    color: black;
+    text-decoration: underline;
+}
+
 .pwWrapper {
     display: flex;
     justify-content: space-between;
@@ -179,11 +192,11 @@
 }
 
 #pwUpFeedback, #pwInFeedback {
-    color: red;
+    width: 70vw;
+    margin: 0 0 3vh 0 !important;
     font-size: 3.5vmin;
     text-align: left;
-    margin: 0 0 3vh 0 !important;
-    width: 70vw;
+    color: red;
 }
 
 .errorInput {
