@@ -49,7 +49,7 @@ function printThemes(themes, isFirstTime) {
 }
 
 function useTheme(hex, hex2, color) {
-    const inputs = document.getElementsByTagName('input');
+    const inputs = document.querySelectorAll('input, textarea');
     const borders = document.querySelectorAll('.entry, .theme, .detailedEntry, hr');
     const circles = document.getElementsByClassName('fa-check-circle');
     const id = hex.replace('#', '') + hex2.replace('#', '') + color.replace('#', ''); 
