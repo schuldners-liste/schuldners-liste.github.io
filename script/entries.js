@@ -518,7 +518,7 @@ window.addEventListener('load', () => {
             saveBtn.addEventListener('click', () => {
                 let isValid = true;
 
-                if (person.value === '' || person.value === ' ') {
+                if (person.value.trim() === '') {
                     isValid = false;
                     feedback.textContent = 'Bitte geben Sie einen Namen ein.';
                     person.classList.add('errorInput');
@@ -532,7 +532,15 @@ window.addEventListener('load', () => {
                     wrapper.style.transform = 'scale(0.4)';
                     choosePerson.value = person.value;
 
-                    sessionStorage.setItem('createdNewUser', true);
+                    let personExists = true;
+
+                    for (const p of document.querySelectorAll('#personWrapper p, #personObjectWrapper p')) {
+                        if (p.textContent === person.value) {
+                            personExists = false;
+                        }
+                    }                    
+
+                    sessionStorage.setItem('createdNewUser', personExists);
 
                     if (wrapperID.includes('Money')) document.getElementById('disableMoneyPersonSelection').classList.add('hide');
                     else document.getElementById('disableObjectPersonSelection').classList.add('hide');
