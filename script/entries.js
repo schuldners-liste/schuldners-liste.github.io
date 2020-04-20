@@ -924,7 +924,7 @@ window.addEventListener('load', () => {
                 const deletedDetailed = document.getElementById(`deletedDetailed${name.replace(' ', '')}`);
 
                 if (deletedOverview) {
-                    deletedDetailed.appendChild(createDeletedDetailedEntry(dataToDelete));
+                    deletedDetailed.appendChild(createDeletedDetailedEntry(dataToDelete, name));
                 } else {
                     const data = [[]];
                     data[0][0] = dataToDelete;
@@ -1213,6 +1213,11 @@ window.addEventListener('load', () => {
             if (entry.type === 'object') {
                 dataToRestore.object = entry.object;
             }
+
+            console.log(name);
+
+            console.table(dataToRestore);
+            
 
             firebase.database().ref(`users/${firebase.auth().currentUser.uid}/entries/${name}/${entry.entryID}`).set(dataToRestore).then(() => {
                 firebase.database().ref(`users/${firebase.auth().currentUser.uid}/deletedEntries/${name}/${entry.entryID}`).remove();
