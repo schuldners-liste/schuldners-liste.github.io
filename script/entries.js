@@ -228,6 +228,10 @@ window.addEventListener('load', () => {
                 document.getElementById('personObjectWrapper')
             ];
 
+            if (parseFloat(sum.value) < 0) {
+                sum.value = parseFloat(sum.value) * (-1);
+            }
+
             // check if a new person is created
             // when a new person is created, the person has to be added to the person selection pop up
             if (sessionStorage.getItem('createdNewUser') === 'true') {
