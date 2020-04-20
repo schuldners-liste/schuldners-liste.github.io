@@ -439,7 +439,6 @@ window.addEventListener('load', () => {
                 createdEntry[0].name = name.value;
 
                 printEntriesOverview(createdEntry, true);
-                printDetailedEntries(createdEntry);
             } else {
                 // format array with current entry to make sure, that the called method can use the data
                 createdEntry = {date: date.value, reason: reason.value, entryID: entryID, sum: worth.value *= 1, object: object.value, type: 'object', restored: false};
