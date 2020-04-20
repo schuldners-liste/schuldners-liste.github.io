@@ -9,8 +9,8 @@ window.addEventListener('load', () => {
         let isValid = true;
 
         const elements = [
-            {value: message.value, errorMessage: 'Bitte geben Sie ein Datum ein.', errorID: 'messageFDB'},
-            {value: subject.value, errorMessage: 'Bitte geben Sie eine Begründung ein.', errorID: 'subjectFDB'},
+            {value: message.value, errorMessage: 'Bitte geben Sie eine Nachricht ein.', errorID: 'messageFDB'},
+            {value: subject.value, errorMessage: 'Bitte geben Sie einen Betreff ein.', errorID: 'subjectFDB'},
         ];
 
         for (const elmt of elements) {
