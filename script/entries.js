@@ -1359,11 +1359,30 @@ function clearCreateInputs() {
 
     for (const input of inputs) {
         input.value = '';
+        input.classList.remove('errorInput');
+    }
+
+    const fdbs = [
+        document.getElementById('nameMoneyFDB'),
+        document.getElementById('dateMoneyFDB'),
+        document.getElementById('reasonMoneyFDB'),
+        document.getElementById('sumMoneyFDB'),
+        document.getElementById('nameObjectFDB'),
+        document.getElementById('dateObjectFDB'),
+        document.getElementById('reasonObjectFDB'),
+        document.getElementById('objectFDB'),
+    ];
+
+    for (const fdb of fdbs) {
+        fdb.textContent = '';
     }
 
     document.getElementById('wothObject').value = 0;
     document.getElementById('choosePerson').value = 'Person auswählen';
     document.getElementById('choosePersonObject').value = 'Person auswählen';
+    document.getElementById('wothObject').classList.remove('errorInput');
+    document.getElementById('choosePerson').classList.remove('errorInput');
+    document.getElementById('choosePersonObject').classList.remove('errorInput');
 }
 
 function initDate(id) {
