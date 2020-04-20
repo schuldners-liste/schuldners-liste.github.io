@@ -250,10 +250,10 @@ window.addEventListener('load', () => {
         } else {
             if (!/[a-z]/.test(password.value)) {
                 // no lower case letters
-                pwUpFeedback.textContent = 'Bitte geben Sie auch kleine Buchstaben ein.';
+                pwUpFeedback.textContent = 'Bitte geben Sie auch Kleinbuchstaben ein.';
             } else if (!/[A-Z]/.test(password.value)) {
                 // no higer case letters 
-                pwUpFeedback.textContent = 'Bitte geben Sie auch große Buchstaben ein.';
+                pwUpFeedback.textContent = 'Bitte geben Sie auch Großbuchstaben ein.';
             } else if (!/[0-9]/.test(password.value)) {
                 // no numbers
                 pwUpFeedback.textContent = 'Bitte geben Sie auch Ziffern ein.';
