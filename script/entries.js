@@ -62,6 +62,7 @@ window.addEventListener('load', () => {
             createPersonSelection('createObjectEntry', user);
             clearInputs();
             document.getElementById('backButton').click();
+            document.getElementById('entriesFooter').click();
             sessionStorage.setItem('deleteUser', false);
 
             if (user.providerData[0].providerId === 'google.com') {
