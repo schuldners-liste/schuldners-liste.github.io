@@ -249,17 +249,19 @@ function authorize() {
     document.getElementById('authorizePW').classList.remove('errorInput');
     document.getElementById('authorizePWFDB').innerHTML = '&nbsp;';
 
+    footer.style.zIndex = 0;
+
     if (user.providerData[0].providerId === 'google.com') {
         const provider = new firebase.auth.GoogleAuthProvider();
 
-        user.reauthenticateWithPopup(provider).then((result) => {
+        user.reauthenticateWithPopup(provider).then(() => {
             authorized = true;
+            footer.style.zIndex = 2
         }, (error) => {
             console.error(error);
         });
     } else if (user.providerData[0].providerId === 'password') {
         authorizeWrapper.classList.remove('hide');
-        footer.style.zIndex = 0;
     
         confirmAuthorize.addEventListener('click', () => {
             user.reauthenticateAndRetrieveDataWithCredential(firebase.auth.EmailAuthProvider.credential(user.email, document.getElementById('authorizePW').value)).then(() => {
@@ -288,6 +290,12 @@ function authorize() {
 
                 deactiveLoading();
             });
+        });
+
+        cancelAuthorize.addEventListener('click', () => {
+            authorizeWrapper.classList.add('hide');
+                footer.style.zIndex = 2
+                document.getElementById('authorizePW').value = '';
         });
     } else {
         showSuccessMessage('Unbekanntes Problem, versuche es später erneut.', 4);

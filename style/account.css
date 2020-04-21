@@ -75,4 +75,15 @@
 
 #authorizeWrapper p {
     font-size: 4vmin;
+    margin-bottom: 5vh;
+}
+
+#authorizeWrapper .button {
+    width: 100%;
+    margin: 2vh 0;
+    font-size: 3.5vmin;
+}
+
+#cancelAuthorize {
+    background: #ee5a5a !important;
 }
