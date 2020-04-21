@@ -533,12 +533,12 @@ window.addEventListener('load', () => {
                 if (isValid) {
                     wrapper.style.opacity = 0;
                     wrapper.style.transform = 'scale(0.4)';
-                    choosePerson.value = person.value;
+                    choosePerson.value = person.value.trim();
 
                     let personExists = true;
 
                     for (const p of document.querySelectorAll('#personWrapper p, #personObjectWrapper p')) {
-                        if (p.textContent === person.value) {
+                        if (p.textContent === person.value.trim()) {
                             personExists = false;
                         }
                     }                    
