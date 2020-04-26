@@ -296,7 +296,7 @@ function buildCustomThemeSelection() {
     hammer.on('swiperight', () => {
         if (sessionStorage.getItem('isNavTriggered') === 'false') {
             const customThemeWrapper = document.getElementById('customThemeWrapper');
-            document.getElementById('themeOverview').style.left = '0';
+            document.getElementById('themeOverview').style.left = 0;
             customThemeWrapper.style.left = '100vw';
 
             changeHeadline('Theme');
@@ -339,7 +339,7 @@ function createCustomTheme() {
             }
 
             const customThemeWrapper = document.getElementById('customThemeWrapper');
-            document.getElementById('themeOverview').style.left = '0';
+            document.getElementById('themeOverview').style.left = 0;
             customThemeWrapper.style.left = '100vw';
 
             changeHeadline('Theme');
@@ -412,7 +412,7 @@ function createCustomTheme() {
 
     customThemeCancelBtn.addEventListener('click', () => {
         const customThemeWrapper = document.getElementById('customThemeWrapper');
-        document.getElementById('themeOverview').style.left = '0';
+        document.getElementById('themeOverview').style.left = 0;
         customThemeWrapper.style.left = '100vw';
 
         changeHeadline('Theme');
