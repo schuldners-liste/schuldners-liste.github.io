@@ -317,6 +317,66 @@ function createCustomTheme() {
             }, 210);
         });
     });
+    
+    customThemeUpdateBtn.addEventListener('click', () => {
+        activateLoading(.3);
+        const theme = {
+            hex: primaryColorPicker.value,
+            hex2: secondaryColorPicker.value,
+            color: textColorPicker.value,
+            isCustom: true
+        };
+        
+        const previousId = getThemeId(previousTheme);
+        const id = getThemeId(theme);
+
+        if (previousId !== id) {
+            firebase.database().ref(`users/${firebase.auth().currentUser.uid}/customThemes/${id}`).set(theme).then(() => {
+                firebase.database().ref(`users/${firebase.auth().currentUser.uid}/customThemes/${previousId}`).remove().then(() => {
+                    deactiveLoading();
+    
+                    const themeElement = document.getElementById(previousId);
+                    themeElement.hex = theme.hex;
+                    themeElement.hex2 = theme.hex2;
+                    themeElement.color = theme.color;
+    
+                    const colorBoxes = themeElement.querySelectorAll('.defaultView .colorWrapper div');
+                    colorBoxes[0].style.background = theme.hex;
+                    colorBoxes[1].style.background = theme.hex2;
+    
+                    const paths = themeElement.querySelectorAll('.defaultView .bannerWrapper svg path');
+                    paths[0].style.fill = theme.hex;
+                    paths[1].style.fill = theme.hex2;
+                    
+                    const customThemeWrapper = document.getElementById('customThemeWrapper');
+                    document.getElementById('themeOverview').style.left = 0;
+                    customThemeWrapper.style.left = '100vw';
+    
+                    const themeIcon = themeElement.querySelector('.defaultView .bannerWrapper .iconWrapper i');
+    
+                    themeElement.setAttribute('id', id);
+                    themeIcon.setAttribute('id', `icon${id}`);
+    
+                    changeHeadline('Theme');
+    
+                    if (themeIcon.className.includes('active')) {
+                        useTheme(theme.hex, theme.hex2, theme.color);
+                    }
+    
+                    setTimeout(() => {
+                        clearThemeInputs();
+                        customThemeUpdateBtn.classList.add('hide');
+                        customThemeSaveBtn.classList.remove('hide');
+                    }, 210);
+                });
+            });
+        } else {
+            deactiveLoading();
+            const customThemeWrapper = document.getElementById('customThemeWrapper');
+            document.getElementById('themeOverview').style.left = 0;
+            customThemeWrapper.style.left = '100vw';
+        }
+    });
 
     customThemeCancelBtn.addEventListener('click', () => {
         const customThemeWrapper = document.getElementById('customThemeWrapper');
