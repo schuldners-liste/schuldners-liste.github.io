@@ -312,6 +312,7 @@ function createCustomTheme() {
     const textColorPicker = document.getElementById('textColorPicker');
     const svg = document.getElementById('customThemeSvg');
     const customThemeSaveBtn = document.getElementById('customThemeSaveBtn');
+    const customThemeUpdateBtn = document.getElementById('customThemeUpdateBtn');
     const customThemeCancelBtn = document.getElementById('customThemeCancelBtn');
 
     primaryColorPicker.addEventListener('input', () => {
