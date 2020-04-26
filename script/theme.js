@@ -79,9 +79,19 @@ function printThemes(themes, isFirstTime) {
             deleteWrapper.addEventListener('click', () => {
                 sessionStorage.setItem('buttonClicked', true);
 
-                setTimeout(() => {
-                    sessionStorage.setItem('buttonClicked', false);
-                }, 50);
+                firebase.database().ref(`users/${firebase.auth().currentUser.uid}/customThemes/${id}`).remove().then(() => {
+                    if (document.getElementById(`icon${id}`).className.includes('active')) {
+                        sessionStorage.setItem('buttonClicked', false);
+                        document.getElementsByClassName('defaultTheme')[0].click();
+                        sessionStorage.setItem('buttonClicked', true);
+                    }
+                    
+                    contentWrapper.removeChild(newTheme);
+    
+                    setTimeout(() => {
+                        sessionStorage.setItem('buttonClicked', false);
+                    }, 50);
+                });
             });
 
             cancelWrapper.addEventListener('click', () => {
@@ -106,6 +116,7 @@ function printThemes(themes, isFirstTime) {
         iconWrapper.classList.add('iconWrapper');
         defaultView.classList.add('defaultView');
         newTheme.classList.add('theme');
+        if (theme.isDefault) newTheme.classList.add('defaultTheme');
         newTheme.setAttribute('id', id);
 
         newTheme.addEventListener('click', () => {
