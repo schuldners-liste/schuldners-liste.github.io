@@ -80,6 +80,34 @@ function printThemes(themes, isFirstTime) {
                 cancelWrapper.click();
             }
 
+            editWrapper.addEventListener('click', () => {
+                const customThemeWrapper = document.getElementById('customThemeWrapper');
+                document.getElementById('themeOverview').style.left = '-100vw';
+                customThemeWrapper.style.left = 0;
+
+                const primaryColorPicker = document.getElementById('primaryColorPicker');
+                const secondaryColorPicker = document.getElementById('secondaryColorPicker');
+                const textColorPicker = document.getElementById('textColorPicker');
+                const svg = document.getElementById('customThemeSvg');
+
+                primaryColorPicker.value = newTheme.hex;
+                secondaryColorPicker.value = newTheme.hex2;
+                textColorPicker.value = newTheme.color;
+
+                svg.getElementsByTagName('path')[0].style.fill = primaryColorPicker.value;
+                svg.getElementsByTagName('path')[1].style.fill = secondaryColorPicker.value;
+
+                previousTheme = {hex: newTheme.hex, hex2: newTheme.hex2, color: newTheme.color};
+                document.getElementById('customThemeSaveBtn').classList.add('hide');
+                document.getElementById('customThemeUpdateBtn').classList.remove('hide');
+
+                changeHeadline('Theme bearbeiten');
+
+                setTimeout(() => {
+                    cancelWrapper.click();
+                }, 210);
+            });
+
             deleteWrapper.addEventListener('click', () => {
                 sessionStorage.setItem('buttonClicked', true);
 
