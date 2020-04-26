@@ -347,6 +347,12 @@ function createCustomTheme() {
 
             changeHeadline('Theme');
 
+            const themeLocal = JSON.parse(localStorage.getItem('theme'));
+
+            if (themeLocal !== null) {
+                useTheme(themeLocal.hex, themeLocal.hex2, themeLocal.color, true);
+            }
+
             setTimeout(() => {
                 clearThemeInputs();
             }, 210);
@@ -403,6 +409,12 @@ function createCustomTheme() {
                         customThemeUpdateBtn.classList.add('hide');
                         customThemeSaveBtn.classList.remove('hide');
                     }, 210);
+
+                    const theme = JSON.parse(localStorage.getItem('theme'));
+
+                    if (theme !== null) {
+                        useTheme(theme.hex, theme.hex2, theme.color, true);
+                    }
                 });
             });
         } else {
