@@ -9,6 +9,8 @@ function printThemes(themes, isFirstTime) {
         const colorWrapper = document.createElement('div');
         const iconWrapper = document.createElement('div');
         const newTheme = document.createElement('div');
+        const defaultView = document.createElement('div');
+        const touchHoldView = document.createElement('div');
 
         svg = svg.replace('placeholder1', theme.hex);
         svg = svg.replace('placeholder2', theme.hex2);
@@ -20,24 +22,102 @@ function printThemes(themes, isFirstTime) {
             colorWrapper.appendChild(newColor);
         }
 
-        const icon = document.createElement('i');
+        let icon = document.createElement('i');
         icon.setAttribute('class', 'far fa-check-circle');
         icon.setAttribute('id', `icon${id}`);
         iconWrapper.appendChild(icon);
 
+        if (theme.isCustom) {
+            const editWrapper = document.createElement('div');
+            const deleteWrapper = document.createElement('div');
+            const cancelWrapper = document.createElement('div');
+
+            // edit Wrapper elements
+            let text = document.createElement('h3');
+            text.textContent = 'Bearbeiten';
+            icon = document.createElement('i');
+            icon.setAttribute('class', 'fas fa-edit');
+
+            editWrapper.appendChild(text);
+            editWrapper.appendChild(icon);
+            
+            // delete Wrapper elements
+            text = document.createElement('h3');
+            text.textContent = 'Löschen';
+            icon = document.createElement('i');
+            icon.setAttribute('class', 'fas fa-trash-alt');
+
+            deleteWrapper.appendChild(text);
+            deleteWrapper.appendChild(icon);
+            
+            // cancel Wrapper elements
+            text = document.createElement('h3');
+            text.textContent = 'Abbrechen';
+            icon = document.createElement('i');
+            icon.setAttribute('class', 'fas fa-times');
+
+            cancelWrapper.appendChild(text);
+            cancelWrapper.appendChild(icon);
+
+            let timer;
+            let duration = 500;
+            let touchHold;
+
+            newTheme.addEventListener('touchstart', () => {
+                timer = setTimeout(touchHold, duration);
+            });
+
+            newTheme.addEventListener('touchend', () => {
+                if (timer)
+                clearTimeout(timer);
+            });
+
+            touchHold = () => {            
+                cancelWrapper.click();
+            }
+
+            deleteWrapper.addEventListener('click', () => {
+                sessionStorage.setItem('buttonClicked', true);
+
+                setTimeout(() => {
+                    sessionStorage.setItem('buttonClicked', false);
+                }, 50);
+            });
+
+            cancelWrapper.addEventListener('click', () => {
+                sessionStorage.setItem('buttonClicked', true);
+                defaultView.classList.toggle('hide');
+                touchHoldView.classList.toggle('hide');
+                
+                setTimeout(() => {
+                    sessionStorage.setItem('buttonClicked', false);
+                }, 50);
+            });
+
+            touchHoldView.appendChild(editWrapper);
+            touchHoldView.appendChild(deleteWrapper);
+            touchHoldView.appendChild(cancelWrapper);
+        }
+
+        touchHoldView.classList.add('hide');
+        touchHoldView.classList.add('touchHoldView');
         bannerWrapper.classList.add('bannerWrapper');
         colorWrapper.classList.add('colorWrapper');
         iconWrapper.classList.add('iconWrapper');
+        defaultView.classList.add('defaultView');
         newTheme.classList.add('theme');
         newTheme.setAttribute('id', id);
 
         newTheme.addEventListener('click', () => {
+            if (sessionStorage.getItem('buttonClicked') == 'false' && !defaultView.className.includes('hide'))
             useTheme(theme.hex, theme.hex2, theme.color);
         });
 
-        newTheme.appendChild(colorWrapper);
+        defaultView.appendChild(colorWrapper);
         bannerWrapper.appendChild(iconWrapper);
-        newTheme.appendChild(bannerWrapper);
+        defaultView.appendChild(bannerWrapper);
+        newTheme.appendChild(defaultView);
+        newTheme.appendChild(touchHoldView);
         contentWrapper.appendChild(newTheme);
         i++;
     }
@@ -200,7 +280,8 @@ function createCustomTheme() {
         const theme = {
             hex: primaryColorPicker.value,
             hex2: secondaryColorPicker.value,
-            color: textColorPicker.value
+            color: textColorPicker.value,
+            isCustom: true
         };
 
         const id = theme.hex.replace('#', '') + theme.hex2.replace('#', '') + theme.color.replace('#', '');
