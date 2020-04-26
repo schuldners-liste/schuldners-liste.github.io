@@ -23,10 +23,51 @@
     padding: 0 3vw;
     margin: 1vh 0;
     display: flex;
-    justify-content: space-between;
     align-items: center;
     border: 1px solid #486491;
     border-radius: 3px;
+    user-select: none;
+}
+
+#createTheme .theme:nth-last-child(1) {
+    justify-content: space-between;
+}
+
+.defaultView {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.touchHoldView {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    font-size: 3vmin;
+}
+
+.touchHoldView > div {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.touchHoldView > div > h3 {
+    margin: 0;
+}
+
+.touchHoldView > div > i {
+    margin-left: 1.5vw;
+}
+
+.touchHoldView > div:nth-child(2) {
+    color: #ee5a5a;
+}
+
+.touchHoldView > div:nth-child(3) {
+    color: #03a87c;
 }
 
 .bannerWrapper {
