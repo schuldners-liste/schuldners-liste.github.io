@@ -1,3 +1,5 @@
+let previousTheme = {};
+
 function printThemes(themes, isFirstTime) {
     const contentWrapper = document.getElementById('selectThemes');
     let i = 0;
