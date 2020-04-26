@@ -16,6 +16,10 @@ function printThemes(themes, isFirstTime) {
         svg = svg.replace('placeholder2', theme.hex2);
         bannerWrapper.innerHTML += svg;
 
+        newTheme.hex = theme.hex;
+        newTheme.hex2 = theme.hex2;
+        newTheme.color = theme.color;
+
         for (let i = 0; i < 2; i++) {
             const newColor = document.createElement('div');
             i % 2 === 0 ? newColor.style.background = theme.hex : newColor.style.background = theme.hex2;
@@ -123,7 +127,7 @@ function printThemes(themes, isFirstTime) {
 
         newTheme.addEventListener('click', () => {
             if (sessionStorage.getItem('buttonClicked') == 'false' && !defaultView.className.includes('hide'))
-            useTheme(theme.hex, theme.hex2, theme.color);
+            useTheme(newTheme.hex, newTheme.hex2, newTheme.color);
         });
 
         defaultView.appendChild(colorWrapper);
