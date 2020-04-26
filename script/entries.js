@@ -168,6 +168,17 @@ window.addEventListener('load', () => {
             });
         } else {
             deactiveLoading();
+
+            const wrappers = [
+                document.getElementById('selectThemes'),
+                document.getElementById('createTheme'),
+                document.getElementById('createMoneyEntry'),
+                document.getElementById('createObjectEntry'),
+            ];
+
+            for (const wrapper of wrappers) {
+                while (wrapper.firstChild) wrapper.removeChild(wrapper.firstChild);
+            }
         }
     });
 
