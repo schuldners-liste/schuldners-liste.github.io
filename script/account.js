@@ -301,3 +301,21 @@ function authorize() {
         showSuccessMessage('Unbekanntes Problem, versuche es später erneut.', 4);
     }
 }
+
+function clearAccountInputs() {
+    const inputs = document.querySelectorAll('#accountWindow input');
+    const fdbs = [
+        document.getElementById('newUsernameFDB'),
+        document.getElementById('newEmailFDB'),
+        document.getElementById('newPasswordFDB'),
+        document.getElementById('authorizePWFDB')
+    ];
+
+    for (const fdb of fdbs) {
+        fdb.innerHTML = '&nbsp;';
+    }
+
+    for (const input of inputs) {
+        input.classList.remove('errorInput');
+    }
+}
