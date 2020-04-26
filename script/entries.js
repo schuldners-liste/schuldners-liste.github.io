@@ -90,12 +90,12 @@ window.addEventListener('load', () => {
 
                     const theme = JSON.parse(localStorage.getItem('theme'));
 
-                if (theme !== null) {
-                    useTheme(theme.hex, theme.hex2, theme.color);
-                }
+                    if (theme !== null) {
+                        useTheme(theme.hex, theme.hex2, theme.color, true);
+                    }
 
                     firebase.database().ref(`users/${user.uid}/theme`).once('value').then(snapshot => {
-                        useTheme(snapshot.val().hex, snapshot.val().hex2, snapshot.val().color);
+                        useTheme(snapshot.val().hex, snapshot.val().hex2, snapshot.val().color, false);
                     });
                 });  
             });
@@ -1348,7 +1348,7 @@ window.addEventListener('load', () => {
         const theme = JSON.parse(localStorage.getItem('theme'));
 
         if (theme !== null) {
-            useTheme(theme.hex, theme.hex2, theme.color);
+            useTheme(theme.hex, theme.hex2, theme.color, true);
         }
     }
 });

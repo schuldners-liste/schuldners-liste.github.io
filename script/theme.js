@@ -157,7 +157,7 @@ function printThemes(themes, isFirstTime) {
 
         newTheme.addEventListener('click', () => {
             if (sessionStorage.getItem('buttonClicked') == 'false' && !defaultView.className.includes('hide'))
-            useTheme(newTheme.hex, newTheme.hex2, newTheme.color);
+            useTheme(newTheme.hex, newTheme.hex2, newTheme.color, false);
         });
 
         defaultView.appendChild(colorWrapper);
@@ -175,7 +175,7 @@ function printThemes(themes, isFirstTime) {
     }
 }
 
-function useTheme(hex, hex2, color) {
+function useTheme(hex, hex2, color, fromLocalStorage) {
     const inputs = document.querySelectorAll('input, textarea');
     const borders = document.querySelectorAll('.entry, .theme, .detailedEntry, hr');
     const circles = document.getElementsByClassName('fa-check-circle');
@@ -236,7 +236,7 @@ function useTheme(hex, hex2, color) {
     document.getElementById('startBanner').getElementsByTagName('path')[0].style.fill = hex;
     document.getElementById('startBanner').getElementsByTagName('path')[1].style.fill = hex2;
     
-    if (firebase.auth().currentUser !== null && sessionStorage.getItem('deleteUser') !== 'true') {
+    if (firebase.auth().currentUser !== null && sessionStorage.getItem('deleteUser') !== 'true' && !fromLocalStorage) {
         firebase.database().ref(`users/${firebase.auth().currentUser.uid}/theme`).set({
             hex: hex,
             hex2: hex2,
@@ -395,7 +395,7 @@ function createCustomTheme() {
                     changeHeadline('Theme');
     
                     if (themeIcon.className.includes('active')) {
-                        useTheme(theme.hex, theme.hex2, theme.color);
+                        useTheme(theme.hex, theme.hex2, theme.color, false);
                     }
     
                     setTimeout(() => {
