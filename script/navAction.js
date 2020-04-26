@@ -48,6 +48,7 @@ window.addEventListener('load', () => {
 
         clearThemeInputs();
         clearCreateInputs();
+        clearAccountInputs();
 
         setTimeout(() => {
             // reset entry overview window
