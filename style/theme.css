@@ -184,10 +184,10 @@
     box-shadow: 1px 1px 9px 0px #dbdbdb;
 }
 
-#customThemeButtonBar .button:nth-child(1) {
+#customThemeButtonBar .button {
     background: #03a87c;
 }
 
-#customThemeButtonBar .button:nth-child(2) {
+#customThemeButtonBar .button:nth-child(3) {
     background: #ee5a5a;
 }
