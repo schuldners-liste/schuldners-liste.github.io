@@ -196,6 +196,14 @@ window.addEventListener('load', () => {
                     text.setAttribute('id', 'entriesErrorMessage');
                     contentWrapper.appendChild(text);
 
+                    contentWrapper = document.getElementById('personWrapper');
+                    
+                    while (contentWrapper.firstChild) contentWrapper.removeChild(contentWrapper.firstChild);
+                    
+                    contentWrapper = document.getElementById('personObjectWrapper');
+
+                    while (contentWrapper.firstChild) contentWrapper.removeChild(contentWrapper.firstChild);
+
                     setTimeout(() => {
                         firebase.database().ref(`users/${firebase.auth().currentUser.uid}/deletedEntries`).remove().then(() => {
                             showSuccessMessage('Alle Gelöschten-Einträge wurden gelöscht', 3);
