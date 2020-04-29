@@ -156,7 +156,7 @@ function printThemes(themes, isFirstTime) {
         newTheme.setAttribute('id', id);
 
         newTheme.addEventListener('click', () => {
-            if (sessionStorage.getItem('buttonClicked') == 'false' && !defaultView.className.includes('hide'))
+            if (sessionStorage.getItem('buttonClicked') == 'false' || sessionStorage.getItem('buttonClicked') == null && !defaultView.className.includes('hide'))
             useTheme(newTheme.hex, newTheme.hex2, newTheme.color, false);
         });
 
