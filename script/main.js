@@ -2,13 +2,13 @@ window.addEventListener('load', () => {
     const logInScreen = document.getElementById('logInScreen');
     const mainScreen = document.getElementById('mainScreen');
     const firebaseConfig = {
-        apiKey: "AIzaSyC193EbS7F1xds4fLyh4iujaF30j-XhhrY",
-        authDomain: "schuldners-liste-development.firebaseapp.com",
-        databaseURL: "https://schuldners-liste-development.firebaseio.com",
-        projectId: "schuldners-liste-development",
-        storageBucket: "schuldners-liste-development.appspot.com",
-        messagingSenderId: "1050245368401",
-        appId: "1:1050245368401:web:9968259298ddbee108c670" 
+        apiKey: "AIzaSyDBR26c7FbJYLloG0lV-c22g539TDTDYGY",
+        authDomain: "schuldners-liste.firebaseapp.com",
+        databaseURL: "https://schuldners-liste.firebaseio.com",
+        projectId: "schuldners-liste",
+        storageBucket: "schuldners-liste.appspot.com",
+        messagingSenderId: "654409783665",
+        appId: "1:654409783665:web:b90d648514895df1e2fed0"
     };
 
     firebase.initializeApp(firebaseConfig);
