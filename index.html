@@ -1,348 +1,461 @@
 <!DOCTYPE html>
 <html lang='de' dir='ltr'>
   <head>
-    <meta charset='utf-8'>
+    <!-- General -->
     <title>Schulden Verwaltung</title>
     <link rel="icon" href="img/favicon.ico">
-    <link rel='stylesheet' href='style/style.css'>
-    <link rel="stylesheet" href="style/nav.css">
-    <link href='https://fonts.googleapis.com/css?family=Roboto:300,500' rel='stylesheet'>
-    <link href='https://fonts.googleapis.com/css?family=Roboto:200,400' rel='stylesheet'>
-    <link href='https://use.fontawesome.com/releases/v5.8.1/css/all.css' rel='stylesheet' integrity='sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf' crossorigin='anonymous'>
-    <script src='script/script.js' charset='utf-8'></script>
+    <!-- Meta -->
+    <meta charset='utf-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name='mobile-web-app-capable' content='yes'>
+    <meta name='apple-mobile-web-app-capable' content='yes'>
+    <meta name='apple-mobile-web-app-status-bar-style' content='black'>
+    <meta name='keywords' content='Jonas Dorfinger, Schulden, Verwaltung, Debts, Manager, Schuldners-Liste'>
+    <meta name='author' content='Jonas Dorfinger'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <meta name='description' content='Verwalten Sie Ihre Schudlen und Darlehen einfach und bequem.'/>
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="./style/nav.css">
+    <link rel="stylesheet" href="./style/main.css">
+    <link rel="stylesheet" href="./style/text.css">
+    <link rel="stylesheet" href="./style/theme.css">
+    <link rel="stylesheet" href="./style/footer.css">
+    <link rel="stylesheet" href="./style/header.css">
+    <link rel="stylesheet" href="./style/content.css">
+    <link rel="stylesheet" href="./style/entries.css">
+    <link rel="stylesheet" href="./style/account.css">
+    <link rel="stylesheet" href="./style/feedback.css">
+    <link rel="stylesheet" href="./style/signup_in.css">
+    <link rel="stylesheet" href="./style/createEntry.css">
+    <link rel="stylesheet" href="./style/loadingAnimation.css">
+    <!-- JavaScript Files -->
+    <script src="./script/nav.js"></script>
+    <script src="./script/main.js"></script>
+    <script src="./script/theme.js"></script>
+    <script src="./script/entries.js"></script>
+    <script src="./script/account.js"></script>
+    <script src="./script/feedback.js"></script>
+    <script src="./script/navAction.js"></script>
+    <script src="./script/signup_in.js"></script>
+    <script src="./script/globalLoading.js"></script>
+    <script src="./script/checkConnection.js"></script>
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    <!-- Libraries -->
+    <script src="./script/hammer.min.js"></script>
+    <script src="https://kit.fontawesome.com/e7df220bd7.js" crossorigin="anonymous"></script>
+    <!-- Firebase -->
     <script src="https://www.gstatic.com/firebasejs/6.1.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/6.1.0/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/6.1.0/firebase-database.js"></script>
   </head>
   <body>
+    <div id="logInScreen" class="hide">
+      <div id="startScreen">
+        <svg id="startBanner" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 3284 1833.35"><path class="cls-1" style="fill: #486491" d="M1140.94,684c-155.16,499.63-933.06,460.5-957.35,718.72-21.26,226,539.19,631.7,957.35,480.19,427.3-154.82,421.09-580.76,802-705.76,504-165.41,934.55,597.07,1280.14,424.7,279.41-139.36,343-950.26,63.12-1168.83C2939.09,162,2263.86,957.77,1690.87,624.86,1450.31,485.1,1317.13,198.29,1213.63,251.5,1131.39,293.78,1204.06,480.73,1140.94,684Z" transform="translate(-183 -163.65)"></path><path class="cls-2" style="fill: #687fa4; opacity: .6" d="M1601.2,1435.31c-635.61-475-935.69-428.72-1123.69-839.6-60.72-132.72-126.44-351-56.06-419.56C528.64,71.7,935.75,657.07,1465.77,626,1907.54,600.06,1997,165.07,2495.43,181.43c68.67,2.26,379.11,12.45,559.5,257.21,116.19,157.65,121.1,334.85,126.24,520.63,2.28,82.27,15.63,844.76-360.46,1011.58-48.61,21.57-137.42,48.12-347.28-4.53C2097.42,1872,1914.23,1669.23,1601.2,1435.31Z" transform="translate(-183 -163.65)"></path></svg>
+        <h1>Willkommen!</h1>
 
-    <nav id="navWrapper">
-      <div id="navBurger">
-        <p id="burger1"></p>
-        <p id="burger2"></p>
-        <p id="burger3"></p>
-      </div>
-      <div id="nav">
-        <div id="textWrapper">
-          <img src="./img/banner_green.svg" alt="cannot display image" id="banner">
-          <p>Eingeloggt als: <span id="usernameField"></span></p>
-          <hr>
-          <p id="konto"><i class="fas fa-user"></i> Konto</p>
-          <p id="entries"><i class="fas fa-clipboard-list"></i> Einträge</p>
-          <p id="deleted"><i class="fas fa-trash-alt"></i> Gelöscht</p>
-          <p id="theme"><i class="fas fa-brush"></i> Theme</p>
-          <p id="info"><i class="fas fa-info-circle"></i> Informationen</p>
-          <p id="security"><i class="fas fa-shield-alt"></i> Datenschutz & Sicherheit</p>
-          <p id="support"><i class="fas fa-comment"></i> Feedback & Support</p>
-          <!-- <p id="settings"><i class="fas fa-cog"></i> Einstellungen</p> -->
-          <hr>
-          <p id="copyright">© Copyright by Jonas Dorfinger (2019)</p>
-        </div>
-      </div>
-    </nav>
-
-    <div id="disableNav"></div>
-
-    <div id='accountWrapper'>
-      <h1 id="signInHeadline">Anmelden</h1>
-
-      <div id="signIn">
-
-        <span id="emailSignInSpan">E-Mail Adresse</span>
-        <input autocomplete="on" type="text" id="emailSignIn">
-
-        <br><br><br>
-
-        <span id="passwordSignInSpan">Passwort</span>
-        <input autocomplete="on" type="password" id="passwordSignIn">
-
-        <p id="signInFDB"></p>
-
-        <br><br>
-
-        <div class="button" id="signInBtn">
-          <div class="loader hide" id="signInLoader">
-            <div></div>
-            <div></div>
-            <div></div>
+        <div id="buttonWrapper">
+          <div class="startButton" id="continueWithSignIn">
+            <span>Anmelden</span>
           </div>
-          <span id="signInText">Anmelden</span>
-        </div>
 
-        <p>Noch keinen Account? <label id="goToSignUp">Registrieren</label>.</p>
-
-      </div>
-
-      <h1 id="signUpHeadline">Registrieren</h1>
-
-      <div id="signUp">
-
-        <span id="emailSignInSpan">E-Mail Adresse</span>
-        <input autocomplete="on" type="text" id="emailSignUp">
-
-        <br><br><br>
-
-        <span id="usernameSignUpSpan">Benutzername</span>
-        <input autocomplete="on" type="text" id="usernameSignUp">
-
-        <br><br><br>
-
-        <span id="passwordSignUpSpan">Passwort</span>
-        <input autocomplete="on" type="password" id="passwordSignUp">
-
-        <p id="signUpFDB"></p>
-
-        <br><br>
-
-        <div class="button" id="signUpBtn">
-          <div class="loader hide" id="signUpLoader">
-            <div></div>
-            <div></div>
-            <div></div>
+          <div class="startButton" id="continueWithSignUp">
+            <span>Registrieren</span>
           </div>
-          <span id="signUpText">Registrieren</span>
-        </div>
 
-        <p>Bereits registriert? <label id="goToSignIn">Anmelden</label>.</p>
+          <span>oder</span>
 
-      </div>
-    </div>
-
-    <div id='contentWrapper'>
-      <h1>Einträge</h1>
-      <div id="entryWrapper"></div>
-      <p id="entryFDB"></p>
-    </div>
-
-    <div id='plusWrapper'>
-      <h1>Eintrag erstellen</h1>
-
-      <div id="addWrapper">
-        <span id="nameSpan">Name des Schuldners</span>
-        <input autocomplete="on" type="text" id="name">
-
-        <br><br><br>
-
-        <span id="reasonSpan">Grund</span>
-        <input autocomplete="on" type="text" id="reason">
-
-        <br><br><br>
-
-        <span id="dateSpan">Datum</span>
-        <input autocomplete="on" type="date" id="date" value="">
-
-        <br><br><br>
-
-        <span id="sumSpan">Betrag</span>
-        <input autocomplete="on" type="number" id="sum" step="0.01">
-
-
-        <br><br>
-
-        <div class="button" id="addEntryBtn">
-          <div class="loader hide" id="addEntryLoader">
-            <div></div>
-            <div></div>
-            <div></div>
+          <div id="continueWithGoogle">
+            <img src="./img/google_logo.svg" alt="cannot display image"> <p>mit Google fortfahren</p>
           </div>
-          <span id="addEntryText">Erstellen</span>
+
+          <p><i class="fas fa-info-circle"></i> Mit dem Anmelden oder Registrieren erklären Sie sich automatisch mit den <a href="./datenschutzrichtlinien/index.html">Datenschutzrichtlinien</a> von Schuldners-Liste einverstanden.</p>
         </div>
-
-
       </div>
-      <p id="addFDB"></p>
-    </div>
 
-    <div id="infoWrapper">
-      <h1>Informationen</h1>
-      <div class="specialTextWrapper">
-        <p>Verfolgen und verwalten Sie Ihre Darlehen einfach und bequem. </p>
-        <p>Schuldners Liste ist für StudentInnen und SchülerInnen die ideale App, da sie für eher kleinere Beträge entwickelt wurde, ist aber dennoch nach oben hin bis ins Unendliche skalierbar.</p>
-
-        <p style="margin-top: 3vh">Standardfunktionen:</p>
-        <ul>
-          <li>Sehen Sie auf einen Blick, wem Sie wie viel Geld geliehen haben.</li>
-          <li>Sortierung nach Höhe des Betrages/Datum</li>
-          <li>Speichern der letzten 50 Darlehen</li>
-          <li>Individueller Kundensupport</li>
-          <li>App individualisieren</li>
-        </ul>
-      </div>
-      <p id="version">Version 1.1, letztes Update: 18.07.2019 17:51 Uhr.</p>
-    </div>
-
-    <div id="themeWrapper">
-      <h1>Theme</h1>
-      <p id="themeFDB"></p>
-      <div id="themeContent">
-      </div>
-    </div>
-    
-    <div id="securityWrapper">
-      <h1>Datenschutz & Sicherheit</h1>
-      <div class="specialTextWrapper">
-        <p>In diesem Text kläre ich Sie auf wie Ihre Daten auf dieser Website gespeichert und verarbeitet werden.</p>
-
-
-        <p class="headline">Sie haben folgende Rechte: </p>
-        <ul>
-          <li>Recht auf Auskunft</li>
-          <li>Recht auf Löschung (Recht auf Vergessen werden)</li>
-          <li>Recht auf Widerspruch gegen die Verarbeitung</li>
-        </ul>
-
-        <p class="headline">Recht auf Auskunft</p>
-        <p>Sie haben Anspruch auf Ihre Daten, wenn Sie Wissen möchten welche Daten von Ihnen gespeichert sind, bin ich als Entwickler dazu angehalten Sie über Ihre Daten zu informieren.</p>
-        <p>Sie können mir eine E-Mail schreiben oder mich auf andere Art und Weisen kontaktieren, ich werde Ihnen unverzüglich Ihre Daten zu kommen lassen.</p>
-
-        <p class="headline">Recht auf Löschung</p>
-        <p>Sie können Ihren Account unter den Konto Einstellungen löschen. Sie haben jedoch auch das Recht Ihre Daten aus den Backups der Datenbank zu entfernen. Kontaktieren Sie mich um dieses Recht zu geltend zu machen.</p>
-
-        <p class="headline">Datenbank</p>
-        <p>Unsere Website verwendet Funktionen des Datenbankdienstes Google Firebase. Dazu wird die Browser IndexedDB verwendet. Die IndexedDB API ist eine Programmierschnittstelle, die es Webseiten mittels JavaScript erlaubt, strukturierte Daten im Browser zu speichern. Diese Daten werden wieder gelöscht sobald Sie den Browser schließen. Wenn Sie die App heruntergeladen haben werden diese Daten nicht gelöscht sondern gespeichert um es Ihnen zu ermöglichen angemeldet zu bleiben auch wenn Sie die App schließen. Da es sich um einen Google Dienst handelt, hat Google Zugang allen Datenbank einträgen.</p>
-
-        <p>Mit dieser App wird kein Geld verdient, Ihre Daten werden ebenfalls nicht an Dritte weiterverkauft.</p>
-
-
-        <p>Um einen Ausfall des Server vorzubeugen wird jeden Freitag Abend ein Backup der Datenbank  erstellt.</p>
-
-        <br><br><br><br><br><br><br><br><br><br><br><br>
-
-      </div>
-    </div>
-
-    <div id="deletedWrapper">
-      <h1>Gelöschte Einträge</h1>
-      <div id="deletedEntriesWrapper"></div>
-      <p id="deletedFDB"></p>
-    </div>
-
-    <div id="supportWrapper">
-      <h1>Feedback & Support</h1>
-      <div class="specialTextWrapper">
-        <p>Nur durch Ihr Feedback kann Schuldners Liste verbessert werden, schreiben Sie mir eine E-Mail mit Ihrer Kritik. Egal ob positiv oder negativ, ich freue mich über Ihre E-Mail.</p>
-        <!-- <p>Nutzen Sie gerne das Formular unten um mir Ihr Feedback zu senden.</p> -->
-        <!-- <br> -->
-        <p>Brauchen Sie Hilfe oder haben Sie einen Fehler entdeckt? Kontaktieren Sie mich jederzeit auch auf einen meiner Social Media Kanäle.</p>
-
-        <p>Instagram: @jdprdctn</p>
-        <p>Twitter: @jdprdctn</p>
-        <p>E-Mail: jonas.dofinger@gmx.at</p>
-      </div>
-    </div>
-
-    <!-- <div id="settingsWrapper">
-      <h1>Einstellungen</h1>
-      <div class="specialTextWrapper">
-        <p>Alle Einträge löschen.</p>
-        <p>Theme ändern (beta)</p>
-        <p>Benachritigungen (beta)</p>
-        <p>Sortierungs Einstellungen</p>
-      </div>
-    </div> -->
-
-    <div id="kontoWrapper">
-      <h1>Konto</h1>
-
-      <div id="formWrapper">
-        <form id="changeUsername" action="index.html" method="post">
-          <h2>Benutzernamen ändern</h2>
-          <span>neuer Benutzername</span>
-          <input autocomplete="on" type="text" id="newUsername">
-          <span>Passwort</span>
-          <input autocomplete="on" autocomplete="on" type="password" id="usernamePW">
-
-          <div class="button" id="changeUNBtn">
-            <div class="loader hide" id="changeUNLoader">
-              <div></div>
-              <div></div>
-              <div></div>
+      <div id="emailWrapper" class="hide">
+        <div id="signInWrapper">
+          <h1>Anmelden</h1>
+            
+          <div class="continueWithEmail">
+            <input type="text" placeholder="E-Mail Adresse" id="emailIn" autocomplete="email">
+            <p id="emInFeedback"></p>
+            <div class="pwWrapper">
+              <input type="password" placeholder="Passwort" id="passwordIn" autocomplete="current-password">
+              <i class="fas fa-eye" id="eyePwIn"></i>
             </div>
-            <span id="changeUNText">Speichern</span>
-          </div>
-          <p id="changeUsernameFDB">&nbsp;</p>
-        </form>
+            <p id="pwInFeedback"></p>
 
-        <form id="changeEmail" action="index.html" method="post">
-          <h2>E-Mail Adresse ändern</h2>
-          <span>neue E-Mail Adresse</span>
-          <input autocomplete="on" type="text" id="newEmail">
-          <span>Passwort</span>
-          <input autocomplete="on" type="password" id="emailPW">
-
-          <div class="button" id="changeEMpBtn">
-            <div class="loader hide" id="changeEMLoader">
-              <div></div>
-              <div></div>
-              <div></div>
-            </div>
-            <span id="changeEMText">Speichern</span>
-          </div>
-          <p id="changeEmailFDB">&nbsp;</p>
-        </form>
-
-        <form id="changePassword" action="index.html" method="post">
-          <h2>Passwort ändern</h2>
-          <span>altes Passwort</span>
-          <input autocomplete="on" type="password" id="oldPW">
-          <span>neues Passwort</span>
-          <input autocomplete="on" type="password" id="newPW">
-          <span>neues Passwort wiederholen</span>
-          <input autocomplete="on" type="password" id="confirmNewPW">
-
-          <div class="button" id="changePWBtn">
-            <div class="loader hide" id="changePWLoader">
-              <div></div>
-              <div></div>
-              <div></div>
-            </div>
-            <span id="changePWText">Speichern</span>
-          </div>
-          <p id="changePWFDB">&nbsp;</p>
-        </form>
-
-        <form id="delAccWrapper">
-
-          <h2>Account löschen</h2>
-
-          <span>Passwort</span>
-          <input autocomplete="on" type="password" id="deleteAccPW">
-
-          <div class="button" id="deleteAccBtn">
-            <span id="deleteAccText">Account löschen</span>
-          </div>
-
-          <p id="deleteFDB"></p>
-
-          <div id="deleteAccPopUp">
-            <h2>Account löschen</h2>
-            <i class="fas fa-times"  id="closePopUp"></i>
-            <p>Sind Sie sich sicher, dass Sie Ihren Account löschen möchten? Dieser Schritt kann nicht Rückgängig gemacht werden.</p>
-            <div class="button" id="deleteAccPopUpBtn">
-              <div class="loader hide" id="deleteAccLoader">
-                <div></div>
-                <div></div>
-                <div></div>
+            <div class="btnWrapper">
+              <div class="button" id="signInBtn">
+                <span id="signInBtnText">Anmelden</span>
               </div>
-              <span id="deleteAccPopUpText">Ja, ich bin mir sicher</span>
             </div>
           </div>
 
-        </form>
+          <div></div>
+  
+          <div>
+            <p id="passwordForgot">Passwort vergessen?</p>
+            <p id="goToSignUp">Kein Account? Registrieren!</p>
+          </div>
+        </div>
+  
+        <div id="signUpWrapper">
+          <h1>Registrieren</h1>
+  
+          <div class="continueWithEmail">
+            <input type="text" placeholder="E-Mail Adresse" id="emailUp" autocomplete="email">
+            <p id="emUpFeedback"></p>
+            <input type="text" placeholder="Benutzername" id="usernameUp" maxlength="25" autocomplete="name">
+            <p id="unUpFeedback"></p>
+            <div class="pwWrapper">
+              <input type="password" placeholder="Passwort" id="passwordUp" autocomplete="new-password">
+              <i class="fas fa-eye" id="eyePwUp"></i>
+            </div>
+            <p id="pwUpFeedback"></p>
 
-        <br><br><br><br><br><br><br><br><br><br><br><br>
+            <div class="btnWrapper">
+              <div class="button" id="signUpBtn">
+                <span id="signUpBtnText">Registrieren</span>
+              </div>
+            </div>
+          </div>
+          
+          <p id="goToSignIn">Bereits registriert? Anmelden!</p>
+        </div>
+
+        <div class="startButton" id="backButton">
+          <span>Zurück</span>
+        </div>
+
+        <div id="passwordForgotWrapper" class="hide">
+          <h2>Passwort zurücksetzen</h2>
+  
+          <input type="email" id="forgotPWEmail" placeholder="E-Mail Adresse" autocomplete="email">
+          <p id="fgtEMFeedback"> &nbsp; </p>
+          
+          <div id="forgotButtonWrapper">
+            <div class="button" id="sendForgotEmail">
+              Senden
+            </div>
+          </div>
+  
+          <p class="infoText"><i class="fas fa-info-circle"></i> Geben Sie die E-Mail Adresse Ihre Accounts ein, um einen Link zum Zurücksetzen des Passwortes zu erhalten.</p>
+        </div>
+  
+        <div id="disablePasswordForgotWrapper" class="hide"></div>
       </div>
-
-      <p id="kontoError">Sie müssen angemeldet sein um Ihre Account Einstellungen ändern zu können.</p>
-
     </div>
 
-    <footer id="footer">
-      <i class="fas fa-sign-out-alt" id="signOut"></i>
-      <i class='fas fa-user' id='user'></i>
-      <!-- <i class='fas fa-home' id='home'></i> -->
-      <i class="fas fa-clipboard-list" id="home"></i>
-      <i class="fas fa-plus" id="plus"></i>
-    </footer>
+    <div id="mainScreen" class="hide">
+      <header id="header">
+        <i class="fas fa-bars" id="bars"></i>
+        <h1 id="title">Einträge</h1>
+      </header>
+
+      <nav id="nav">
+        <div id="textWrapper">
+          <svg id="banner" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 3284 1833.35"><path class="cls-1" style="fill: #486491" d="M1140.94,684c-155.16,499.63-933.06,460.5-957.35,718.72-21.26,226,539.19,631.7,957.35,480.19,427.3-154.82,421.09-580.76,802-705.76,504-165.41,934.55,597.07,1280.14,424.7,279.41-139.36,343-950.26,63.12-1168.83C2939.09,162,2263.86,957.77,1690.87,624.86,1450.31,485.1,1317.13,198.29,1213.63,251.5,1131.39,293.78,1204.06,480.73,1140.94,684Z" transform="translate(-183 -163.65)"></path><path class="cls-2" style="fill: #687fa4; opacity: .6" d="M1601.2,1435.31c-635.61-475-935.69-428.72-1123.69-839.6-60.72-132.72-126.44-351-56.06-419.56C528.64,71.7,935.75,657.07,1465.77,626,1907.54,600.06,1997,165.07,2495.43,181.43c68.67,2.26,379.11,12.45,559.5,257.21,116.19,157.65,121.1,334.85,126.24,520.63,2.28,82.27,15.63,844.76-360.46,1011.58-48.61,21.57-137.42,48.12-347.28-4.53C2097.42,1872,1914.23,1669.23,1601.2,1435.31Z" transform="translate(-183 -163.65)"></path></svg>
+          <p id="usernameField"> &nbsp; </p>
+          <hr>
+          <p id="accountNav"><i class="fas fa-user"></i> Account</p>
+          <p id="entriesNav"><i class="fas fa-clipboard-list"></i> Einträge</p>
+          <p id="deletedNav"><i class="fas fa-trash-alt"></i> Gelöscht</p>
+          <p id="themeNav"><i class="fas fa-brush"></i> Theme</p>
+          <p id="infoNav"><i class="fas fa-info-circle"></i> Informationen</p>
+          <p id="securityNav"><i class="fas fa-shield-alt"></i> Datenschutzerklärung</p>
+          <p id="supportNav"><i class="fas fa-comment"></i> Feedback & Support</p>
+          <hr>
+          <div id="iconWrapper">
+            <span id='signOut'>
+              <i class="fas fa-sign-out-alt"></i> Abmelden
+            </span>
+          </div>
+        </div>
+      </nav>
+
+      <div id="disableNav" style="display: none;"></div>
+
+      <main id="mainContent">
+        <div id="accountWindow" class="hide">
+          <div class="changeInformationBox">
+            <h3>Benutzername ändern</h3>
+            <input type="text" placeholder="neuer Benutzername" maxlength="25" id="newUsername">
+            <p id="newUsernameFDB"> &nbsp; </p>
+            <div class="button" id="saveNewUsername">Speichern</div>
+          </div>
+
+          <div class="changeInformationBox hideable">
+            <h3>E-Mail Adresse ändern</h3>
+            <input type="text" placeholder="neue E-Mail Adresse" id="newEmail">
+            <p id="newEmailFDB"> &nbsp; </p>
+            <div class="button" id="saveNewEmail">Speichern</div>
+          </div>
+
+          <div class="changeInformationBox hideable">
+            <h3>Passwort ändern</h3>
+            <div class="pwWrapper">
+              <input type="password" placeholder="neues Passwort" id="newPassword">
+              <i class="fas fa-eye"></i>
+            </div>
+            <p id="newPasswordFDB"> &nbsp; </p>
+            <div class="button" id="saveNewPassword">Speichern</div>
+          </div>
+
+          <div class="changeInformationBox">
+            <h3>Account löschen</h3>
+            <div class="button danger" id="deleteAccount">Account löschen</div>
+            <p><i class="fas fa-info-circle"></i> Dieser Schritt kann nicht rückgängig gemacht werden!</p>
+          </div>
+
+          <div class="changeInformationBox">
+            <h3>Alle Einträge löschen</h3>
+            <div class="button danger" id="deleteAllEntries">Einträge löschen</div>
+            <p><i class="fas fa-info-circle"></i> Dieser Schritt kann nicht rückgängig gemacht werden!</p>
+          </div>
+
+          <div id="authorizeWrapper" class="hide">
+            <h2>Bestätige dein Passwort um fortzufahren</h2>
+
+            <div class="pwWrapper">
+              <input type="password" id="authorizePW" placeholder="Passwort">
+              <i class="fas fa-eye"></i>
+            </div>
+
+            <p id="authorizePWFDB"> &nbsp; </p>
+
+            <div class="button" id="confirmAuthorize">Bestätigen</div>
+            <div class="button" id="cancelAuthorize">Abbrechen</div>
+          </div>
+
+          <p id="successMessage" class="hide"></p>
+        </div>
+
+        <div id="entriesWindow">
+          <div id="entryWrapper"></div>
+          <div id="detailedEntriesWrapper"></div>
+          <div id="editEntryWrapper">
+            <div class="getDataBox" data-entry-type="money, object">
+              <p>Name des Schuldners</p>
+              <input id="editName" disabled>
+            </div>
+
+            <div class="getDataBox" data-entry-type="money, object">
+              <p>Datum</p>
+              <input type="date" id="editDate">
+              <p class="feedback" id="editDateFDB"></p>
+            </div>
+
+            <div class="getDataBox" data-entry-type="money, object">
+              <p>Begründung</p>
+              <input type="text" id="editReason">
+              <p class="feedback" id="editReasonFDB"></p>
+            </div>
+
+            <div class="getDataBox" data-entry-type="object">
+              <p>Objekt</p>
+              <input type="text" id="editObject">
+              <p class="feedback" id="editObjectFDB"></p>
+            </div>
+
+            <div class="getDataBox" data-entry-type="money">
+              <p>Betrag</p>
+              <input type="number" id="editSum" step="0.01">
+              <p class="feedback" id="editSumFDB"></p>
+            </div>
+
+            <div class="getDataBox" data-entry-type="object">
+              <p>Wert in Euro</p>
+              <input type="number" id="editWorth" step="0.01">
+              <p class="feedback" id="editWorthFDB"></p>
+            </div>
+            
+            <div id="editButtonBar" data-entry-type="money, object">
+              <div class="button" id="editSaveBtn">Speichern</div>
+              <div class="button" id="editCancelBtn">Abbrechen</div>
+            </div>
+
+            <div id="editWarningWrapper" class="hide" data-entry-type="">
+              <div>
+                <div>
+                  <h2>Warnung!</h2>
+                  <p>Sind Sie sicher? Alle nicht gespeicherten Änderungen werden verworfen.</p>
+                </div>
+                
+                <div>
+                  <div class="button" id="editConfirmedCancel">dennoch Abbrechen</div>
+                  <div class="button" id="editCanceldCancel">nicht Abbrechen</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="createEntryWindow" class="hide">
+          <div id="switchType">
+            <h2 id="moneyType">Geld</h2>
+            <h2 id="objectType">Objekt</h2>
+            <div id="currentType"></div>
+          </div>
+
+          <div class="createEntryWrapper" id="createMoneyEntry">
+            <div class="getDataBox">
+              <p>Name des Schuldners</p>
+              <input id="choosePerson" value="Person auswählen" readonly>
+              <p class="feedback" id="nameMoneyFDB"></p>
+            </div>
+
+            <div class="getDataBox">
+              <p>Datum</p>
+              <input type="date" id="dateMoney">
+              <p class="feedback" id="dateMoneyFDB"></p>
+            </div>
+
+            <div class="getDataBox">
+              <p>Begründung</p>
+              <input type="text" id="reasonMoney">
+              <p class="feedback" id="reasonMoneyFDB"></p>
+            </div>
+
+            <div class="getDataBox">
+              <p>Betrag</p>
+              <input type="number" id="sumMoney" step="0.01">
+              <p class="feedback" id="sumMoneyFDB"></p>
+            </div>
+
+            <div class="button" id="createEntryMoney">
+              <span>Erstellen</span>
+            </div>
+
+            <div id="disableMoneyPersonSelection" class="hide"></div>
+          </div>
+
+          <div class="createEntryWrapper" id="createObjectEntry">
+            <div class="getDataBox">
+                <p>Name des Schuldners</p>
+                <input id="choosePersonObject" value="Person auswählen" readonly>
+                <p class="feedback" id="nameObjectFDB"></p>
+            </div>
+
+            <div class="getDataBox">
+              <p>Datum</p>
+              <input type="date" id="dateObject">
+              <p class="feedback" id="dateObjectFDB"></p>
+            </div>
+
+            <div class="getDataBox">
+              <p>Begründung</p>
+              <input type="text" id="reasonObject">
+              <p class="feedback" id="reasonObjectFDB"></p>
+            </div>
+
+            <div class="getDataBox">
+              <p>Objekt</p>
+              <input type="text" id="object">
+              <p class="feedback" id="objectFDB"></p>
+            </div>
+
+            <div class="getDataBox">
+              <p>Wert in Euro</p>
+              <input type="number" id="wothObject" value="0" step="0.01">
+              <p class="feedback" id="worthObjectFDB"></p>
+            </div>
+
+            <div class="button" id="createEntryObject">
+              <span>Erstellen</span>
+            </div>
+
+            <div id="disableObjectPersonSelection" class="hide"></div>
+          </div>
+        </div>
+
+        <div id="deletedEntriesWindow" class="hide">
+          <div id="deletedEntryWrapper"></div>
+          <div id="deletedDetailedEntriesWrapper"></div>
+        </div>
+
+        <div id="themeWindow" class="hide">
+          <div id="themeOverview">
+            <div id="selectThemes"></div>
+            <div id="createTheme"></div>
+          </div>
+          <div id="customThemeWrapper">
+            <div>
+              <h3>Primärfarbe</h3>
+              <input type="color" id="primaryColorPicker" value="#d3d3d3">
+
+              <h3>Sekundärfarbe</h3>
+              <input type="color" id="secondaryColorPicker" value="#353535">
+
+              <h3>Schriftfarbe</h3>
+              <input type="color" id="textColorPicker" value="#ffffff">
+            </div>
+
+            <svg id="customThemeSvg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 3284 1833.35"><path class="cls-1" style="fill: lightgray" d="M1140.94,684c-155.16,499.63-933.06,460.5-957.35,718.72-21.26,226,539.19,631.7,957.35,480.19,427.3-154.82,421.09-580.76,802-705.76,504-165.41,934.55,597.07,1280.14,424.7,279.41-139.36,343-950.26,63.12-1168.83C2939.09,162,2263.86,957.77,1690.87,624.86,1450.31,485.1,1317.13,198.29,1213.63,251.5,1131.39,293.78,1204.06,480.73,1140.94,684Z" transform="translate(-183 -163.65)"></path><path class="cls-2" style="fill: #353535; opacity: .6" d="M1601.2,1435.31c-635.61-475-935.69-428.72-1123.69-839.6-60.72-132.72-126.44-351-56.06-419.56C528.64,71.7,935.75,657.07,1465.77,626,1907.54,600.06,1997,165.07,2495.43,181.43c68.67,2.26,379.11,12.45,559.5,257.21,116.19,157.65,121.1,334.85,126.24,520.63,2.28,82.27,15.63,844.76-360.46,1011.58-48.61,21.57-137.42,48.12-347.28-4.53C2097.42,1872,1914.23,1669.23,1601.2,1435.31Z" transform="translate(-183 -163.65)"></path></svg>
+
+            <div id="customThemeButtonBar">
+              <div class="button" id="customThemeSaveBtn">Speichern</div>
+              <div class="button hide" id="customThemeUpdateBtn">Speichern</div>
+              <div class="button" id="customThemeCancelBtn">Abbrechen</div>
+            </div>
+          </div>
+        </div>
+
+        <div id="informationsWindow" class="hide">
+          <div class="textWrapper">
+            <p>Schuldners-Liste wurde entwickelt, um Ihnen zu helfen, den Überblick über die eigenen Darlehen nicht zu verlieren.</p>
+            <p>Diese App bietet Ihnen viele Möglichkeiten um wieder an Ihr Geld zu gelangen.</p>
+
+            <p>Die Möglichkeiten:</p>
+            <ul>
+              <li>Einträge erstellen</li>
+              <li>weisen Sie Einträge einer bestimmten Person zu</li>
+              <li>bearbeiten Sie die Informationen des Eintrages</li>
+              <li>löschen Sie Einträge</li>
+              <li>Sie können Einträge auch wiederherstellen</li>
+            </ul>
+          </div>
+        </div>
+
+        <div id="securityWindow" class="hide">
+          <iframe src="https://dorfingerjonas.at/data-privacy-statement-app" frameborder="0"></iframe>
+
+          <p>Diese Anwendung verwendet <a href="https://fontawesome.com/license">Font Awesome</a> und <a href="https://firebase.google.com/">Firebase</a>.</p>
+        </div>
+
+        <div id="feedbackWindow" class="hide">
+          <div id="feedbackContent">
+            <p>Wenn Sie Probleme mit Schuldners-Liste oder Fragen haben können Sie jederzeit eine Nachricht schreiben:</p>
+
+            <input type='text' placeholder='Betreff' id='subject' autocomplete='off' maxlength='80'>
+            <p id="subjectFDB"></p>
+
+            <textarea id='message' placeholder='Nachricht' rows='10' autocomplete='off' maxlength='5000'></textarea>
+            <p id="messageFDB"></p>
+
+            <p id="feedbackFDB"></p>
+            
+            <div class="button" id="sendEmailButton">Senden</div>
+          </div>
+        </div>
+      </main>
+
+      <footer id="footer">
+        <i class="fas fa-trash-alt" id="deletedFooter"></i>
+        <i class="fas fa-clipboard-list" id="entriesFooter"></i>
+        <i class="fas fa-plus" id="addEntryFooter"></i>
+      </footer>
+    </div>
+
+    <div id="loader" class="hide">
+      <div class="lds-ellipsis">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+    </div>
   </body>
 </html>

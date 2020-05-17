@@ -1,0 +1,193 @@
+#themeOverview, #customThemeWrapper {
+    width: 80vw;
+    padding: 0 10vw;
+    max-height: 81vh;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+    position: fixed;
+    left: 0;
+    top: 9vh;
+    overflow-y: scroll;
+    transition: left 300ms ease-in-out;
+}
+
+#customThemeWrapper {
+    left: 100vw;
+}
+
+.theme {
+    width: 74vw;
+    height: 8vh;
+    padding: 0 3vw;
+    margin: 1vh 0;
+    display: flex;
+    align-items: center;
+    border: 1px solid #486491;
+    border-radius: 3px;
+    user-select: none;
+}
+
+#createTheme .theme:nth-last-child(1) {
+    justify-content: space-between;
+}
+
+.defaultView {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.touchHoldView {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    font-size: 3vmin;
+}
+
+.touchHoldView > div {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.touchHoldView > div > h3 {
+    margin: 0;
+}
+
+.touchHoldView > div > i {
+    margin-left: 1.5vw;
+}
+
+.touchHoldView > div:nth-child(2) {
+    color: #ee5a5a;
+}
+
+.touchHoldView > div:nth-child(3) {
+    color: #03a87c;
+}
+
+.bannerWrapper {
+    width: 23vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.theme svg {
+    width: 100%;
+}
+
+.colorWrapper {
+    width: 16vw;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+}
+
+.colorWrapper div {
+    width: 43%;
+    height: 5vh;
+    border-radius: 3px;
+    box-shadow: 1px 1px 9px 0px #dbdbdb;
+}
+
+.colorWrapper div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 5vmin;
+    margin: 1vh 0;
+}
+
+.colorWrapper div:nth-child(1) i {
+    color: lightgray;
+}
+
+.colorWrapper div:nth-child(2) i {
+    color: #353535;
+    opacity: .6;
+}
+
+.colorWrapper div:nth-child(2) {
+    opacity: .6;
+}
+
+.iconWrapper i {
+    color: #fff;
+    margin-left: 3vw;
+    transition: color 250ms ease-in-out;
+}
+
+.iconWrapper .active{
+    color: #17c932;
+}
+
+#customTheme .iconWrapper i {
+    color: #353535;
+}
+
+#customThemeWrapper {
+    height: 81vh;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: column;
+    overflow-y: scroll;
+}
+
+#customThemeWrapper h3 {
+    margin-bottom: .5vh;
+}
+
+#customThemeWrapper input {
+    border: none;
+    outline: none;
+    border-radius: 50%;
+    width: 80vw;
+    height: 5vh;
+    padding: 0;
+    background: transparent;
+    margin: 0 0 3vh 0;
+}
+
+#customThemeWrapper input::-webkit-color-swatch {
+    border-radius: 7px;
+    border: none;
+    box-shadow: 1px 1px 9px 0px #dbdbdb;
+}
+
+#customThemeWrapper svg {
+    width: 60%;
+}
+
+#customThemeWrapper svg path {
+    transition: fill 200ms ease-in-out;
+}
+
+#customThemeButtonBar {
+    width: 100%;
+}
+
+#customThemeButtonBar .button {
+    width: 98%;
+    margin: 1.8vh 0;
+    padding: 1.3vh 1vw;
+    color: #fff;
+    text-align: center;
+    font-size: 4vmin;
+    border-radius: 3px;
+    box-shadow: 1px 1px 9px 0px #dbdbdb;
+}
+
+#customThemeButtonBar .button {
+    background: #03a87c;
+}
+
+#customThemeButtonBar .button:nth-child(3) {
+    background: #ee5a5a;
+}

@@ -1,78 +1,24 @@
-body {
-  margin: 0 auto;
-  padding: 0;
-  font-family: 'Roboto', sans-serif;
-}
-
-#navWrapper {
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 101;
-}
-
-#navBurger {
-  position: absolute;
-  transition: left 500ms ease-in-out;
-  left: 0;
-}
-
-#navBurger p {
-  width: 11.4vw;
-  height: 2vw;
-  background: black;
-  border-radius: 10px;
-  margin: 2vw;
-}
-
-#burger1 {
-  transition: all 200ms ease-in-out;
-  transform-origin: left;
-}
-
-#burger2 {
-  transition: all 200ms ease-in-out;
-}
-
-#burger3 {
-  transition: all 200ms ease-in-out;
-  transform-origin: left;
-}
-
-.burger1Active {
-  transform: rotateZ(45deg);
-}
-
-.burger2Active {
-  opacity: 0;
-}
-
-.burger3Active {
-  transform: rotateZ(-45deg);
-}
-
-/* nav bar */
-
 #nav {
   height: 100vh;
   background-color: white;
   width: 80vw;
   margin: 0 auto;
-  box-shadow: 7px 0px 5px 1px rgba(189,189,189,0.5);
+  box-shadow: 2px 0px 7px 1px rgba(189, 189, 189, 0.7);
   position: fixed;
   top: 0;
-  font-size: 300%;
+  right: 110vw;
+  font-size: 4.9vmin;
   display: flex;
   justify-content: center;
-  left: -90vw;
-  transition: left 500ms ease-in-out;
+  overflow-y: scroll;
+  z-index: 101;
 }
 
 #nav p {
   margin: 8vw 0 6vw 0;
 }
 
-#nav img {
+#nav svg {
   width: 100%;
   position: relative;
   top: 5vmin;
@@ -87,15 +33,21 @@ body {
   width: 80%;
 }
 
-#copyright {
-  font-size: 60% !important;
-  text-align: center;
-  margin: 0 auto !important;
+#usernameField {
+  font-size: 4.5vmin;
+  margin: 4vh 0 0 0 !important;
 }
 
-#usernameField {
-  font-size: 100%;
-  font-weight: bold;;
+#iconWrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#signOut i {
+  margin: 0 0 10vh 0;
+  transform: rotate(180deg);
 }
 
 #disableNav {

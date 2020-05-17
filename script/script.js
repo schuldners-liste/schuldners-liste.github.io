@@ -1,18 +1,20 @@
 window.addEventListener('load', () => {
 
   const config = {
-    apiKey: 'AIzaSyDW8BFHDpNA2C80hYDlF-iSVpawHeek_Mo',
-    authDomain: 'schulden-verwaltung.firebaseapp.com',
-    databaseURL: 'https://schulden-verwaltung.firebaseio.com',
-    projectId: 'schulden-verwaltung',
-    storageBucket: 'schulden-verwaltung.appspot.com',
-    messagingSenderId: '348756034907',
-    appId: '1:348756034907:web:d68eba86f4d6bb8a'
+    apiKey: "AIzaSyC193EbS7F1xds4fLyh4iujaF30j-XhhrY",
+    authDomain: "schuldners-liste-development.firebaseapp.com",
+    databaseURL: "https://schuldners-liste-development.firebaseio.com",
+    projectId: "schuldners-liste-development",
+    storageBucket: "schuldners-liste-development.appspot.com",
+    messagingSenderId: "1050245368401",
+    appId: "1:1050245368401:web:9968259298ddbee108c670"
   };
 
   firebase.initializeApp(config);
 
   firebase.auth().languageCode = 'de';
+
+  document.getElementById('nav').style.right = (window.innerWidth / 100) * parseInt(document.getElementById('nav').style.right) + 'px';
 
   const userIcon = document.getElementById('user');
   const homeIcon = document.getElementById('home');
@@ -23,16 +25,13 @@ window.addEventListener('load', () => {
   const signUpBtn = document.getElementById('signUpBtn');
   const signInBtn = document.getElementById('signInBtn');
   const addEntryBtn = document.getElementById('addEntryBtn');
-  const navBurger = document.getElementById('navBurger');
   const info = document.getElementById('info');
   const security = document.getElementById('security');
   const deleted = document.getElementById('deleted');
   const support = document.getElementById('support');
   const entries = document.getElementById('entries');
   const theme = document.getElementById('theme');
-  // const settings = document.getElementById('settings');
   const konto = document.getElementById('konto');
-  const disableNav = document.getElementById('disableNav');
 
   userIcon.addEventListener('click', () => {
 
@@ -73,7 +72,7 @@ window.addEventListener('load', () => {
 
       theme.click();
       homeIcon.click();
-      navBurger.click();
+      hideNav();
 
       changeDisplayProperty('kontoError', 'none');
       changeDisplayProperty('kontoError', 'none');
@@ -84,7 +83,7 @@ window.addEventListener('load', () => {
 
       document.getElementById('addFDB').textContent = '';
 
-      if (entryWrapper.childNodes.length === 0) document.getElementById('entryFDB').textContent = 'Keine Einträge verfügbar.';
+      // if (entryWrapper.childNodes.length === 0) document.getElementById('entryFDB').textContent = 'Keine Einträge verfügbar.';
       if (deletedEntriesWrapper.childNodes.length === 0) document.getElementById('deletedFDB').textContent = 'Keine Einträge verfügbar.';
 
       firebase.database().ref('users/' + user.uid + '/userdata').once('value').then((snapshot) => {
@@ -106,7 +105,7 @@ window.addEventListener('load', () => {
       while (patternWrapper.firstChild) patternWrapper.removeChild(patternWrapper.firstChild);
       document.getElementById('themeFDB').textContent = 'Sie müssen eingeloggt sein um dieses Feature nutzen zu können.';
 
-      document.getElementById('entryFDB').textContent = 'Keine Einträge verfügbar.';
+      // document.getElementById('entryFDB').textContent = 'Keine Einträge verfügbar.';
       document.getElementById('addFDB').textContent = 'Sie müssen angemeldet sein um Einträge erstellen zu können.';
       document.getElementById('usernameField').textContent = 'nicht eingeloggt.';
 
@@ -390,47 +389,18 @@ window.addEventListener('load', () => {
     }
   });
 
-  navBurger.addEventListener('click', () => {
-    const b1 = document.getElementById('burger1');
-    const b2 = document.getElementById('burger2');
-    const b3 = document.getElementById('burger3');
-    const nav = document.getElementById('nav');
-    const burger = document.getElementById('navBurger');
-    const disableNav = document.getElementById('disableNav');
-
-    b1.classList.toggle('burger1Active');
-    b2.classList.toggle('burger2Active');
-    b3.classList.toggle('burger3Active');
-
-    if (nav.style.left === '0px') {
-      nav.style.left = '-90vw';
-      burger.style.left = 0;
-      disableNav.style.display = 'none';
-    } else {
-      nav.style.left = 0;
-      burger.style.left = '82vw';
-      disableNav.style.display = 'block';
-    }
-  });
-
-  disableNav.addEventListener('click', () => {
-    if (document.getElementById('nav').style.left === '0px') {
-      navBurger.click();
-    }
-  });
-
   info.addEventListener('click', () => {
     hideAll();
     changeDisplayProperty('infoWrapper', 'block');
 
-    navBurger.click();
+    hideNav();
   });
 
   security.addEventListener('click', () => {
     hideAll();
     changeDisplayProperty('securityWrapper', 'block');
 
-    navBurger.click();
+    hideNav();
   });
 
   deleted.addEventListener('click', () => {
@@ -438,7 +408,7 @@ window.addEventListener('load', () => {
     hideAll();
     changeDisplayProperty('deletedWrapper', 'block');
 
-    navBurger.click();
+    hideNav();
 
     if (firebase.auth().currentUser !== null) {
       printDeletedEntries(firebase.auth().currentUser.uid);
@@ -453,7 +423,7 @@ window.addEventListener('load', () => {
     hideAll();
     changeDisplayProperty('themeWrapper', 'block');
 
-    navBurger.click();
+    hideNav();
 
     const patternWrapper = document.getElementById('themeContent');
     while (patternWrapper.firstChild) patternWrapper.removeChild(patternWrapper.firstChild);
@@ -516,22 +486,15 @@ window.addEventListener('load', () => {
 
   entries.addEventListener('click', () => {
     homeIcon.click();
-    navBurger.click();
+    hideNav();
   });
 
   support.addEventListener('click', () => {
     hideAll();
     changeDisplayProperty('supportWrapper', 'block');
 
-    navBurger.click();
+    hideNav();
   });
-
-  // settings.addEventListener('click', () => {
-  //   hideAll();
-  //   changeDisplayProperty('settingsWrapper', 'block');
-  //
-  //   navBurger.click();
-  // });
 
   konto.addEventListener('click', () => {
     hideAll();
@@ -718,8 +681,24 @@ window.addEventListener('load', () => {
 
     });
 
-    navBurger.click();
+    hideNav();
   });
+
+  function hideNav() {
+    setTimeout(() => {
+      nav.style.transition = 'right 500ms ease-in-out';
+
+      if (document.getElementById('nav').style.right === (window.innerWidth / 100) * 20 + 'px') {
+        nav.style.right = (window.innerWidth / 100) * 101 + 'px';
+        previousX = parseInt(nav.style.right);
+        disableNav.style.display = 'none';
+      }
+
+      setTimeout(() => {
+        nav.style.transition = 'none';
+      }, 510);
+    }, 100);
+  }
 
   function writeUserToDatabase(username, email, userId) {
     firebase.database().ref('users/' + userId + '/userdata').set({
@@ -756,80 +735,88 @@ window.addEventListener('load', () => {
       content = snapshot.val();
 
       // Fill Array with Database Content
-      for (let index in content) {
-        entries[entries.length] = content[index];
-      }
-
-      // Sort Array by timestamp
-      for (let i = 0; i < entries.length; i++) {
-        for (let j = i + 1; j < entries.length; j++) {
-          if (entries[i].timestamp > entries[j].timestamp) {
-            let help = entries[j];
-            entries[j] = entries[i];
-            entries[i] = help;
-          }
+      for (const index in content) {
+        entries.push([]);
+        for (const index2 in content[index]) {
+          entries[entries.length - 1].push(content[index][index2]);
         }
       }
 
       // Convert Date Format
       for (let i = 0; i < entries.length; i++) {
-        if (entries[i].date.includes('-')) {
-          let parts = entries[i].date.split('-');
-          let tempYear = parts[0];
-          let tempMonth = parts[1];
-          let tempDay = parts[2];
-
-          entries[i].date = `${tempDay}.${tempMonth}.${tempYear}`;
+        for (let j = 0; j < entries[i].length; j++) {
+          if (entries[i][j].date.includes('-')) {
+            const parts = entries[i][j].date.split('-');
+            entries[i][j].date = `${parts[2]}.${parts[1]}.${parts[0]}`;
+          }
         }
       }
+
+      console.log(entries);
 
       for (let i = 0; i < entries.length; i++) {
-        let date = 'Datum: ' + entries[i].date;
-        entries[i].sum = entries[i].sum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
-        entries[i].sum = entries[i].sum.replace('.', ',');
-        let sum = 'Betrag: ' + entries[i].sum + '€';
-        let name = 'Schuldner: ' + entries[i].name;
-        let reason = 'Grund: ' + entries[i].reason;
-        let timestamp = entries[i].timestamp;
+        const contentWrapper = document.getElementById('entryWrapper');
+        const newPerson = document.createElement('div');
 
-        let contentWrapper = document.getElementById('entryWrapper');
-        let newEintrag = document.createElement('div');
+        const header = document.createElement('div');
+        const headerName = document.createElement('h2');
+        const headerIconWrapper = document.createElement('div');
+        const headerTotalPrice = document.createElement('p');
+        const headerIcon = document.createElement('i');
 
-        newEintrag.classList.add('eintrag');
+        headerName.textContent = entries[i][0].name;
+        headerTotalPrice.textContent = '23,50€';
+        headerIcon.setAttribute('class', 'fas fa-angle-down');
 
-        let dateBox = document.createElement('div');
-        let sumBox = document.createElement('div');
-        let nameBox = document.createElement('div');
-        let reasonBox = document.createElement('div');
-        let removeBox = document.createElement('i');
-
-        let eintragData = [name, date, reason, sum];
-        let outputArr = [nameBox, dateBox, reasonBox, sumBox];
-
-        for (let i = 0; i < outputArr.length; i++) {
-          setTimeout(() => {
-            outputArr[i].textContent = eintragData[i];
-            newEintrag.appendChild(outputArr[i]);
-          }, 250);
-        }
-        removeBox.classList.add('fas');
-        removeBox.classList.add('fa-times');
-
-        removeBox.addEventListener('click', () => {
-          firebase.database().ref('users/' + userId + '/entries/' + timestamp).remove();
-          contentWrapper.removeChild(newEintrag);
-          moveEntry(userId, entries[i]);
-          if (contentWrapper.childNodes.length === 0) document.getElementById('entryFDB').textContent = 'Keine Einträge verfügbar.'
-          else document.getElementById('entryFDB').textContent = '';
+        header.addEventListener('click', () => {
+          newPerson.classList.toggle('makeBigger');
+          headerIcon.classList.toggle('turn180deg');
         });
-        newEintrag.appendChild(removeBox)
-        contentWrapper.appendChild(newEintrag);
 
-        if (contentWrapper.childNodes.length === 0) document.getElementById('entryFDB').textContent = 'Keine Einträge verfügbar.'
-        else document.getElementById('entryFDB').textContent = '';
+        headerIconWrapper.appendChild(headerTotalPrice);
+        headerIconWrapper.appendChild(headerIcon);
+
+        header.appendChild(headerName);
+        header.appendChild(headerIconWrapper);
+
+        header.setAttribute('class', 'personHeader');
+
+        newPerson.appendChild(header);
+        newPerson.setAttribute('class', 'person');
+
+
+        for (let j = 0; j < entries[i].length; j++) {
+          const newDebt = document.createElement('div');
+
+          let date = entries[i][j].date;
+          // format sum (e.g. from 35600 to 35 600)
+          entries[i][j].sum = entries[i][j].sum.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+          entries[i][j].sum = entries[i][j].sum.replace('.', ',');
+          let sum = entries[i][j].sum;
+          let name = entries[i][j].name;
+          let reason = entries[i][j].reason;
+          let timestamp = entries[i][j].timestamp;
+
+          const texte = [{strong: 'Grund:', text: reason}, {strong: 'Was:', text: sum}, {strong: 'Erstellt am:', text: date}]
+
+          for (const text of texte) {
+            const strong = document.createElement('b');
+            const element = document.createElement('p');
+
+            strong.textContent = text.strong + ' ';
+            element.appendChild(strong);
+            element.textContent += text.text;
+            newDebt.appendChild(element);
+          }
+
+          newDebt.setAttribute('class', 'debt')
+          newPerson.appendChild(newDebt);
+          
+        }
+
+        contentWrapper.appendChild(newPerson);
       }
     });
-    document.getElementById('entryFDB').textContent = '';
   }
 
   function printDeletedEntries(userId) {
