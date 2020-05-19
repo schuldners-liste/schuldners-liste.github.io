@@ -1422,6 +1422,9 @@ function clearCreateInputs() {
 }
 
 function initDate(id) {
-    const time = new Date();
-    document.getElementById(id).value = `${time.getFullYear()}-${('0' + (time.getMonth() + 1)).slice(-2)}-${('0' + time.getDate()).slice(-2)}`;
+    if (document.getElementById(id) !== null) {
+        const time = new Date();
+        document.getElementById(id).value = `${time.getFullYear()}-${('0' + (time.getMonth() + 1)).slice(-2)}-${('0' + time.getDate()).slice(-2)}`;   
+    }
+    
 }
