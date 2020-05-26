@@ -185,18 +185,12 @@ function useTheme(hex, hex2, color, fromLocalStorage) {
         document.getElementById('currentType'),
         document.querySelectorAll('.selectPersonPopUp .button')[0],
         document.querySelectorAll('.selectPersonPopUp .button')[1],
-        document.getElementById('backButton'),
-        document.getElementById('continueWithSignIn'),
-        document.getElementById('continueWithSignUp'),
     ];
     
     const colors = [
         document.querySelectorAll('.selectPersonPopUp .button')[0],
         document.querySelectorAll('.selectPersonPopUp .button')[1],
         document.getElementById('footer'),
-        document.getElementById('backButton'),
-        document.getElementById('continueWithSignIn'),
-        document.getElementById('continueWithSignUp'),
     ];
 
     for (const input of inputs) {
@@ -233,8 +227,6 @@ function useTheme(hex, hex2, color, fromLocalStorage) {
     document.getElementById(`icon${id}`).classList.add('active');
     document.getElementById('banner').getElementsByTagName('path')[0].style.fill = hex;
     document.getElementById('banner').getElementsByTagName('path')[1].style.fill = hex2;
-    document.getElementById('startBanner').getElementsByTagName('path')[0].style.fill = hex;
-    document.getElementById('startBanner').getElementsByTagName('path')[1].style.fill = hex2;
     
     if (firebase.auth().currentUser !== null && sessionStorage.getItem('deleteUser') !== 'true' && !fromLocalStorage) {
         firebase.database().ref(`users/${firebase.auth().currentUser.uid}/theme`).set({
