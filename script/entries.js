@@ -56,12 +56,11 @@ window.addEventListener('load', () => {
 
     firebase.auth().onAuthStateChanged((user) => {
         if (user) {
+            initEyes();
             initDate('dateMoney');
             initDate('dateObject');
             createPersonSelection('createMoneyEntry', user);
             createPersonSelection('createObjectEntry', user);
-            clearInputs();
-            document.getElementById('backButton').click();
             document.getElementById('entriesFooter').click();
             sessionStorage.setItem('deleteUser', false);
 
@@ -1372,7 +1371,7 @@ function calculatePersonSum(name) {
             entriesSum = entriesSum.getElementsByTagName('p');
 
             for (const entry of entriesSum) {
-                if (entry.textContent.includes('€') && typeof parseFloat(entry.textContent.replace(/[^0-9,.]/ig, '')) === "number") {
+                if (entry.textContent.includes('€') && typeof parseFloat(entry.textContent.replace(/[^0-9,.]/ig, '')) === 'number') {
                     sum += parseFloat(entry.textContent.replace(',', '.').replace(/[^0-9,.]/ig, ''));
                 }
             }
@@ -1424,4 +1423,25 @@ function clearCreateInputs() {
 function initDate(id) {
     const time = new Date();
     document.getElementById(id).value = `${time.getFullYear()}-${('0' + (time.getMonth() + 1)).slice(-2)}-${('0' + time.getDate()).slice(-2)}`;
+}
+
+function initEyes() {
+    const pwWrapper = document.getElementsByClassName('pwWrapper');
+
+    for (let i = 0; i < pwWrapper.length; i++) {
+        for (let j = 1; j < pwWrapper[i].children.length; j++) {        
+            const icon = pwWrapper[i].children[j];
+            const input = pwWrapper[i].children[j-1];
+            
+            icon.addEventListener('click', () => {
+                if (icon.className.includes('-slash')) {
+                    icon.className = icon.className.replace('-slash', '');
+                    input.type = 'password';
+                } else {
+                    icon.className += '-slash';
+                    input.type = 'text';
+                }
+            });
+        }
+    }
 }
