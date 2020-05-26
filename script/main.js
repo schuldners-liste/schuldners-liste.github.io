@@ -1,14 +1,12 @@
 window.addEventListener('load', () => {
-    const logInScreen = document.getElementById('logInScreen');
-    const mainScreen = document.getElementById('mainScreen');
     const firebaseConfig = {
-        apiKey: "AIzaSyDBR26c7FbJYLloG0lV-c22g539TDTDYGY",
-        authDomain: "schuldners-liste.firebaseapp.com",
-        databaseURL: "https://schuldners-liste.firebaseio.com",
-        projectId: "schuldners-liste",
-        storageBucket: "schuldners-liste.appspot.com",
-        messagingSenderId: "654409783665",
-        appId: "1:654409783665:web:b90d648514895df1e2fed0"
+        apiKey: 'AIzaSyDBR26c7FbJYLloG0lV-c22g539TDTDYGY',
+        authDomain: 'schuldners-liste.firebaseapp.com',
+        databaseURL: 'https://schuldners-liste.firebaseio.com',
+        projectId: 'schuldners-liste',
+        storageBucket: 'schuldners-liste.appspot.com',
+        messagingSenderId: '654409783665',
+        appId: '1:654409783665:web:b90d648514895df1e2fed0'
     };
 
     firebase.initializeApp(firebaseConfig);
@@ -34,11 +32,13 @@ window.addEventListener('load', () => {
                 });
             }
 
-            logInScreen.classList.add('hide');
-            mainScreen.classList.remove('hide');
+            if (window.location.pathname.includes('/join')) {
+                window.location.href = `${window.location.protocol}//${window.location.host}/index.html`;
+            }
         } else {
-            logInScreen.classList.remove('hide');
-            mainScreen.classList.add('hide');
+            if (!window.location.pathname.includes('/join')) {
+                window.location.href = `${window.location.protocol}//${window.location.host}/join/index.html`;
+            }
         }
     });
 });
