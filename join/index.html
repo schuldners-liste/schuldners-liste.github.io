@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <!-- General -->
+    <title>Schulden Verwaltung</title>
+    <link rel="icon" href="../img/favicon.png">
+    <!-- Meta -->
+    <meta charset='utf-8'>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name='mobile-web-app-capable' content='yes'>
+    <meta name='apple-mobile-web-app-capable' content='yes'>
+    <meta name='apple-mobile-web-app-status-bar-style' content='black'>
+    <meta name='keywords' content='Jonas Dorfinger, Schulden, Verwaltung, Debts, Manager, Schuldners-Liste'>
+    <meta name='author' content='Jonas Dorfinger'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <meta name='description' content='Verwalten Sie Ihre Schulden und Darlehen einfach und bequem.'/>
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="../style/main.css">
+    <link rel="stylesheet" href="../style/signup_in.css">
+    <link rel="stylesheet" href="../style/loadingAnimation.css">
+    <!-- JavaScript Files -->
+    <script src="../script/main.js"></script>
+    <script src="../script/signup_in.js"></script>
+    <script src="../script/globalLoading.js"></script>
+    <script src="../script/checkConnection.js"></script>
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    <!-- Libraries -->
+    <script src="https://kit.fontawesome.com/e7df220bd7.js" crossorigin="anonymous"></script>
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/6.1.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.1.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/6.1.0/firebase-database.js"></script>
+</head>
+<body>
+    <div id="logInScreen">
+        <div id="startScreen">
+          <svg id="startBanner" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 3284 1833.35"><path class="cls-1" style="fill: #486491" d="M1140.94,684c-155.16,499.63-933.06,460.5-957.35,718.72-21.26,226,539.19,631.7,957.35,480.19,427.3-154.82,421.09-580.76,802-705.76,504-165.41,934.55,597.07,1280.14,424.7,279.41-139.36,343-950.26,63.12-1168.83C2939.09,162,2263.86,957.77,1690.87,624.86,1450.31,485.1,1317.13,198.29,1213.63,251.5,1131.39,293.78,1204.06,480.73,1140.94,684Z" transform="translate(-183 -163.65)"></path><path class="cls-2" style="fill: #687fa4; opacity: .6" d="M1601.2,1435.31c-635.61-475-935.69-428.72-1123.69-839.6-60.72-132.72-126.44-351-56.06-419.56C528.64,71.7,935.75,657.07,1465.77,626,1907.54,600.06,1997,165.07,2495.43,181.43c68.67,2.26,379.11,12.45,559.5,257.21,116.19,157.65,121.1,334.85,126.24,520.63,2.28,82.27,15.63,844.76-360.46,1011.58-48.61,21.57-137.42,48.12-347.28-4.53C2097.42,1872,1914.23,1669.23,1601.2,1435.31Z" transform="translate(-183 -163.65)"></path></svg>
+          <h1>Willkommen!</h1>
+  
+          <div id="buttonWrapper">
+            <div class="startButton" id="continueWithSignIn">
+              <span>Anmelden</span>
+            </div>
+  
+            <div class="startButton" id="continueWithSignUp">
+              <span>Registrieren</span>
+            </div>
+  
+            <span>oder</span>
+  
+            <div id="continueWithGoogle">
+              <img src="../img/google_logo.svg" alt="cannot display image"> <p>mit Google fortfahren</p>
+            </div>
+  
+            <p><i class="fas fa-info-circle"></i> Mit dem Anmelden oder Registrieren erklären Sie sich automatisch mit den <a href="../datenschutzrichtlinien/index.html">Datenschutzrichtlinien</a> von Schuldners-Liste einverstanden.</p>
+          </div>
+        </div>
+  
+        <div id="emailWrapper" class="hide">
+          <div id="signInWrapper">
+            <h1>Anmelden</h1>
+              
+            <div class="continueWithEmail">
+              <input type="text" placeholder="E-Mail Adresse" id="emailIn" autocomplete="email">
+              <p id="emInFeedback"></p>
+              <div class="pwWrapper">
+                <input type="password" placeholder="Passwort" id="passwordIn" autocomplete="current-password">
+                <i class="fas fa-eye" id="eyePwIn"></i>
+              </div>
+              <p id="pwInFeedback"></p>
+  
+              <div class="btnWrapper">
+                <div class="button" id="signInBtn">
+                  <span id="signInBtnText">Anmelden</span>
+                </div>
+              </div>
+            </div>
+  
+            <div></div>
+    
+            <div>
+              <p id="passwordForgot">Passwort vergessen?</p>
+              <p id="goToSignUp">Kein Account? Registrieren!</p>
+            </div>
+          </div>
+    
+          <div id="signUpWrapper">
+            <h1>Registrieren</h1>
+    
+            <div class="continueWithEmail">
+              <input type="text" placeholder="E-Mail Adresse" id="emailUp" autocomplete="email">
+              <p id="emUpFeedback"></p>
+              <input type="text" placeholder="Benutzername" id="usernameUp" maxlength="25" autocomplete="name">
+              <p id="unUpFeedback"></p>
+              <div class="pwWrapper">
+                <input type="password" placeholder="Passwort" id="passwordUp" autocomplete="new-password">
+                <i class="fas fa-eye" id="eyePwUp"></i>
+              </div>
+              <p id="pwUpFeedback"></p>
+  
+              <div class="btnWrapper">
+                <div class="button" id="signUpBtn">
+                  <span id="signUpBtnText">Registrieren</span>
+                </div>
+              </div>
+            </div>
+            
+            <p id="goToSignIn">Bereits registriert? Anmelden!</p>
+          </div>
+  
+          <div class="startButton" id="backButton">
+            <span>Zurück</span>
+          </div>
+  
+          <div id="passwordForgotWrapper" class="hide">
+            <h2>Passwort zurücksetzen</h2>
+    
+            <input type="email" id="forgotPWEmail" placeholder="E-Mail Adresse" autocomplete="email">
+            <p id="fgtEMFeedback"> &nbsp; </p>
+            
+            <div id="forgotButtonWrapper">
+              <div class="button" id="sendForgotEmail">
+                Senden
+              </div>
+            </div>
+    
+            <p class="infoText"><i class="fas fa-info-circle"></i> Geben Sie die E-Mail Adresse Ihre Accounts ein, um einen Link zum Zurücksetzen des Passwortes zu erhalten.</p>
+          </div>
+    
+          <div id="disablePasswordForgotWrapper" class="hide"></div>
+        </div>
+    </div>
+
+    <div id="loader" class="hide">
+        <div class="lds-ellipsis">
+          <div></div>
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
+      </div>
+</body>
+</html>
