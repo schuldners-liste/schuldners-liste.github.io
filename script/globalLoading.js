@@ -6,6 +6,7 @@ function activateLoading(opacity) {
     ];
 
     for (const wrapper of wrappers) {
+        if (wrapper !== null)
         wrapper.style.opacity = opacity;
     }
 
@@ -20,6 +21,7 @@ function deactiveLoading() {
     ];
     
     for (const wrapper of wrappers) {
+        if (wrapper !== null)
         wrapper.style.opacity = 1;
     }
     
