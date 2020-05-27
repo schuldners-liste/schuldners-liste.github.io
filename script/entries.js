@@ -1445,3 +1445,13 @@ function initEyes() {
         }
     }
 }
+
+// @param string
+function validatePassword(password) {
+    return /[a-z]/.test(password) && /[A-Z]/.test(password) && /[0-9]/.test(password) && password.length > 5;
+}
+
+// @param string
+function validateEmail(email) {
+    return /^(([^<>()\[\]\\.,;:\s@']+(\.[^<>()\[\]\\.,;:\s@']+)*)|('.+'))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(email);
+}
