@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang='de' dir='ltr'>
-  <head>
+<html lang='de'>
+<head>
     <!-- General -->
     <title>Schulden Verwaltung</title>
-    <link rel="icon" href="img/favicon.png">
+    <link rel='icon' href='img/favicon.png'>
     <!-- Meta -->
     <meta charset='utf-8'>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
     <meta name='mobile-web-app-capable' content='yes'>
     <meta name='apple-mobile-web-app-capable' content='yes'>
     <meta name='apple-mobile-web-app-status-bar-style' content='black'>
@@ -14,348 +14,59 @@
     <meta name='author' content='Jonas Dorfinger'>
     <meta name='viewport' content='width=device-width, initial-scale=1'>
     <meta name='description' content='Verwalten Sie Ihre Schulden und Darlehen einfach und bequem.'/>
-    <!-- CSS Files -->
-    <link rel="stylesheet" href="./style/nav.css">
-    <link rel="stylesheet" href="./style/main.css">
-    <link rel="stylesheet" href="./style/text.css">
-    <link rel="stylesheet" href="./style/theme.css">
-    <link rel="stylesheet" href="./style/footer.css">
-    <link rel="stylesheet" href="./style/header.css">
-    <link rel="stylesheet" href="./style/content.css">
-    <link rel="stylesheet" href="./style/entries.css">
-    <link rel="stylesheet" href="./style/account.css">
-    <link rel="stylesheet" href="./style/feedback.css">
-    <link rel="stylesheet" href="./style/signup_in.css">
-    <link rel="stylesheet" href="./style/createEntry.css">
-    <link rel="stylesheet" href="./style/loadingAnimation.css">
-    <!-- JavaScript Files -->
-    <script src="./script/nav.js"></script>
-    <script src="./script/main.js"></script>
-    <script src="./script/theme.js"></script>
-    <script src="./script/entries.js"></script>
-    <script src="./script/account.js"></script>
-    <script src="./script/feedback.js"></script>
-    <script src="./script/navAction.js"></script>
-    <script src="./script/globalLoading.js"></script>
-    <script src="./script/checkConnection.js"></script>
+    <!-- CSS File -->
+    <link rel='stylesheet' href='./style/style.css'>
     <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
-    <!-- Libraries -->
-    <script src="./script/hammer.min.js"></script>
-    <script src="https://kit.fontawesome.com/e7df220bd7.js" crossorigin="anonymous"></script>
-    <!-- Firebase -->
-    <script src="https://www.gstatic.com/firebasejs/6.1.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/6.1.0/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/6.1.0/firebase-database.js"></script>
-  </head>
-  <body>
-    <div id="mainScreen">
-      <header id="header">
-        <i class="fas fa-bars" id="bars"></i>
-        <h1 id="title">Einträge</h1>
-      </header>
+    <link href='https://fonts.googleapis.com/css?family=Lato&display=swap' rel='stylesheet'>
+    <link href='https://fonts.googleapis.com/icon?family=Material+Icons' rel='stylesheet'>
+    <script src='https://kit.fontawesome.com/e7df220bd7.js' crossorigin='anonymous'></script>
+</head>
+<body>
+    <header>
+        <h1>Schuldners Liste</h1>
 
-      <nav id="nav">
-        <div id="textWrapper">
-          <svg id="banner" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 3284 1833.35"><path class="cls-1" style="fill: #486491" d="M1140.94,684c-155.16,499.63-933.06,460.5-957.35,718.72-21.26,226,539.19,631.7,957.35,480.19,427.3-154.82,421.09-580.76,802-705.76,504-165.41,934.55,597.07,1280.14,424.7,279.41-139.36,343-950.26,63.12-1168.83C2939.09,162,2263.86,957.77,1690.87,624.86,1450.31,485.1,1317.13,198.29,1213.63,251.5,1131.39,293.78,1204.06,480.73,1140.94,684Z" transform="translate(-183 -163.65)"></path><path class="cls-2" style="fill: #687fa4; opacity: .6" d="M1601.2,1435.31c-635.61-475-935.69-428.72-1123.69-839.6-60.72-132.72-126.44-351-56.06-419.56C528.64,71.7,935.75,657.07,1465.77,626,1907.54,600.06,1997,165.07,2495.43,181.43c68.67,2.26,379.11,12.45,559.5,257.21,116.19,157.65,121.1,334.85,126.24,520.63,2.28,82.27,15.63,844.76-360.46,1011.58-48.61,21.57-137.42,48.12-347.28-4.53C2097.42,1872,1914.23,1669.23,1601.2,1435.31Z" transform="translate(-183 -163.65)"></path></svg>
-          <p id="usernameField"> &nbsp; </p>
-          <hr>
-          <p id="accountNav"><i class="fas fa-user"></i> Account</p>
-          <p id="entriesNav"><i class="fas fa-clipboard-list"></i> Einträge</p>
-          <p id="deletedNav"><i class="fas fa-trash-alt"></i> Gelöscht</p>
-          <p id="themeNav"><i class="fas fa-brush"></i> Theme</p>
-          <p id="infoNav"><i class="fas fa-info-circle"></i> Informationen</p>
-          <p id="securityNav"><i class="fas fa-shield-alt"></i> Datenschutzerklärung</p>
-          <p id="supportNav"><i class="fas fa-comment"></i> Feedback & Support</p>
-          <hr>
-          <div id="iconWrapper">
-            <span id='signOut'>
-              <i class="fas fa-sign-out-alt"></i> Abmelden
-            </span>
-          </div>
-        </div>
-      </nav>
+        <a href='https://schuldners-liste.github.io'>Jetzt beginnen!</a>
+    </header>
 
-      <div id="disableNav" style="display: none;"></div>
+    <section>
+        <h1>Vorteile von Schuldners Liste</h1>
 
-      <main id="mainContent">
-        <div id="accountWindow" class="hide">
-          <div class="changeInformationBox">
-            <h3>Benutzername ändern</h3>
-            <input type="text" placeholder="neuer Benutzername" maxlength="25" id="newUsername">
-            <p id="newUsernameFDB"> &nbsp; </p>
-            <div class="button" id="saveNewUsername">Speichern</div>
-          </div>
-
-          <div class="changeInformationBox hideable">
-            <h3>E-Mail Adresse ändern</h3>
-            <input type="text" placeholder="neue E-Mail Adresse" id="newEmail">
-            <p id="newEmailFDB"> &nbsp; </p>
-            <div class="button" id="saveNewEmail">Speichern</div>
-          </div>
-
-          <div class="changeInformationBox hideable">
-            <h3>Passwort ändern</h3>
-            <div class="pwWrapper">
-              <input type="password" placeholder="neues Passwort" id="newPassword">
-              <i class="fas fa-eye"></i>
-            </div>
-            <p id="newPasswordFDB"> &nbsp; </p>
-            <div class="button" id="saveNewPassword">Speichern</div>
-          </div>
-
-          <div class="changeInformationBox">
-            <h3>Account löschen</h3>
-            <div class="button danger" id="deleteAccount">Account löschen</div>
-            <p><i class="fas fa-info-circle"></i> Dieser Schritt kann nicht rückgängig gemacht werden!</p>
-          </div>
-
-          <div class="changeInformationBox">
-            <h3>Alle Einträge löschen</h3>
-            <div class="button danger" id="deleteAllEntries">Einträge löschen</div>
-            <p><i class="fas fa-info-circle"></i> Dieser Schritt kann nicht rückgängig gemacht werden!</p>
-          </div>
-
-          <div id="authorizeWrapper" class="hide">
-            <h2>Bestätige dein Passwort um fortzufahren</h2>
-
-            <div class="pwWrapper">
-              <input type="password" id="authorizePW" placeholder="Passwort">
-              <i class="fas fa-eye"></i>
-            </div>
-
-            <p id="authorizePWFDB"> &nbsp; </p>
-
-            <div class="button" id="confirmAuthorize">Bestätigen</div>
-            <div class="button" id="cancelAuthorize">Abbrechen</div>
-          </div>
-
-          <p id="successMessage" class="hide"></p>
-        </div>
-
-        <div id="entriesWindow">
-          <div id="entryWrapper"></div>
-          <div id="detailedEntriesWrapper"></div>
-          <div id="editEntryWrapper">
-            <div class="getDataBox" data-entry-type="money, object">
-              <p>Name des Schuldners</p>
-              <input id="editName" disabled>
-            </div>
-
-            <div class="getDataBox" data-entry-type="money, object">
-              <p>Datum</p>
-              <input type="date" id="editDate">
-              <p class="feedback" id="editDateFDB"></p>
-            </div>
-
-            <div class="getDataBox" data-entry-type="money, object">
-              <p>Begründung</p>
-              <input type="text" id="editReason">
-              <p class="feedback" id="editReasonFDB"></p>
-            </div>
-
-            <div class="getDataBox" data-entry-type="object">
-              <p>Objekt</p>
-              <input type="text" id="editObject">
-              <p class="feedback" id="editObjectFDB"></p>
-            </div>
-
-            <div class="getDataBox" data-entry-type="money">
-              <p>Betrag</p>
-              <input type="number" id="editSum" step="0.01">
-              <p class="feedback" id="editSumFDB"></p>
-            </div>
-
-            <div class="getDataBox" data-entry-type="object">
-              <p>Wert in Euro</p>
-              <input type="number" id="editWorth" step="0.01">
-              <p class="feedback" id="editWorthFDB"></p>
-            </div>
+        <div class='contentWrapper'>
+            <img src='./img/theme.png' alt='cannot display image' draggable='false'>
             
-            <div id="editButtonBar" data-entry-type="money, object">
-              <div class="button" id="editSaveBtn">Speichern</div>
-              <div class="button" id="editCancelBtn">Abbrechen</div>
-            </div>
-
-            <div id="editWarningWrapper" class="hide" data-entry-type="">
-              <div>
-                <div>
-                  <h2>Warnung!</h2>
-                  <p>Sind Sie sicher? Alle nicht gespeicherten Änderungen werden verworfen.</p>
+            <div id='featureWrapper'>
+                <div class='feature'>
+                    <i class='fas fa-comments-dollar'></i>
+                    <p>Sie können Einträge für geliehenes Geld und geliehene Gegenstände erstellen.</p>
                 </div>
-                
-                <div>
-                  <div class="button" id="editConfirmedCancel">dennoch Abbrechen</div>
-                  <div class="button" id="editCanceldCancel">nicht Abbrechen</div>
+
+                <div class='feature'>
+                    <i class='fas fa-user'></i>
+                    <p>erstellte Einträge werden nach Personen sortiert und angezeigt.</p>
                 </div>
-              </div>
+
+                <div class='feature'>
+                    <i class='fas fa-redo-alt'></i>
+                    <p>Stellen Sie gelöschte Einträge wieder her</p>
+                </div>
+
+                <div class='feature'>
+                    <span class='material-icons'>money_off</span>
+                    <p>Schuldners Liste ist kostenlos und zeigt Ihnen keine Werbung an.</p>
+                </div>
+
+                <div class='feature'>
+                    <i class='fas fa-brush'></i>
+                    <p>personalisieren Sie Ihren Account mit einem individuellen Theme.</p>
+                </div>
             </div>
-          </div>
+
+            <div></div>
         </div>
+    </section>
 
-        <div id="createEntryWindow" class="hide">
-          <div id="switchType">
-            <h2 id="moneyType">Geld</h2>
-            <h2 id="objectType">Objekt</h2>
-            <div id="currentType"></div>
-          </div>
-
-          <div class="createEntryWrapper" id="createMoneyEntry">
-            <div class="getDataBox">
-              <p>Name des Schuldners</p>
-              <input id="choosePerson" value="Person auswählen" readonly>
-              <p class="feedback" id="nameMoneyFDB"></p>
-            </div>
-
-            <div class="getDataBox">
-              <p>Datum</p>
-              <input type="date" id="dateMoney">
-              <p class="feedback" id="dateMoneyFDB"></p>
-            </div>
-
-            <div class="getDataBox">
-              <p>Begründung</p>
-              <input type="text" id="reasonMoney">
-              <p class="feedback" id="reasonMoneyFDB"></p>
-            </div>
-
-            <div class="getDataBox">
-              <p>Betrag</p>
-              <input type="number" id="sumMoney" step="0.01">
-              <p class="feedback" id="sumMoneyFDB"></p>
-            </div>
-
-            <div class="button" id="createEntryMoney">
-              <span>Erstellen</span>
-            </div>
-
-            <div id="disableMoneyPersonSelection" class="hide"></div>
-          </div>
-
-          <div class="createEntryWrapper" id="createObjectEntry">
-            <div class="getDataBox">
-                <p>Name des Schuldners</p>
-                <input id="choosePersonObject" value="Person auswählen" readonly>
-                <p class="feedback" id="nameObjectFDB"></p>
-            </div>
-
-            <div class="getDataBox">
-              <p>Datum</p>
-              <input type="date" id="dateObject">
-              <p class="feedback" id="dateObjectFDB"></p>
-            </div>
-
-            <div class="getDataBox">
-              <p>Begründung</p>
-              <input type="text" id="reasonObject">
-              <p class="feedback" id="reasonObjectFDB"></p>
-            </div>
-
-            <div class="getDataBox">
-              <p>Objekt</p>
-              <input type="text" id="object">
-              <p class="feedback" id="objectFDB"></p>
-            </div>
-
-            <div class="getDataBox">
-              <p>Wert in Euro</p>
-              <input type="number" id="wothObject" value="0" step="0.01">
-              <p class="feedback" id="worthObjectFDB"></p>
-            </div>
-
-            <div class="button" id="createEntryObject">
-              <span>Erstellen</span>
-            </div>
-
-            <div id="disableObjectPersonSelection" class="hide"></div>
-          </div>
-        </div>
-
-        <div id="deletedEntriesWindow" class="hide">
-          <div id="deletedEntryWrapper"></div>
-          <div id="deletedDetailedEntriesWrapper"></div>
-        </div>
-
-        <div id="themeWindow" class="hide">
-          <div id="themeOverview">
-            <div id="selectThemes"></div>
-            <div id="createTheme"></div>
-          </div>
-          <div id="customThemeWrapper">
-            <div>
-              <h3>Primärfarbe</h3>
-              <input type="color" id="primaryColorPicker" value="#d3d3d3">
-
-              <h3>Sekundärfarbe</h3>
-              <input type="color" id="secondaryColorPicker" value="#353535">
-
-              <h3>Schriftfarbe</h3>
-              <input type="color" id="textColorPicker" value="#ffffff">
-            </div>
-
-            <svg id="customThemeSvg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 3284 1833.35"><path class="cls-1" style="fill: lightgray" d="M1140.94,684c-155.16,499.63-933.06,460.5-957.35,718.72-21.26,226,539.19,631.7,957.35,480.19,427.3-154.82,421.09-580.76,802-705.76,504-165.41,934.55,597.07,1280.14,424.7,279.41-139.36,343-950.26,63.12-1168.83C2939.09,162,2263.86,957.77,1690.87,624.86,1450.31,485.1,1317.13,198.29,1213.63,251.5,1131.39,293.78,1204.06,480.73,1140.94,684Z" transform="translate(-183 -163.65)"></path><path class="cls-2" style="fill: #353535; opacity: .6" d="M1601.2,1435.31c-635.61-475-935.69-428.72-1123.69-839.6-60.72-132.72-126.44-351-56.06-419.56C528.64,71.7,935.75,657.07,1465.77,626,1907.54,600.06,1997,165.07,2495.43,181.43c68.67,2.26,379.11,12.45,559.5,257.21,116.19,157.65,121.1,334.85,126.24,520.63,2.28,82.27,15.63,844.76-360.46,1011.58-48.61,21.57-137.42,48.12-347.28-4.53C2097.42,1872,1914.23,1669.23,1601.2,1435.31Z" transform="translate(-183 -163.65)"></path></svg>
-
-            <div id="customThemeButtonBar">
-              <div class="button" id="customThemeSaveBtn">Speichern</div>
-              <div class="button hide" id="customThemeUpdateBtn">Speichern</div>
-              <div class="button" id="customThemeCancelBtn">Abbrechen</div>
-            </div>
-          </div>
-        </div>
-
-        <div id="informationsWindow" class="hide">
-          <div class="textWrapper">
-            <p>Schuldners-Liste wurde entwickelt, um Ihnen zu helfen, den Überblick über die eigenen Darlehen nicht zu verlieren.</p>
-            <p>Diese App bietet Ihnen viele Möglichkeiten um wieder an Ihr Geld zu gelangen.</p>
-
-            <p>Die Möglichkeiten:</p>
-            <ul>
-              <li>Einträge erstellen</li>
-              <li>weisen Sie Einträge einer bestimmten Person zu</li>
-              <li>bearbeiten Sie die Informationen des Eintrages</li>
-              <li>löschen Sie Einträge</li>
-              <li>Sie können Einträge auch wiederherstellen</li>
-            </ul>
-          </div>
-        </div>
-
-        <div id="securityWindow" class="hide">
-          <iframe src="https://dorfingerjonas.at/data-privacy-statement-app" frameborder="0"></iframe>
-
-          <p>Diese Anwendung verwendet <a href="https://fontawesome.com/license">Font Awesome</a> und <a href="https://firebase.google.com/">Firebase</a>.</p>
-        </div>
-
-        <div id="feedbackWindow" class="hide">
-          <div id="feedbackContent">
-            <p>Wenn Sie Probleme mit Schuldners-Liste oder Fragen haben können Sie jederzeit eine Nachricht schreiben:</p>
-
-            <input type='text' placeholder='Betreff' id='subject' autocomplete='off' maxlength='80'>
-            <p id="subjectFDB"></p>
-
-            <textarea id='message' placeholder='Nachricht' rows='10' autocomplete='off' maxlength='5000'></textarea>
-            <p id="messageFDB"></p>
-
-            <p id="feedbackFDB"></p>
-            
-            <div class="button" id="sendEmailButton">Senden</div>
-          </div>
-        </div>
-      </main>
-
-      <footer id="footer">
-        <i class="fas fa-trash-alt" id="deletedFooter"></i>
-        <i class="fas fa-clipboard-list" id="entriesFooter"></i>
-        <i class="fas fa-plus" id="addEntryFooter"></i>
-      </footer>
-    </div>
-
-    <div id="loader" class="hide">
-      <div class="lds-ellipsis">
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-      </div>
-    </div>
-  </body>
+    <footer>
+        <p>© Copyright by Jonas Dorfinger, 2020. All rights reserved.</p>
+    </footer>
+</body>
 </html>
